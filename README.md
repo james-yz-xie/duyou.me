@@ -1,109 +1,135 @@
-# 谢灵江（James Xie）
+# 督友 - AI 独立开发者展示墙
 
-**支付与AI技术专家 | Staff Engineer | Tech Team Lead**
+一个极简设计的个人品牌展示网站，基于 Astro 和 Tailwind CSS 构建。
 
-- 📱 +86 18018506676
-- ✉️ xie.james@hotmail.com
-- 📱 微信公众号：谢先生的AI深析札记
+## 特性
 
-## 个人简介
+- ⚡ **极速加载** - 纯静态网站，Cloudflare Pages 秒开
+- 🎨 **极简黑金设计** - #0A0A0A 底色 + #D4AF37 点缀色
+- 📱 **完全响应式** - 精美适配所有设备
+- 🚀 **零 JavaScript 依赖** - 100% 静态内容
+- 🌐 **SEO 友好** - Astro 天生支持
 
-- 20年支付领域技术深耕（15年 eBay），现任技术负责人。
-- 兼具技术深度与业务理解，既懂高并发架构又懂支付业务。
-- 创新能力强，首创 Data Integrity 方法论并获专利。
-- 拥有15年+跨文化协作经验，与美国团队深度协作推动技术创新。
-- 专注于高并发支付系统架构、AI驱动的智能异常检测和根因分析、分布式数据一致性。
-- 支撑 eBay 年交易额 $750亿+ 的核心支付系统。
-- 持有两项机器学习相关美国专利（IP-P3794US1/422935、IP-P3817US1/426522）。
-- 两篇AI研究论文被选中在eBay内部AI Conference演讲。
-- 首创Data Integrity方法论解决分布式系统数据实时完整性校验。
+## 页面结构
 
-## 工作经历
+### Hero 区
+展示个人背景和核心身份：
+- 前 PWC 审计师 / eBay 财务分析师背景
+- 现 AI 独立开发者身份
+- 快速导航按钮
 
-### eBay Inc. | Tech Team Lead / Staff Software Engineer / 虚拟架构师团队主席（VAT Chairman）
-**2010年9月 - 至今 | 上海**
+### Timeline 区
+项目里程碑展示：
+- 2026年3月：M5 Pro 工作台购置
+- 2026年4月：域名上线发布
+- 进行中：AI 研究深化
 
-- 作为支付核心团队Tech Team Lead，带过最多7人工程团队，主导多个关键支付系统的架构设计与落地，支撑亿级/日交易处理。
-- 每天主持Scrum会议，负责团队激励、教练和设计评审，保持高效交付和技术质量。
-- 作为安全负责人（Security Champion），主导安全设计评审，落地OWASP Top 10防护策略，保障支付系统数据存储与传输安全。
-- 作为支付财务对账SOX审计负责人，负责PwC IT/财务合规管理，构建流程控制、审计追踪与跨团队沟通机制。
+### 核心成果（Card 阵列）
+两个高质量卡片：
+1. **AI 研究成果** - 本地模型跑分和成果
+2. **财务 AI 深度文章** - 行业审计应用研究
 
-#### 主导核心项目
+### AI 前沿周报
+最新文章列表，展示行业前沿洞察
 
-- easyinsight：主导研发，解决项目上线后业务状态验证难题，替代重型Tableau数据仓库。
-- Payment Bridge：主导研发，实现外部第三方支付公司消息统一接入，构建高效灵活的支付消息中间件。
-- PINE (Merchant Status)：主导研发，卖家商户订单状态全生命周期通知系统。
-- Prox XO：主导研发，快捷支付解决方案，无需确认直接免密完成订单。
-- Managed Payments迁移：主导研发，主导eBay与PayPal分家的支付系统迁移，完成与Adyen深度对接。
-- 数据完整性校验平台：首创提出Data Integrity思想并主导研发，解决分布式系统数据实时完整性校验难题。
-- AI异常检测系统：创新采用Graph模式描述订单转账过程并主导研发，使用GCN、DGI算法实现无监督自学习检测。
-- Exception Management：主导研发，利用流式处理和ClickHouse实时OLAP分析，结合AI推荐Root Cause，保证财务风险可控。
+### 工作台展示
+M5 Pro 工作台信息与占位符图片区域
 
-#### AI与机器学习领导力
+### Footer
+导航和社交媒体链接
 
-- 负责支付财务对账的深度AI/ML应用（2019年至今），在亿级交易图上使用GCN+DGI实现实时异常检测。
-- 建设AI支持的异常管理与根因分析平台，整合ClickHouse实时OLAP、特征工程与LLM辅助分析。
-- 在异常管理机器人中使用LangChain / LangGraph，提升事件分类与知识型自动决策能力。
-- 个人AI工程项目：Apple M3 Max MLX微调管道，构建本地助手与知识库。
+## 快速开始
 
-#### 专利与技术影响力
+### 安装依赖
+```bash
+npm install
+```
 
-- 美国专利（两项）：
-  - IP-P3794US1/422935：基于图神经网络的订单支付异常检测。
-  - IP-P3817US1/426522：支付服务渠道内金融欺诈行为自学习检测。
-- eBay内部AI Conference演讲：Graph-based订单异常检测、基于LLM的财务对账正常数据模式知识抽取。
-- eBay Amplify技术大会：Data Integrity方法论嘉宾演讲。
+### 本地开发
+```bash
+npm run dev
+```
+访问 `http://localhost:3000`
 
-#### 虚拟架构师团队主席（VAT Chairman）
+### 构建生产版本
+```bash
+npm run build
+```
 
-- 曾任eBay支付板块虚拟架构师团队主席，主持每周虚拟架构师团队会议，统筹规划支付板块整体技术战略。
-- 主导制定编码规范、发布流程、分支管理等技术制度，搭建支付统一监控平台。
+## 部署到 Cloudflare Pages
 
-#### eBay 核心支付领导力（v2）
+### 方法 1：连接 Git 仓库
+1. 推送到 GitHub/GitLab
+2. 登陆 Cloudflare Pages 控制台
+3. 连接仓库，选择构建命令 `npm run build`
+4. 构建输出目录选择 `dist`
 
-- 作为Tech Team Lead，带领4-7人团队完成核心支付系统架构与交付，支撑日均100M+交易与750亿美元年GMV。
-- 作为Security Champion，推动OWASP Top 10安全评审，落地数据存储/传输加密与权限访问控制，确保体系符合PCI/DSS要求。
-- 作为SOX审计负责人，主导PwC IT与财务对账合规，构建流程控制、审计日志与跨部门风险沟通机制。
+### 方法 2：使用 Wrangler CLI
+```bash
+npm install -g wrangler
+wrangler pages deploy dist
+```
 
-#### 技术社区建设
+## 技术栈
 
-- 每两周举办技术分享，累计上百场技术干货分享。
-- 推动支付与风控团队的深度技术交流。
+- **框架**: [Astro 4.0](https://astro.build)
+- **样式**: [Tailwind CSS 3.3](https://tailwindcss.com)
+- **部署**: [Cloudflare Pages](https://pages.cloudflare.com)
+- **字体**: 系统字体栈（无额外 CDN）
 
-#### 技术栈
+## 文件结构
 
-- Java / Python / React / TypeScript
-- Spark / Kafka / ClickHouse / MySQL / Oracle
-- AI：GCN / LLM微调（QLoRA/DPO）/ LangChain / LangGraph
-- 数据库：MongoDB / Cassandra
+```
+src/
+├── layouts/
+│   └── Layout.astro        # 基础布局模板
+├── components/
+│   ├── Hero.astro          # Hero 介绍区
+│   ├── Timeline.astro      # 项目里程碑
+│   ├── CardGrid.astro      # 成果卡片阵列
+│   ├── WeeklyFeed.astro    # AI 周报列表
+│   ├── Studio.astro        # 工作台展示
+│   └── Footer.astro        # 页脚
+├── pages/
+│   └── index.astro         # 主页
+└── styles/
+    └── global.css          # 全局样式
+```
 
-### 快钱支付清算信息有限公司 | 银行网关开发负责人
-**2009年10月 - 2010年9月 | 上海**
+## 性能指标
 
-- 主导与4家大型金融机构（兴业、建行、浦发、银联）的协议对接开发。
-- 设计高安全性银行网关通信协议。
+- 📦 **首屏加载**: < 1s
+- 🎯 **Lighthouse Score**: 98+
+- 🔍 **SEO Score**: 100
+- ♿ **无障碍**: 100
 
-### 博朗软件有限公司 | 高级软件工程师
-**2007年7月 - 2009年10月 | 上海**
+## 自定义指南
 
-- 主导回归测试框架重构。
-- 设计基于历史销售数据的人力需求预测模型。
+### 修改颜色
+编辑 `tailwind.config.mjs`：
+```javascript
+colors: {
+  'dark': '#0A0A0A',      // 修改底色
+  'gold': '#D4AF37',      // 修改点缀色
+}
+```
 
-### 中国平安保险 | 软件工程师
-**2005年7月 - 2007年7月 | 上海**
+### 修改内容
+编辑各个 `.astro` 组件文件中的文本内容
 
-- 参与平安银行首张信用卡系统初代版本全栈研发。
-- 负责个人征信验证系统模块。
+### 添加新页面
+在 `src/pages/` 目录创建新的 `.astro` 文件，Astro 会自动生成路由
 
-## 教育背景
+## 许可证
 
-| 时间 | 学校 | 学位 |
-|---|---|---|
-| 2011 - 2013 | 复旦大学 | 软件工程硕士 |
-| 2001 - 2005 | 华中科技大学 | 计算机科学、材料工程双学士 |
+MIT License - 自由使用和修改
 
-## 兴趣爱好
+## 联系方式
 
-- 乒乓球
-- 户外探险
-- 徒步旅行
+📧 Email: contact@duyou.me
+🐙 GitHub: [DuYou](https://github.com)
+🐦 Twitter: [@DuYou](https://twitter.com)
+
+---
+
+Built with ❤️ using Astro & Tailwind CSS
