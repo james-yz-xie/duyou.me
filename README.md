@@ -37,7 +37,10 @@ git add -A && git commit -m "message" && git push
 2. 更新首页周报摘要：`src/components/WeeklyFeed.astro`
 3. 更新周报详情页：`src/pages/briefings.astro`
 4. 分类按 Scout Agent 格式：工业界巨头、学术界前沿、社区与工程
-5. 每条周报添加原始信源链接（Google、OpenAI、arXiv 等）
+5. **每条周报必须添加链接**（三种情况）：
+   - 有外部来源：添加原始信源链接（如 `Google →`、`arXiv →`、`OpenAI →`）
+   - 原创深度文章：标注 `深度解析 →` 链接到 `/briefings`
+   - 进行中项目：标注 `进行中` 状态
 6. 提交推送：`git add -A && git commit -m "Update weekly feed" && git push`
 
 **用户指令**：`更新周报`
