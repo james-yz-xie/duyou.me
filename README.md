@@ -30,17 +30,15 @@ git add -A && git commit -m "message" && git push
 
 周报内容来源：
 - **Briefings**: `/Users/james/git/obsidian/MrXie AI consulting/Outputs/Briefings/`
-- **Articles**: `/Users/james/git/obsidian/MrXie AI consulting/Outputs/Articles/`
+
+**注意**：周报仅包含外部情报（来自 Briefings），不包含原创文章。原创文章在"核心成果"页面展示。
 
 **步骤**：
 1. 阅读 Briefings 目录下的最新简报
 2. 更新首页周报摘要：`src/components/WeeklyFeed.astro`
 3. 更新周报详情页：`src/pages/briefings.astro`
 4. 分类按 Scout Agent 格式：工业界巨头、学术界前沿、社区与工程
-5. **每条周报必须添加链接**（三种情况）：
-   - 有外部来源：添加原始信源链接（如 `Google →`、`arXiv →`、`OpenAI →`）
-   - 原创深度文章：标注 `深度解析 →` 链接到 `/briefings`
-   - 进行中项目：标注 `进行中` 状态
+5. **每条周报必须添加外部来源链接**（如 `Google →`、`arXiv →`、`OpenAI →`）
 6. 提交推送：`git add -A && git commit -m "Update weekly feed" && git push`
 
 **用户指令**：`更新周报`
