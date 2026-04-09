@@ -70,6 +70,20 @@ Hero 组件：`src/components/Hero.astro`
 
 ---
 
+### 更新核心成果
+
+核心成果位置：`src/components/CardGrid.astro`
+
+**内容来源**：`/Users/james/git/obsidian/MrXie AI consulting/Knowledge_Base/`
+
+**两个卡片**：
+1. **AI 研究成果**：展示已发布的公众号文章，从 Knowledge_Base 目录获取
+2. **财务 AI 深度文章**：待发布，标注"敬请期待"
+
+**用户指令**：`更新核心成果`
+
+---
+
 ## 内容来源路径
 
 | 内容 | 路径 |
