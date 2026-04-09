@@ -1,0 +1,228 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="AI 前沿周报 | 谢灵江">
+  <section class="bg-dark px-4 py-20 min-h-screen">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl font-bold text-center mb-4 text-white">
+        AI 前沿<span class="text-gold">周报</span>
+      </h1>
+      <p class="text-center text-gray-400 mb-12">来自 Scout Agent 的每日深度情报精选</p>
+      <div class="h-1 w-16 bg-gold mx-auto mb-16"></div>
+
+      <!-- 工业界巨头 -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-gold mb-8 flex items-center">
+          <span class="mr-3">🏛️</span> 工业界巨头 (Big Tech)
+        </h2>
+        <div class="space-y-6">
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                智能体基建元年：Google、OpenAI、Anthropic、Microsoft 同时出手
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-07</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              Google AutoBNN 强化预测、OpenAI Codex 搞定代码生成、Anthropic Claude 4 定义安全边界、Microsoft Azure AI Agent Service 正式商用。基础设施已铺好，应用层窗口期正在打开。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                GPT-5.4 发布：Pro 与 Thinking 双版本齐发
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              OpenAI 发布 GPT-5.4，定位为"专业工作最高效的前沿模型"，首次推出 Pro 版（更强推理）和 Thinking 版（深度思考模式）。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                Claude Opus 4.6：从"最佳编程助手"转向"知识工作者默认 AI 层"
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              Anthropic 战略转向：不再只盯着开发者，而是瞄准 docs、spreadsheets、presentations 等企业级知识工作。支持 100 万 token 上下文（Beta），引入 Agent Teams 并行任务机制。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                Gemini 3 系列发布：原生多模态 + 智能体原生架构
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              Google 最智能的模型，具备 state-of-the-art 推理能力，支持智能体工具调用和超长上下文。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                DeepSeek V4：中国万亿参数多模态挑战者
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              DeepSeek 市场份额从 2025 年 1 月的 1% 增长到 2026 年 1 月的 15%，堪称 AI 史上最快采用曲线。开源社区高度期待其 V4 发布。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                Anthropic vs 美国国防部：AI 军事化的边界之争
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              Anthropic 被列为"供应链风险"后提起诉讼，OpenAI 和 Google 员工联合声援。这场争议可能引发 AI 行业对军事应用的全面反思。
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <!-- 学术界前沿 -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-gold mb-8 flex items-center">
+          <span class="mr-3">🎓</span> 学术界前沿 (Academia)
+        </h2>
+        <div class="space-y-6">
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                AI 正在阉割谁的技能？Anthropic 实验揭示的真相
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-03</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              Anthropic 研究发现：使用 AI 编程的开发者理解测试得分低 17%。"认知卸载"会阻碍技能形成，但"认知辅助"不会。关键在于你是让 AI 代写，还是追问为什么。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                SIEVE：从自然语言中进行样本高效的参数化学习
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-07</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              自然语言上下文（如指令、知识或反馈）包含丰富的适应信号。arXiv:2604.02339 提出了一种新的参数化学习方法。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                单 Agent LLM 在多跳推理上优于多 Agent 系统
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-07</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              在等思考 Token 预算下，单 Agent LLM 在多跳推理任务上表现优于多 Agent 系统。arXiv:2604.02460 挑战了多 Agent 系统的优势假设。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                2026 年 3 月 AI 论文提交量达 1936 篇
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              单月近 2000 篇 AI 论文，学术界的"大模型军备竞赛"同样白热化。
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <!-- 社区与工程 -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-gold mb-8 flex items-center">
+          <span class="mr-3">🔥</span> 社区与工程 (Community)
+        </h2>
+        <div class="space-y-6">
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                2026 年主流 AI Agent 框架对比：LangGraph vs CrewAI vs AutoGen
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              深入对比三大开源框架的架构设计、使用场景与性能表现。对于一人公司，选择正确的框架可能比选择模型更重要。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                Claude 4.6 Memory 发布：AI 的"白板问题"终于解决
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              Anthropic 推出持久化记忆层，跨会话理解你的工作上下文。这对于一人公司的"数字员工"建设意义重大。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                LangChain + MongoDB Partnership：可信数据库上的 AI Agent 栈
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-07</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              在 MongoDB Atlas 上构建生产级 AI Agent——内置向量搜索、持久记忆、自然语言查询和端到端可观测性。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                本地大模型战略：智力平权与数字主权的终极夺回
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-07</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              云端 AI 是"租借的智力"，本地化是智力供应链的战略防空洞。通过供应危机、经济临界、技术跨越、主权夺回四个维度拆解 2026 本地大模型战略。
+            </p>
+          </article>
+
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                AI Agent 行业全景深度解析：从主权级到插件级
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-09</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              打破"盲人摸象"：将 Agent 分为主权级、IDE 深度集成级、全自主工程级、CLI 协作级、模型原生级、插件级六大维度，系统性解析各框架的核心竞争力与关键缺陷。
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <!-- 返回首页 -->
+      <div class="text-center mt-12">
+        <a href="/" class="inline-block px-8 py-3 border-2 border-gold text-gold hover:bg-gold hover:text-dark transition-all font-semibold">
+          返回首页
+        </a>
+      </div>
+    </div>
+  </section>
+  <Footer />
+</Layout>
