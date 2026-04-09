@@ -20,14 +20,7 @@ import Footer from '../components/Footer.astro';
 
       <script is:inline>
         const linkResearch = document.getElementById('wechat-link-research');
-        const isWechat = /MicroMessenger/i.test(navigator.userAgent);
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        if (isWechat || isMobile) {
-          linkResearch.href = 'weixin://contacts/profile/gh_f297261425ba';
-        } else {
-          linkResearch.href = 'https://weixin.sogou.com/weixin?type=1&query=谢先生的AI深析札记';
-        }
+        linkResearch.href = 'weixin://contacts/profile/gh_f297261425ba';
       </script>
 
       <div class="space-y-8">

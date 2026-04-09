@@ -48,13 +48,6 @@
 
   <script is:inline>
     const linkFooter = document.getElementById('wechat-link-footer');
-    const isWechat = /MicroMessenger/i.test(navigator.userAgent);
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    if (isWechat || isMobile) {
-      linkFooter.href = 'weixin://contacts/profile/gh_f297261425ba';
-    } else {
-      linkFooter.href = 'https://weixin.sogou.com/weixin?type=1&query=谢先生的AI深析札记';
-    }
+    linkFooter.href = 'weixin://contacts/profile/gh_f297261425ba';
   </script>
 </footer>
