@@ -41,10 +41,22 @@
           </div>
 
           <div class="mt-8 pt-6 border-t border-gold/20">
-            <a href="weixin://contacts/profile/gh_f297261425ba" class="text-gold hover:text-white transition-colors font-semibold">
+            <a href="#" id="wechat-link-card" class="text-gold hover:text-white transition-colors font-semibold">
               微信公众号：谢先生的AI深析札记 →
             </a>
           </div>
+
+          <script is:inline>
+            const linkCard = document.getElementById('wechat-link-card');
+            const isWechat = /MicroMessenger/i.test(navigator.userAgent);
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isWechat || isMobile) {
+              linkCard.href = 'weixin://contacts/profile/gh_f297261425ba';
+            } else {
+              linkCard.href = 'https://weixin.sogou.com/weixin?type=1&query=谢先生的AI深析札记';
+            }
+          </script>
         </div>
       </div>
 

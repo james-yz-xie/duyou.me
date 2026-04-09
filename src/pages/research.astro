@@ -13,10 +13,22 @@ import Footer from '../components/Footer.astro';
       <div class="h-1 w-16 bg-gold mx-auto mb-4"></div>
       
       <p class="text-center mb-12">
-        <a href="weixin://contacts/profile/gh_f297261425ba" class="text-gold hover:text-white transition-colors">
+        <a href="#" id="wechat-link-research" class="text-gold hover:text-white transition-colors">
           关注公众号阅读全文 →
         </a>
       </p>
+
+      <script is:inline>
+        const linkResearch = document.getElementById('wechat-link-research');
+        const isWechat = /MicroMessenger/i.test(navigator.userAgent);
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isWechat || isMobile) {
+          linkResearch.href = 'weixin://contacts/profile/gh_f297261425ba';
+        } else {
+          linkResearch.href = 'https://weixin.sogou.com/weixin?type=1&query=谢先生的AI深析札记';
+        }
+      </script>
 
       <div class="space-y-8">
         <!-- 文章 1 -->
