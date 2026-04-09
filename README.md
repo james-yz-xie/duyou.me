@@ -74,6 +74,7 @@ Hero 组件：`src/components/Hero.astro`
 
 | 内容 | 路径 |
 |------|------|
+| AI 研究成果（已发布文章） | `/Users/james/git/obsidian/MrXie AI consulting/Knowledge_Base/` |
 | AI 咨询 Briefings | `/Users/james/git/obsidian/MrXie AI consulting/Outputs/Briefings/` |
 | AI 咨询 Articles | `/Users/james/git/obsidian/MrXie AI consulting/Outputs/Articles/` |
 | AI 养生公司 | `/Users/james/git/obsidian/MrXie AI养生公司` |
