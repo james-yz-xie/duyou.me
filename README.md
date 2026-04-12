@@ -19,7 +19,7 @@ npm run dev
 npm run build
 
 # 部署（推送到 GitHub，Cloudflare 自动部署）
-git add -A && git commit -m "message" && git push
+git add -A && git commit -m "message"
 ```
 
 ---
@@ -39,7 +39,7 @@ git add -A && git commit -m "message" && git push
 3. 更新情报详情页：`src/pages/briefings.astro`
 4. 分类按 Scout Agent 格式：工业界巨头、学术界前沿、社区与工程
 5. **每条简报必须添加外部来源链接**（如 `Google →`、`arXiv →`、`OpenAI →`）
-6. 提交推送：`git add -A && git commit -m "Update AI feed" && git push`
+6. 提交：`git add -A && git commit -m "Update AI feed"`
 
 **用户交互口令**：`更新 AI 前沿情报`
 
@@ -69,7 +69,7 @@ git add -A && git commit -m "message" && git push
 
 3. **提交与全网自动部署**：
    ```bash
-   git add -A && git commit -m "Update open source feed" && git push
+   git add -A && git commit -m "Update open source feed"
    ```
 
 **用户交互口令**：`更新 GitHub 开源热点`
