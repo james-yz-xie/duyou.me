@@ -26,39 +26,53 @@ git add -A && git commit -m "message" && git push
 
 ## 内容更新
 
-### 更新周报
+### 更新 AI 前沿情报
 
-周报内容来源：
-- **Briefings**: `/Users/james/git/obsidian/MrXie AI consulting/Outputs/Briefings/`
+内容来源：
+- **AI Briefings**: `/Users/james/git/obsidian/MrXie AI consulting/Outputs/Briefings/`
 
-**注意**：周报仅包含外部情报（来自 Briefings），不包含原创文章。原创文章在"核心成果"页面展示。
+**注意**：仅包含外部情报（来自 Briefings），不包含原创文章。原创文章在"核心成果"页面展示。
 
 **步骤**：
 1. 阅读 Briefings 目录下的最新简报
-2. 更新首页周报摘要：`src/components/WeeklyFeed.astro`
-3. 更新周报详情页：`src/pages/briefings.astro`
+2. 更新首页前沿情报摘要：`src/components/WeeklyFeed.astro`
+3. 更新情报详情页：`src/pages/briefings.astro`
 4. 分类按 Scout Agent 格式：工业界巨头、学术界前沿、社区与工程
-5. **每条周报必须添加外部来源链接**（如 `Google →`、`arXiv →`、`OpenAI →`）
-6. 提交推送：`git add -A && git commit -m "Update weekly feed" && git push`
+5. **每条简报必须添加外部来源链接**（如 `Google →`、`arXiv →`、`OpenAI →`）
+6. 提交推送：`git add -A && git commit -m "Update AI feed" && git push`
 
-**用户指令**：`更新周报`
+**用户交互口令**：`更新 AI 前沿情报`
 
 ---
 
-### 更新开源周报
+### 更新 GitHub 开源热点
 
 开源内容来源：
-- **GitHub Trending Briefings**: `/Users/james/git/obsidian/MrXie GitHub Trending/Outputs/Briefings/`
+- **GitHub Trending 独立监控项目**: `/Users/james/git/obsidian/MrXie GitHub Trending/`
 
-**注意**：开源周报使用 `text-emerald-400` 绿色主题，与传统周报区分。
+**注意**：开源热点专栏统一使用 `text-emerald-400` (翡翠绿) 主题，以便与传统 AI 前沿情报 (金色) 形成视觉区隔。
 
-**步骤**：
-1. 运行 GitHub Scout 脚本或阅读其目录下的最新简报。
-2. 更新首页开源摘要：`src/components/OpenSourceFeed.astro`
-3. 更新开源详情页：`src/pages/opensource.astro`
-4. 提交推送：`git add -A && git commit -m "Update open source feed" && git push`
+**日常完整运维工作流 (End-to-End)**：
+1. **生成最新情报数据**：
+   打开终端环境执行独立项目的抓取脚本，让 Gemini 大模型自动分析：
+   ```bash
+   cd "/Users/james/git/obsidian/MrXie GitHub Trending"
+   source venv/bin/activate
+   python scripts/scout.py
+   ```
+   *注：运行结束后，结构化简报会自动保存在其内部的 `Outputs/Briefings/` 目录下。*
 
-**用户指令**：`更新开源周报`
+2. **更新前台门户网页**：
+   - 阅读刚才生成的 Markdown 简报文件。
+   - 打开 `src/components/OpenSourceFeed.astro`，把“首要信号/趋势总结”以及Top项目的卡片更新上去。
+   - 打开 `src/pages/opensource.astro`，将四大分类和完整的仓库详细名单全量更新进此页面库中。
+
+3. **提交与全网自动部署**：
+   ```bash
+   git add -A && git commit -m "Update open source feed" && git push
+   ```
+
+**用户交互口令**：`更新 GitHub 开源热点`
 
 ---
 

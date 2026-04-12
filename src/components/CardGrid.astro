@@ -8,14 +8,21 @@
     </h2>
     <div class="h-1 w-16 bg-gold mx-auto mb-16"></div>
 
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- AI 研究成果卡片 -->
       <div class="group relative rounded-lg border-2 border-gold/30 hover:border-gold transition-all p-8 bg-gradient-to-br from-dark to-dark/80">
         <div class="absolute inset-0 rounded-lg bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
         <div class="relative z-10">
-          <h3 class="text-2xl font-bold text-gold mb-2">AI 研究成果</h3>
-          <div class="h-1 w-8 bg-gold mb-6"></div>
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <h3 class="text-2xl font-bold text-gold mb-2">AI 研究成果</h3>
+              <div class="h-1 w-8 bg-gold"></div>
+            </div>
+            <div class="bg-white/10 p-1 rounded-lg backdrop-blur-sm">
+              <img src="/gongzhonghao.jpg" alt="公众号二维码" class="w-16 h-16 rounded align-middle shadow-lg" />
+            </div>
+          </div>
 
           <p class="text-gray-300 mb-6">
             公众号「谢先生的AI深析札记」已发布文章，涵盖产业分析、Agent 架构、本地部署实战
@@ -77,6 +84,49 @@
 
           <div class="mt-8 pt-6 border-t border-gold/20">
             <span class="text-gray-500 text-sm">待发布 · 敬请期待</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 督友小程序卡片 -->
+      <div class="group relative rounded-lg border-2 border-gold/30 hover:border-gold transition-all p-8 bg-gradient-to-br from-dark to-dark/80">
+        <div class="absolute inset-0 rounded-lg bg-gradient-to-br from-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+        <div class="relative z-10">
+          <div class="flex justify-between items-start mb-6">
+            <div>
+              <h3 class="text-2xl font-bold text-gold mb-2">督友小程序</h3>
+              <div class="h-1 w-8 bg-gold"></div>
+            </div>
+            <div class="bg-white/10 p-1 rounded-lg backdrop-blur-sm">
+              <img src="/duyou.jpeg" alt="督友小程序码" class="w-16 h-16 rounded align-middle shadow-lg" />
+            </div>
+          </div>
+
+          <p class="text-gray-300 mb-6">
+            强迫症式轻社群自律监督应用。采用混合云双模式运行架构，支持离线网络缓存自动降级，打造无缝流畅体验。
+          </p>
+
+          <div class="space-y-3 text-sm text-gray-400">
+            <div class="flex items-center gap-2">
+              <span class="text-gold">→</span>
+              <span><span class="text-white font-semibold">架构设计</span>API 优先 + 本地回退</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-gold">→</span>
+              <span><span class="text-white font-semibold">云端部署</span>Spring Boot 容器托管</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-gold">→</span>
+              <span><span class="text-white font-semibold">离线支撑</span>断网环境无缝打卡</span>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-gold/20 flex justify-between">
+            <span class="text-gray-500 text-sm">已上线稳定运行</span>
+            <a href="https://github.com/james-yz-xie/duyou-wechat-miniprogram" target="_blank" rel="noopener" class="text-gold hover:text-white transition-colors font-semibold">
+              代码 Repo →
+            </a>
           </div>
         </div>
       </div>
