@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="开源热点周报 | 谢灵江">
+  <section class="bg-dark px-4 py-20 min-h-screen border-t border-emerald-400/10">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl font-bold text-center mb-4 text-white">
+        开源<span class="text-emerald-400">热点周报</span>
+      </h1>
+      <p class="text-center text-gray-400 mb-12">由 GitHub Scout Agent 自动追踪的最具潜力的开源基础设施项目</p>
+      <div class="h-1 w-16 bg-emerald-400 mx-auto mb-16"></div>
+
+      <!-- Core Tools & Framworks -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-emerald-400 mb-8 flex items-center">
+          <span class="mr-3">🛠️</span> 自动化基础设施 (Agent Infrastructure)
+        </h2>
+        <div class="space-y-6">
+          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
+                CLI-Anything：软件界面的降维打击
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-12</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              **Repo: OpenCLI-Framework/cli-anything** (⭐ 12.5k) <br>
+              将拥有复杂界面的专业软件（如 CAD、ERP）直接转化为 CLI 命令的革命性框架，通过 7 阶段自动化管道实现。这使得原本难以自动化的人类 GUI 操作，变得可通过标准命令让大模型操控，填补了 GUI Agent 和 CLI Agent 之间的巨大鸿沟。
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="#" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
+              <a href="#" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">Documentation →</a>
+            </div>
+          </article>
+
+          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
+                OpenCLI：让所有 Web 页面成为 API
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-12</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              **Repo: OpenCLI-Framework/opencli** (⭐ 8.2k) <br>
+              低成本解决企业遗留系统（Legacy Systems）的完美方案，基于浏览器复用协议实现 Zero LLM Cost Runtime。这允许在不修改旧 OA 或内网系统代码、也不暴露 Token 的情况下，安全的把它们“接口化”。
+            </p>
+            <a href="#" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
+          </article>
+        </div>
+      </div>
+
+      <!-- Models & LLMs -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold text-emerald-400 mb-8 flex items-center">
+          <span class="mr-3">🧠</span> 本地智能与基座 (Local AI & Models)
+        </h2>
+        <div class="space-y-6">
+          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
+                Llama-3-Tool-Use：本地推理的新标杆
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-10</span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              **Repo: meta-llama/llama3-tool-use** (⭐ 34k) <br>
+              专为高度准确地进行函数调用（Function Calling）而微调的开源模型，极大地推进了企业级私有算力的部署可能性。从此不再受限于闭源商业 API，可以在内网安全地利用 OpenCLI 等工具驱动业务。
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="#" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
+              <a href="#" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">HuggingFace →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 返回首页 -->
+      <div class="text-center mt-12">
+        <a href="/" class="inline-block px-8 py-3 border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-dark transition-all font-semibold">
+          返回首页
+        </a>
+      </div>
+    </div>
+  </section>
+  <Footer />
+</Layout>

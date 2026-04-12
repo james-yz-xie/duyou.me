@@ -45,6 +45,23 @@ git add -A && git commit -m "message" && git push
 
 ---
 
+### 更新开源周报
+
+开源内容来源：
+- **GitHub Trending Briefings**: `/Users/james/git/obsidian/MrXie GitHub Trending/Outputs/Briefings/`
+
+**注意**：开源周报使用 `text-emerald-400` 绿色主题，与传统周报区分。
+
+**步骤**：
+1. 运行 GitHub Scout 脚本或阅读其目录下的最新简报。
+2. 更新首页开源摘要：`src/components/OpenSourceFeed.astro`
+3. 更新开源详情页：`src/pages/opensource.astro`
+4. 提交推送：`git add -A && git commit -m "Update open source feed" && git push`
+
+**用户指令**：`更新开源周报`
+
+---
+
 ### 更新时间线
 
 时间线位置：`src/components/Timeline.astro`
