@@ -1,0 +1,73 @@
+---
+const services = [
+  {
+    title: "Legacy2API",
+    subtitle: "Web 系统接口化 (Browser-Native)",
+    description: "针对无 API 的内网 OA、旧版 CRM 及繁琐的网页系统，利用浏览器复用技术转化为标准化接口。零 Token 运行成本，确保账号环境绝对安全。",
+    features: ["内网穿透与适配", "自动化操作流水线", "确定性执行结果"],
+    icon: "🌐",
+    color: "gold"
+  },
+  {
+    title: "App-Native",
+    subtitle: "专业软件 AI 赋能 (Automation-Engine)",
+    description: "通过 7 阶段自动化管道，将 CAD、ERP 客户端、财务软件等复杂桌面端工具“命令行化”，让 AI 代理能够调用真实软件后端完成任务。",
+    features: ["跨平台桌面端适配", "软件逻辑深度抽象", "复杂工作流自动化"],
+    icon: "💻",
+    color: "gold"
+  },
+  {
+    title: "Private-Compute",
+    subtitle: "安全算力环境部署 (LLM)",
+    description: "为企业提供私有化大模型部署方案（Llama 3 / DeepSeek 等），支持混合云架构，确保敏感业务数据不出内网，建立企业级安全防线。",
+    features: ["模型私有化微调", "内网环境深度调试", "混合云算力调度"],
+    icon: "🛡️",
+    color: "gold"
+  }
+];
+---
+
+<section id="services" class="bg-dark py-24 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-20">
+      <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+        核心服务<span class="text-gold">模块</span>
+      </h2>
+      <div class="h-1 w-16 bg-gold mx-auto mb-8"></div>
+      <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+        从底层的算力基建，到顶层的软件赋能，我们提供端到端的“企业信息 AI 化”解决方案。
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      {services.map((service) => (
+        <div class="group relative p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md hover:border-gold/50 transition-all duration-500 overflow-hidden">
+          <!-- Glass effect background -->
+          <div class="absolute -right-10 -top-10 w-32 h-32 bg-gold/5 rounded-full blur-3xl group-hover:bg-gold/20 transition-all"></div>
+          
+          <div class="relative z-10">
+            <div class="text-4xl mb-6 bg-dark/50 w-16 h-16 flex items-center justify-center rounded-xl border border-white/10 group-hover:border-gold/30 group-hover:scale-110 transition-transform">
+              {service.icon}
+            </div>
+            
+            <h3 class="text-gold font-bold tracking-widest text-sm mb-2 uppercase">{service.title}</h3>
+            <h4 class="text-2xl font-bold text-white mb-4">{service.subtitle}</h4>
+            
+            <p class="text-gray-400 mb-8 leading-relaxed text-sm h-24">
+              {service.description}
+            </p>
+            
+            <ul class="space-y-3 border-t border-white/10 pt-6">
+              {service.features.map(feature => (
+                <li class="flex items-center gap-3 text-xs text-gray-300">
+                  <span class="w-1.5 h-1.5 bg-gold rounded-full shadow-[0_0_8px_gold]"></span>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

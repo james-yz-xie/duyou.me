@@ -1,0 +1,59 @@
+---
+---
+
+<section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+  <!-- Background Image with Overlay -->
+  <div class="absolute inset-0 z-0">
+    <img 
+      src="/delivery_hero.png" 
+      alt="Enterprise AI Connectivity" 
+      class="w-full h-full object-cover opacity-60 scale-105"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-dark/90 via-transparent to-dark/90"></div>
+  </div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-4 text-center">
+    <div class="inline-block px-4 py-1 border border-gold/30 rounded-full bg-gold/5 backdrop-blur-sm mb-6 animate-fade-in">
+      <span class="text-gold text-sm font-bold tracking-[0.2em] uppercase">Enterprise AI Solutions</span>
+    </div>
+    
+    <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white leading-tight">
+      企业的 <span class="bg-gradient-to-r from-gold via-gold/80 to-gold bg-clip-text text-transparent italic">AI 技能递送者</span>
+    </h1>
+    
+    <div class="max-w-3xl mx-auto">
+      <p class="text-2xl md:text-3xl text-gray-200 font-medium mb-8 leading-relaxed">
+        “AI 懂你的业务，却无法触碰你的系统？我们负责连接。”
+      </p>
+      
+      <div class="h-1 w-24 bg-gold mx-auto mb-10"></div>
+      
+      <p class="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+        打破“信息孤岛”，利用<b>自研核心连接适配技术</b>，将企业遗留系统与专业软件无缝接入 AGI 时代。
+      </p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-center gap-6">
+      <a href="#services" class="px-10 py-4 bg-gold text-dark font-bold rounded-sm hover:scale-105 transition-all shadow-xl shadow-gold/10">
+        查看服务方案
+      </a>
+      <a href="mailto:xie.james@hotmail.com" class="px-10 py-4 border-2 border-white/20 text-white font-bold rounded-sm hover:bg-white/5 transition-all backdrop-blur-md">
+        商务洽谈
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom Gradient Break -->
+  <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-dark to-transparent"></div>
+</section>
+
+<style>
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fade-in 1s ease-out forwards;
+  }
+</style>
