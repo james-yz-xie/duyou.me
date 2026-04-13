@@ -18,10 +18,18 @@ const services = [
   },
   {
     title: "Private-Compute",
-    subtitle: "安全算力环境部署 (LLM)",
-    description: "为企业提供私有化大模型部署方案（Llama 3 / DeepSeek 等），支持混合云架构，确保敏感业务数据不出内网，建立企业级安全防线。",
+    subtitle: "安全算力环境部署 (Cloud/Hybrid)",
+    description: "为企业提供私有化大模型部署方案（DeepSeek / Llama 等），支持混合云架构，确保敏感业务数据不出内网，建立企业级安全防线。",
     features: ["模型私有化微调", "内网环境深度调试", "混合云算力调度"],
     icon: "🛡️",
+    color: "gold"
+  },
+  {
+    title: "Unified-Agent",
+    subtitle: "AI Agent 平台整合 (Service-Hub)",
+    description: "通过统一指挥中心整合所有工具资产。利用自定义技能库（SKILL.md）实现企业能力的数字化沉淀，让 AI 代理具备可发现、可学习的进化能力。",
+    features: ["CLI-Hub 工具聚合", "企业专属技能库建设", "员工 AI 使用培训"],
+    icon: "🏗️",
     color: "gold"
   }
 ];
@@ -39,7 +47,7 @@ const services = [
       </p>
     </div>
 
-    <div class="grid lg:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-2 gap-8">
       {services.map((service) => (
         <div class="group relative p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md hover:border-gold/50 transition-all duration-500 overflow-hidden">
           <!-- Glass effect background -->

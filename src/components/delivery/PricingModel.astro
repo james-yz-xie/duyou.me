@@ -1,24 +1,29 @@
 ---
 const tiers = [
   {
-    name: "算力环境部署",
+    name: "私有算力环境部署",
     mode: "一次性实施费",
     desc: "含私有模型部署、微调、内网环境调试及混合云架构设计。"
   },
   {
-    name: "软件 CLI 化适配",
-    mode: "按软件复杂度",
-    desc: "针对专业桌面软件，执行 7 阶段自动化管道、包含完整测试套件。"
+    name: "专业软件 CLI 化适配",
+    mode: "案软件复杂度",
+    desc: "针对如 CAD、ERP 客户端等桌面软件，执行 7 阶段自动化管道。"
   },
   {
-    name: "系统接口化适配",
+    name: "Web 系统接口化适配",
     mode: "按适配器数量",
-    desc: "针对 Web 系统（OA/CRM），包含适配器生成、验证及环境安全配置。"
+    desc: "针对 OA/CRM 等 Web 系统，包含适配器生成、验证及防检测配置。"
   },
   {
-    name: "Agent 平台集成",
-    mode: "弹性定制",
-    desc: "整合所有工具至 CLI-Hub，并生成 SKILL.md 技能库供 AI 调用。"
+    name: "AI Agent 平台集成",
+    mode: "一次性实施费",
+    desc: "整合所有工具至 CLI-Hub，由专属技能库（SKILL.md）提供发现能力。"
+  },
+  {
+    name: "年度技术服务/维护",
+    mode: "年度订阅 (可选)",
+    desc: "包含 UI/逻辑变更后的适配器更新、模型版本升级及远程支持。"
   }
 ];
 ---
@@ -43,9 +48,9 @@ const tiers = [
           <tbody class="text-gray-300">
             {tiers.map(tier => (
               <tr class="border-b border-white/5 hover:bg-white/5 transition-colors group">
-                <td class="p-6 font-bold text-white group-hover:text-gold transition-colors">{tier.name}</td>
+                <td class="p-6 font-bold text-white group-hover:text-gold transition-colors whitespace-nowrap">{tier.name}</td>
                 <td class="p-6 text-sm">{tier.mode}</td>
-                <td class="p-6 text-sm text-gray-500 leading-relaxed">{tier.desc}</td>
+                <td class="p-6 text-sm text-gray-400 leading-relaxed">{tier.desc}</td>
               </tr>
             ))}
           </tbody>
