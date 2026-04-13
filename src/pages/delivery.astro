@@ -6,6 +6,7 @@ import ServiceGrid from '../components/delivery/ServiceGrid.astro';
 import TechnicalEdge from '../components/delivery/TechnicalEdge.astro';
 import PricingModel from '../components/delivery/PricingModel.astro';
 import VideoShowcase from '../components/delivery/VideoShowcase.astro';
+import PDFViewer from '../components/delivery/PDFViewer.astro';
 ---
 
 <Layout title="企业的 AI 技能递送者 | duyou.me · 行业领先的企业信息 AI 化方案">
@@ -24,6 +25,46 @@ import VideoShowcase from '../components/delivery/VideoShowcase.astro';
 
     <!-- Video Showcase -->
     <VideoShowcase />
+
+    <!-- Direct PPTX Viewer (via Microsoft Office Online) -->
+    <section id="presentation-viewer" class="bg-dark/50 py-24 px-4 overflow-hidden">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+            方案<span class="text-gold">在线演示</span>
+          </h2>
+          <div class="h-1 w-16 bg-gold mx-auto mb-8"></div>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            基于微软官方预览服务，为您原汁原味呈现业务架构（注：需发布上线后方可预览）。
+          </p>
+        </div>
+
+        <div class="relative w-full aspect-video bg-black border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+          <iframe 
+            src={`https://view.officeapps.live.com/op/embed.aspx?src=https://duyou.me/Agent_Native_Enterprise.pptx&wdAr=1.7777777777777777`}
+            class="w-full h-full border-none"
+            title="PPTX Online Viewer"
+          >
+          </iframe>
+          
+          <!-- Local/Dev State Overlay -->
+          <div class="absolute inset-x-0 bottom-0 bg-gold/10 backdrop-blur-md p-4 text-center border-t border-gold/20 pointer-events-none">
+             <p class="text-gold text-xs font-bold uppercase tracking-widest">
+               🚀 发布至公网后即可实时预览 PPT 翻页
+             </p>
+          </div>
+        </div>
+        
+        <div class="mt-8 flex justify-center gap-6">
+           <a href="/Agent_Native_Enterprise.pptx" download class="text-gold text-sm underline px-4 py-2 hover:bg-gold/10 transition-colors">
+              下载原始 PPT 文档
+           </a>
+           <a href="/Agent_Native_Enterprise.pdf" target="_blank" class="text-white/50 text-sm px-4 py-2 hover:text-white transition-colors">
+              查看 PDF 备用版
+           </a>
+        </div>
+      </div>
+    </section>
 
     <!-- Services Section -->
     <ServiceGrid />
