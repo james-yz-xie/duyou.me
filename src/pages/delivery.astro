@@ -8,6 +8,7 @@ import PricingModel from '../components/delivery/PricingModel.astro';
 import VideoShowcase from '../components/delivery/VideoShowcase.astro';
 import PDFViewer from '../components/delivery/PDFViewer.astro';
 import PasscodeLock from '../components/delivery/PasscodeLock.astro';
+import FAQ from '../components/delivery/FAQ.astro';
 ---
 
 <Layout title="企业的 AI 技能递送者 | duyou.me · 行业领先的企业信息 AI 化方案">
@@ -37,7 +38,7 @@ import PasscodeLock from '../components/delivery/PasscodeLock.astro';
           </h2>
           <div class="h-1 w-16 bg-gold mx-auto mb-8"></div>
           <p class="text-gray-400 max-w-2xl mx-auto">
-            基于微软官方预览服务，为您原汁原味呈现业务架构。
+            基于微软官方预览服务，为您原汁原味呈现业务架构预演。
           </p>
         </div>
 
@@ -70,14 +71,17 @@ import PasscodeLock from '../components/delivery/PasscodeLock.astro';
     <!-- Pricing / Business Model -->
     <PricingModel />
 
+    <!-- FAQ Section -->
+    <FAQ />
+
     <!-- Final CTA -->
     <section class="py-32 px-4 relative overflow-hidden bg-gradient-to-b from-dark to-[#0a0a0a]">
       <div class="max-w-4xl mx-auto text-center relative z-10">
         <h2 class="text-3xl md:text-5xl font-bold text-white mb-8">
-          准备好开启您的 <br/><span class="text-gold italic">AI 转型之旅了吗？</span>
+          与其追逐虚幻的 AI 概念 <br/><span class="text-gold italic">不如交付可以跑通的流程</span>
         </h2>
         <p class="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
-          无论是遗留系统改造、还是专业软件深度适配，我们都准备好为您交付“确定性”的 AI 生产力。
+          无论是遗留系统改造、还是专业软件深度适配，我们只讲<b>工程落地与确定性产出</b>。
         </p>
         <div class="flex justify-center flex-wrap gap-6">
           <a href="mailto:xie.james@hotmail.com" class="px-12 py-5 bg-gold text-dark font-black tracking-widest text-lg hover:scale-105 transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)]">

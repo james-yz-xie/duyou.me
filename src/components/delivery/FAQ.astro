@@ -1,0 +1,54 @@
+---
+const faqs = [
+  {
+    question: "你们支持哪些“旧系统”？一定要有 API 吗？",
+    answer: "完全不需要 API。我们的核心优势就是处理“无接口”系统。支持包括：10 年前的内网 OA/ERP、专业行业平台（如 1688、货运系统）、桌面客户端（如金蝶、用友、CAD）、以及各类医疗/物流专用终端。"
+  },
+  {
+    question: "项目实施费为什么要几万块？投入产出比如何？",
+    answer: "相比招聘一名初级文员（年薪约 6-8 万），我们的适配器是一次性投入、长期受益。更重要的是项目运行过程中 **Token 消耗几乎为零**。相比按量计费的 SaaS 系统，这种“买断+少量维护”模式更符合传统企业的成本预期。"
+  },
+  {
+    question: "万一 AI 操作失误搞乱了数据怎么办？有安全保障吗？",
+    answer: "我们提供的是“确定性能力”而非“聊天机器人”。系统通过验证套件确保输出标准（如 JSON/Excel）。安全方面：无需交出账号密码（复用现有登录态），所有数据处理均在您的内网服务器（私有算力）完成。且我们建议先从“只读”适配器开始灰度测试。"
+  },
+  {
+    question: "如果我们的系统 UI 改版了，适配器会失效吗？",
+    answer: "我们会提供年度维护服务（约项目总额 15-20%）。得益于我们的底层框架，当 UI 发生重大变更时，只需运行 `refine` 命令即可快速修复适配器，确保业务几乎无中断。"
+  }
+];
+---
+
+<section id="faq" class="bg-black/20 py-24 px-4 border-t border-white/5">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+        常见<span class="text-gold">疑问</span>解答
+      </h2>
+      <div class="h-1 w-16 bg-gold mx-auto"></div>
+    </div>
+
+    <div class="space-y-6">
+      {faqs.map((faq) => (
+        <div class="group p-8 rounded-2xl border border-white/10 bg-white/5 hover:border-gold/30 transition-all duration-300">
+          <h3 class="text-xl font-bold text-white mb-4 flex items-start gap-4">
+            <span class="text-gold mt-1">Q:</span>
+            {faq.question}
+          </h3>
+          <div class="flex items-start gap-4">
+            <span class="text-gray-600 font-bold mt-1 text-sm">A:</span>
+            <p class="text-gray-400 leading-relaxed text-sm">
+              {faq.answer}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-16 p-8 rounded-2xl bg-gold/5 border border-gold/10 text-center">
+      <p class="text-gray-300 italic">
+        “我们不卖‘虚幻的 AI’，我们卖的是一套<b>不需要额外雇人也能跑通的自动化流程</b>。”
+      </p>
+    </div>
+  </div>
+</section>
