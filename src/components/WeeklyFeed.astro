@@ -1,83 +1,105 @@
 ---
+const highlights = [
+  {
+    title: {
+      zh: '智能体基建窗口已开：四大巨头同步铺路',
+      en: 'The Agent Infrastructure Window Is Open: Four Giants Lay Track at Once'
+    },
+    date: {
+      zh: '2026年4月7日',
+      en: 'April 7, 2026'
+    },
+    summary: {
+      zh: 'Google 强化预测，OpenAI 推进代码生成，Anthropic 强调基础设施级安全，Microsoft 则把企业级 Agent 服务正式推向商用。基础设施层已经成型，应用层机会开始释放。',
+      en: 'Google pushed forecasting, OpenAI advanced code generation, Anthropic reinforced infrastructure-grade safety, and Microsoft took enterprise agent services into GA. The infrastructure layer is maturing, and the application window is opening.'
+    },
+    links: [
+      { label: 'Google →', href: 'http://blog.research.google/2024/03/autobnn-probabilistic-time-series.html' },
+      { label: 'OpenAI →', href: 'https://openai.com/index/gpt-5-3' },
+      { label: 'Anthropic →', href: 'https://anthropic.com/claude-4' },
+      { label: 'Microsoft →', href: 'https://azure.microsoft.com/ai-agents' }
+    ]
+  },
+  {
+    title: {
+      zh: 'SIEVE：让自然语言真正成为参数化学习信号',
+      en: 'SIEVE: Turning Natural Language into a Practical Signal for Parametric Learning'
+    },
+    date: {
+      zh: '2026年4月7日',
+      en: 'April 7, 2026'
+    },
+    summary: {
+      zh: '这篇论文强调指令、知识与反馈本身就是高价值训练信号。对 Agent 来说，未来的竞争点不只是模型规模，而是如何把上下文转化成更高效的学习闭环。',
+      en: 'This paper argues that instructions, knowledge, and feedback are high-value learning signals in their own right. For agents, the next edge may come less from model scale and more from converting context into tighter learning loops.'
+    },
+    links: [
+      { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.02339' }
+    ]
+  },
+  {
+    title: {
+      zh: '单 Agent 推理反超多 Agent：多跳任务上的一次反直觉提醒',
+      en: 'Single-Agent Reasoning Beats Multi-Agent Systems: A Useful Correction on Multi-Hop Tasks'
+    },
+    date: {
+      zh: '2026年4月7日',
+      en: 'April 7, 2026'
+    },
+    summary: {
+      zh: '在相同思考 token 预算下，单 Agent LLM 在多跳推理任务上优于多 Agent 系统。它提醒我们：系统编排的复杂度，并不天然等于更好的推理质量。',
+      en: 'Under equal thinking-token budgets, a single-agent LLM outperforms multi-agent systems on multi-hop reasoning. It is a useful reminder that orchestration complexity does not automatically translate into better reasoning.'
+    },
+    links: [
+      { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.02460' }
+    ]
+  },
+  {
+    title: {
+      zh: 'LangChain + MongoDB：可信数据库正在成为 Agent 默认底座',
+      en: 'LangChain + MongoDB: Trusted Databases Are Becoming the Default Agent Substrate'
+    },
+    date: {
+      zh: '2026年4月7日',
+      en: 'April 7, 2026'
+    },
+    summary: {
+      zh: '向量搜索、持久记忆、自然语言查询与可观测性被一体化打包，说明 Agent 技术栈正在从“拼装”走向“产品化底座”。',
+      en: 'Vector search, persistent memory, natural-language querying, and observability are being packaged together, showing how the agent stack is moving from assembly work to a more productized foundation.'
+    },
+    links: [
+      { label: 'LangChain →', href: 'https://blog.langchain.com/announcing-the-langchain-mongodb-partnership-the-ai-agent-stack-that-runs-on-the-database-you-already-trust/' }
+    ]
+  }
+];
 ---
 
 <section id="feed" class="bg-dark px-4 py-20 border-t border-gold/10">
   <div class="max-w-5xl mx-auto">
-    <!-- 中文内容 -->
     <div class="lang-zh">
       <h2 class="text-4xl font-bold text-center mb-4 text-white">
         AI 前沿<span class="text-gold">周报</span>
       </h2>
-      <p class="text-center text-gray-600 text-sm mb-4">最后更新：2026年4月12日</p>
+      <p class="text-center text-gray-600 text-sm mb-4">最后更新：2026年4月7日</p>
       <div class="h-1 w-16 bg-gold mx-auto mb-16"></div>
 
       <div class="space-y-6">
-        <!-- 周报项 1 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              智能体基建元年：四大巨头同时出手
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026年4月7日</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            Google AutoBNN 强化预测、OpenAI Codex 搞定代码生成、Anthropic Claude 4 定义安全边界、Microsoft Azure AI Agent Service 正式商用。基础设施已铺好，应用层窗口期正在打开。
-          </p>
-          <div class="flex gap-4">
-            <a href="https://blog.research.google/2024/03/autobnn-probabilistic-time-series.html" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Google →</a>
-            <a href="https://openai.com/index/gpt-5-3" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">OpenAI →</a>
-            <a href="https://anthropic.com/claude-4" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Anthropic →</a>
-            <a href="https://azure.microsoft.com/ai-agents" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Microsoft →</a>
-          </div>
-        </article>
-
-        <!-- 周报项 2 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              AI 正在阉割谁的技能？Anthropic 实验揭示的真相
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026年4月3日</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            Anthropic 研究发现：使用 AI 编程的开发者理解测试得分低 17%。"认知卸载"会阻碍技能形成，但"认知辅助"不会。关键在于你是让 AI 代写，还是追问为什么。
-          </p>
-          <div class="flex gap-4">
-            <a href="https://www.anthropic.com/research/AI-assistance-coding-skills" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">原文 →</a>
-            <a href="https://arxiv.org/abs/2601.20245" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">arXiv →</a>
-          </div>
-        </article>
-
-        <!-- 周报项 3 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              模型战争白热化：GPT-5.4、Claude 4.6、Gemini 3 同台竞技
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026年3月17日</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            四大巨头两周内密集发布旗舰模型。OpenAI 推出 Pro 和 Thinking 双版本，Anthropic 战略转向知识工作，Google 原生多模态架构。DeepSeek V4 开源挑战者备受期待。
-          </p>
-          <div class="flex gap-4">
-            <a href="https://deepmind.google/models/gemini/" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Gemini →</a>
-            <a href="https://ai2.work/blog/deepseek-v4-china-s-trillion-parameter-multimodal-ai-rival-in-2026" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">DeepSeek →</a>
-          </div>
-        </article>
-
-        <!-- 周报项 4 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              LangChain + MongoDB：可信数据库上的 AI Agent 栈
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026年4月7日</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            在 MongoDB Atlas 上构建生产级 AI Agent——内置向量搜索、持久记忆、自然语言查询和端到端可观测性。
-          </p>
-          <a href="https://blog.langchain.com/announcing-the-langchain-mongodb-partnership-the-ai-agent-stack-that-runs-on-the-database-you-already-trust/" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">LangChain →</a>
-        </article>
+        {highlights.map((item) => (
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                {item.title.zh}
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">{item.date.zh}</span>
+            </div>
+            <p class="text-gray-400 mb-3">{item.summary.zh}</p>
+            <div class="flex flex-wrap gap-4">
+              {item.links.map((link) => (
+                <a href={link.href} target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">{link.label}</a>
+              ))}
+            </div>
+          </article>
+        ))}
       </div>
 
       <div class="text-center mt-12">
@@ -87,81 +109,30 @@
       </div>
     </div>
     
-    <!-- 英文内容 -->
     <div class="lang-en hidden">
       <h2 class="text-4xl font-bold text-center mb-4 text-white">
         AI Frontiers <span class="text-gold">Weekly</span>
       </h2>
-      <p class="text-center text-gray-600 text-sm mb-4">Last updated: April 12, 2026</p>
+      <p class="text-center text-gray-600 text-sm mb-4">Last updated: April 7, 2026</p>
       <div class="h-1 w-16 bg-gold mx-auto mb-16"></div>
 
       <div class="space-y-6">
-        <!-- 周报项 1 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              Agent Infrastructure Year: Four Giants Move Simultaneously
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">April 7, 2026</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            Google AutoBNN enhances prediction, OpenAI Codex handles code generation, Anthropic Claude 4 defines security boundaries, Microsoft Azure AI Agent Service goes commercial. Infrastructure is ready, application layer window is opening.
-          </p>
-          <div class="flex gap-4">
-            <a href="https://blog.research.google/2024/03/autobnn-probabilistic-time-series.html" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Google →</a>
-            <a href="https://openai.com/index/gpt-5-3" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">OpenAI →</a>
-            <a href="https://anthropic.com/claude-4" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Anthropic →</a>
-            <a href="https://azure.microsoft.com/ai-agents" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Microsoft →</a>
-          </div>
-        </article>
-
-        <!-- 周报项 2 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              Whose Skills is AI Castrating? The Truth Revealed by Anthropic's Experiment
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">April 3, 2026</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            Anthropic research found: Developers using AI for programming scored 17% lower on understanding tests. "Cognitive offloading" hinders skill formation, but "cognitive assistance" does not. The key is whether you let AI write for you or ask why.
-          </p>
-          <div class="flex gap-4">
-            <a href="https://www.anthropic.com/research/AI-assistance-coding-skills" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Original →</a>
-            <a href="https://arxiv.org/abs/2601.20245" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">arXiv →</a>
-          </div>
-        </article>
-
-        <!-- 周报项 3 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              Model War Heats Up: GPT-5.4, Claude 4.6, Gemini 3 Compete
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">March 17, 2026</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            Four giants released flagship models密集 within two weeks. OpenAI launched Pro and Thinking dual versions, Anthropic shifted strategy to knowledge work, Google built native multimodal architecture. DeepSeek V4 open-source challenger is highly anticipated.
-          </p>
-          <div class="flex gap-4">
-            <a href="https://deepmind.google/models/gemini/" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Gemini →</a>
-            <a href="https://ai2.work/blog/deepseek-v4-china-s-trillion-parameter-multimodal-ai-rival-in-2026" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">DeepSeek →</a>
-          </div>
-        </article>
-
-        <!-- 周报项 4 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              LangChain + MongoDB: AI Agent Stack on Trusted Database
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">April 7, 2026</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            Building production-grade AI Agents on MongoDB Atlas—built-in vector search, persistent memory, natural language queries, and end-to-end observability.
-          </p>
-          <a href="https://blog.langchain.com/announcing-the-langchain-mongodb-partnership-the-ai-agent-stack-that-runs-on-the-database-you-already-trust/" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">LangChain →</a>
-        </article>
+        {highlights.map((item) => (
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                {item.title.en}
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">{item.date.en}</span>
+            </div>
+            <p class="text-gray-400 mb-3">{item.summary.en}</p>
+            <div class="flex flex-wrap gap-4">
+              {item.links.map((link) => (
+                <a href={link.href} target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">{link.label}</a>
+              ))}
+            </div>
+          </article>
+        ))}
       </div>
 
       <div class="text-center mt-12">

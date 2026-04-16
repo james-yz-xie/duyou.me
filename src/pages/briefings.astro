@@ -1,6 +1,134 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+
+const sections = [
+  {
+    icon: '🏛️',
+    title: {
+      zh: '工业界巨头',
+      en: 'Big Tech'
+    },
+    items: [
+      {
+        title: {
+          zh: 'AutoBNN：Google 继续补强可组合时间序列预测',
+          en: 'AutoBNN: Google Extends Compositional Time-Series Forecasting'
+        },
+        date: '2026-04-07',
+        summary: {
+          zh: 'Google 继续沿着“基础模型之外的基础设施”发力。AutoBNN 代表的是一类更可解释、更适合企业预测场景的概率建模能力。',
+          en: 'Google continues pushing on the infrastructure beneath foundation models. AutoBNN points toward more interpretable probabilistic forecasting that fits real enterprise prediction workflows.'
+        },
+        links: [
+          { label: 'Google →', href: 'http://blog.research.google/2024/03/autobnn-probabilistic-time-series.html' }
+        ]
+      },
+      {
+        title: {
+          zh: 'GPT-5.3 Codex：代码生成能力继续向工程化落地推进',
+          en: 'GPT-5.3 Codex: Code Generation Moves Closer to Engineering Deployment'
+        },
+        date: '2026-04-07',
+        summary: {
+          zh: '这次信号不只是“更会写代码”，而是系统卡片和安全评估一起出现，意味着 OpenAI 正把自主编码能力往可交付、可治理的方向推进。',
+          en: 'The signal is not just better code generation. The system card and safety framing suggest OpenAI is moving autonomous coding toward something deployable and governable.'
+        },
+        links: [
+          { label: 'OpenAI →', href: 'https://openai.com/index/gpt-5-3' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Claude 4 Opus：安全边界正在被重新定义为基础设施能力',
+          en: 'Claude 4 Opus: Safety Boundaries Are Becoming Infrastructure Capabilities'
+        },
+        date: '2026-04-07',
+        summary: {
+          zh: 'Anthropic 继续把安全、可控和基础设施管理绑定在一起。对企业来说，这意味着“可信 Agent”正在从口号变成采购条件。',
+          en: 'Anthropic keeps tying safety, control, and infrastructure management together. For enterprises, the trusted-agent story is becoming a procurement requirement rather than a slogan.'
+        },
+        links: [
+          { label: 'Anthropic →', href: 'https://anthropic.com/claude-4' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Azure AI Agent Service GA：微软开始收割企业 Agent 平台层',
+          en: 'Azure AI Agent Service GA: Microsoft Targets the Enterprise Agent Platform Layer'
+        },
+        date: '2026-04-07',
+        summary: {
+          zh: '从 Office 365 Copilot 到正式商用的 Agent Service，微软在把 Agent 变成企业 IT 的标准部件。谁掌握平台层，谁就更容易定义应用生态。',
+          en: 'From Office 365 Copilot to GA agent services, Microsoft is turning agents into standard enterprise IT components. Whoever controls the platform layer is best positioned to shape the application ecosystem.'
+        },
+        links: [
+          { label: 'Microsoft →', href: 'https://azure.microsoft.com/ai-agents' }
+        ]
+      }
+    ]
+  },
+  {
+    icon: '🎓',
+    title: {
+      zh: '学术界前沿',
+      en: 'Academia'
+    },
+    items: [
+      {
+        title: {
+          zh: 'SIEVE：自然语言上下文正在变成新的参数化学习接口',
+          en: 'SIEVE: Natural Language Context Is Becoming a New Interface for Parametric Learning'
+        },
+        date: '2026-04-07',
+        summary: {
+          zh: '这项工作指出，指令、知识和反馈本身就能成为强学习信号。对于 Agent 系统，这意味着“上下文工程”正在接近“学习工程”。',
+          en: 'This work shows that instructions, knowledge, and feedback can act as strong learning signals. For agent systems, context engineering is starting to converge with learning engineering.'
+        },
+        links: [
+          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.02339' }
+        ]
+      },
+      {
+        title: {
+          zh: '单 Agent 优于多 Agent：多跳推理中的复杂度反思',
+          en: 'Single Agent Beats Multi-Agent: A Complexity Check on Multi-Hop Reasoning'
+        },
+        date: '2026-04-07',
+        summary: {
+          zh: '在相同思考预算下，单 Agent LLM 在多跳推理中表现更优。这提醒我们，多 Agent 架构不能只追求“看起来更复杂”，还必须追问真实收益。',
+          en: 'With equal thinking budgets, a single-agent LLM performs better on multi-hop reasoning. It is a reminder that multi-agent architectures should be judged by real gains, not by surface complexity.'
+        },
+        links: [
+          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.02460' }
+        ]
+      }
+    ]
+  },
+  {
+    icon: '🔥',
+    title: {
+      zh: '社区与工程',
+      en: 'Community & Engineering'
+    },
+    items: [
+      {
+        title: {
+          zh: 'LangChain + MongoDB：数据库正在演化为 Agent 默认底座',
+          en: 'LangChain + MongoDB: Databases Are Evolving into the Default Agent Substrate'
+        },
+        date: '2026-04-07',
+        summary: {
+          zh: '向量搜索、持久记忆、自然语言查询和可观测性被统一打包，说明 Agent 技术栈正在摆脱零散拼装，开始形成更完整的平台底座。',
+          en: 'Vector search, persistent memory, natural-language querying, and observability are being bundled together, showing how the agent stack is moving beyond ad hoc assembly toward a fuller platform foundation.'
+        },
+        links: [
+          { label: 'LangChain →', href: 'https://blog.langchain.com/announcing-the-langchain-mongodb-partnership-the-ai-agent-stack-that-runs-on-the-database-you-already-trust/' }
+        ]
+      }
+    ]
+  }
+];
 ---
 
 <Layout titleZh="AI 前沿周报 | 谢灵江" titleEn="AI Frontier Weekly | James Xie" descriptionZh="AI 前沿周报，汇总大厂动态、学术进展与社区工程趋势。" descriptionEn="An AI frontier weekly covering big tech moves, academic progress, and community engineering trends." ogImage="/og-briefings.svg">
@@ -11,267 +139,61 @@ import Footer from '../components/Footer.astro';
         <span class="lang-en hidden">AI Frontier <span class="text-gold">Weekly</span></span>
       </h1>
       <p class="text-center text-gray-400 mb-12">
-        <span class="lang-zh">来自 Scout Agent 的每日深度情报精选</span>
-        <span class="lang-en hidden">Daily deep intelligence selection from Scout Agent</span>
+        <span class="lang-zh">来自 Scout Agent 的最新外部情报精选</span>
+        <span class="lang-en hidden">A curated digest of the latest external signals gathered by Scout Agent</span>
       </p>
       <p class="text-center text-gray-600 text-sm mb-4">
-        <span class="lang-zh">最后更新：2026年4月12日</span>
-        <span class="lang-en hidden">Last updated: April 12, 2026</span>
+        <span class="lang-zh">最后更新：2026年4月7日</span>
+        <span class="lang-en hidden">Last updated: April 7, 2026</span>
       </p>
       <div class="h-1 w-16 bg-gold mx-auto mb-16"></div>
 
-      <!-- 工业界巨头 -->
-      <div class="mb-16">
-        <h2 class="text-2xl font-bold text-gold mb-8 flex items-center">
-          <span class="mr-3">🏛️</span>
-          <span class="lang-zh">工业界巨头</span>
-          <span class="lang-en hidden">Big Tech</span>
+      <div class="mb-16 p-8 bg-gold/5 border border-gold/30 rounded-lg">
+        <h2 class="text-2xl font-bold text-gold mb-4 flex items-center">
+          <span class="mr-3">🧠</span>
+          <span class="lang-zh">首要信号</span>
+          <span class="lang-en hidden">Executive Summary</span>
         </h2>
-        <div class="space-y-6">
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">智能体基建元年：四大巨头同时出手</span>
-                <span class="lang-en hidden">Year One of Agent Infrastructure: Four Giants Strike Simultaneously</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-07</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">Google AutoBNN 强化预测、OpenAI Codex 搞定代码生成、Anthropic Claude 4 定义安全边界、Microsoft Azure AI Agent Service 正式商用。基础设施已铺好，应用层窗口期正在打开。</span>
-              <span class="lang-en hidden">Google AutoBNN for enhanced prediction, OpenAI Codex for code generation, Anthropic Claude 4 for safety boundaries, and Microsoft Azure AI Agent Service for commercial use. The infrastructure is ready; the application window is opening.</span>
-            </p>
-            <div class="flex flex-wrap gap-4">
-              <a href="http://blog.research.google/2024/03/autobnn-probabilistic-time-series.html" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Google →</a>
-              <a href="https://openai.com/index/gpt-5-3" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">OpenAI →</a>
-              <a href="https://anthropic.com/claude-4" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Anthropic →</a>
-              <a href="https://azure.microsoft.com/ai-agents" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Microsoft →</a>
-            </div>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">GPT-5.4 发布：Pro 与 Thinking 双版本齐发</span>
-                <span class="lang-en hidden">GPT-5.4 Released: Pro and Thinking Versions Launched Simultaneously</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">OpenAI 发布 GPT-5.4，定位为"专业工作最高效的前沿模型"，首次推出 Pro 版（更强推理）和 Thinking 版（深度思考模式）。</span>
-              <span class="lang-en hidden">OpenAI releases GPT-5.4, positioned as the "most efficient frontier model for professional work," introducing Pro (stronger reasoning) and Thinking (deep thought mode) versions for the first time.</span>
-            </p>
-            <a href="https://techcrunch.com/2026/03/05/openai-launches-gpt-5-4-with-pro-and-thinking-versions/" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">TechCrunch →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">Claude Opus 4.6：从"最佳编程助手"转向"知识工作者默认 AI 层"</span>
-                <span class="lang-en hidden">Claude Opus 4.6: Shifting from "Best Coding Assistant" to "Default AI Layer for Knowledge Workers"</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">Anthropic 战略转向：不再只盯着开发者，而是瞄准 docs、spreadsheets、presentations 等企业级知识工作。支持 100 万 token 上下文（Beta），引入 Agent Teams 并行任务机制。</span>
-              <span class="lang-en hidden">Anthropic's strategic shift: no longer just for developers, but targeting enterprise knowledge work like docs, spreadsheets, and presentations. Supports 1M token context (Beta), introduces Agent Teams parallel task mechanism.</span>
-            </p>
-            <a href="https://www.abzglobal.net/web-development-blog/claude-opus-46-is-here-anthropics-knowledge-work-pivot-and-why-it-matters" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">
-              <span class="lang-zh">详解 →</span>
-              <span class="lang-en hidden">Details →</span>
-            </a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">Gemini 3 系列发布：原生多模态 + 智能体原生架构</span>
-                <span class="lang-en hidden">Gemini 3 Series Released: Native Multimodal + Agent-Native Architecture</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">Google 最智能的模型，具备 state-of-the-art 推理能力，支持智能体工具调用和超长上下文。</span>
-              <span class="lang-en hidden">Google's smartest model, featuring state-of-the-art reasoning, supporting agent tool calls and ultra-long context.</span>
-            </p>
-            <a href="https://deepmind.google/models/gemini/" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">DeepMind →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">DeepSeek V4：中国万亿参数多模态挑战者</span>
-                <span class="lang-en hidden">DeepSeek V4: China's Trillion-Parameter Multimodal Challenger</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">DeepSeek 市场份额从 2025 年 1 月的 1% 增长到 2026 年 1 月的 15%，堪称 AI 史上最快采用曲线。开源社区高度期待其 V4 发布。</span>
-              <span class="lang-en hidden">DeepSeek's market share grew from 1% in Jan 2025 to 15% in Jan 2026, one of the fastest adoption curves in AI history. The open-source community highly anticipates the V4 release.</span>
-            </p>
-            <a href="https://ai2.work/blog/deepseek-v4-china-s-trillion-parameter-multimodal-ai-rival-in-2026" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">AI2 Work →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">Anthropic vs 美国国防部：AI 军事化的边界之争</span>
-                <span class="lang-en hidden">Anthropic vs US DoD: The Battle over AI Militarization Boundaries</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">Anthropic 被列为"供应链风险"后提起诉讼，OpenAI 和 Google 员工联合声援。这场争议可能引发 AI 行业对军事应用的全面反思。</span>
-              <span class="lang-en hidden">Anthropic filed a lawsuit after being listed as a "supply chain risk," with OpenAI and Google employees joint support. This controversy may trigger a comprehensive reflection on military applications in the AI industry.</span>
-            </p>
-            <a href="https://www.technologyreview.com/2026/03/02/1133850/openais-compromise-with-the-pentagon-is-what-anthropic-feared/" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">MIT Tech Review →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">Claude 4.6 Memory 发布：AI 的"白板问题"终于解决</span>
-                <span class="lang-en hidden">Claude 4.6 Memory Released: AI's "Blank Slate Problem" Finally Solved</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">Anthropic 推出持久化记忆层，跨会话理解你的工作上下文。这对于一人公司的"数字员工"建设意义重大。</span>
-              <span class="lang-en hidden">Anthropic introduces a persistent memory layer for cross-session understanding of your work context. This is significant for building "digital employees" for solopreneurs.</span>
-            </p>
-            <a href="https://dev.to/evan-dong/claude-46-memory-is-here-why-im-finally-migrating-my-ai-workflow-133j" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">DEV →</a>
-          </article>
+        <div class="text-gray-300 space-y-4 leading-relaxed">
+          <p>
+            <span class="lang-zh">今天最强的信号集中在<strong class="text-white">智能体基建</strong>。Google、OpenAI、Anthropic 和 Microsoft 同时在预测、编码、安全与企业平台层加码，说明应用层创业者最该盯的，不再只是模型，而是围绕这些基建做组合创新与垂直落地。</span>
+            <span class="lang-en hidden">The strongest signal this cycle is <strong class="text-white">agent infrastructure</strong>. Google, OpenAI, Anthropic, and Microsoft are all investing across forecasting, coding, safety, and enterprise platforms, suggesting that the next application opportunities will come from combination innovation and vertical execution on top of these layers.</span>
+          </p>
         </div>
       </div>
 
-      <!-- 学术界前沿 -->
-      <div class="mb-16">
-        <h2 class="text-2xl font-bold text-gold mb-8 flex items-center">
-          <span class="mr-3">🎓</span>
-          <span class="lang-zh">学术界前沿</span>
-          <span class="lang-en hidden">Academia</span>
-        </h2>
-        <div class="space-y-6">
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">AI 正在阉割谁的技能？Anthropic 实验揭示的真相</span>
-                <span class="lang-en hidden">Whose Skills is AI Emasculating? Truth Revealed by Anthropic Experiments</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-03</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">Anthropic 研究发现：使用 AI 编程的开发者理解测试得分低 17%。"认知卸载"会阻碍技能形成，但"认知辅助"不会。关键在于你是让 AI 代写，还是追问为什么。</span>
-              <span class="lang-en hidden">Anthropic study found: developers using AI for coding scored 17% lower on understanding tests. "Cognitive offloading" hinders skill formation, but "cognitive assistance" does not. The key is whether you let AI ghostwrite or ask why.</span>
-            </p>
-            <div class="flex flex-wrap gap-4">
-              <a href="https://www.anthropic.com/research/AI-assistance-coding-skills" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">Anthropic →</a>
-              <a href="https://arxiv.org/abs/2601.20245" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">arXiv →</a>
-            </div>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">SIEVE：从自然语言中进行样本高效的参数化学习</span>
-                <span class="lang-en hidden">SIEVE: Sample-Efficient Parameterized Learning from Natural Language</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-07</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">自然语言上下文（如指令、知识或反馈）包含丰富的适应信号。提出了一种新的参数化学习方法。</span>
-              <span class="lang-en hidden">Natural language context (e.g., instructions, knowledge, or feedback) contains rich adaptation signals. A new parameterized learning method is proposed.</span>
-            </p>
-            <a href="https://arxiv.org/abs/2604.02339" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">arXiv →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">单 Agent LLM 在多跳推理上优于多 Agent 系统</span>
-                <span class="lang-en hidden">Single-Agent LLM Outperforms Multi-Agent Systems on Multi-Hop Reasoning</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-07</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">在等思考 Token 预算下，单 Agent LLM 在多跳推理任务上表现优于多 Agent 系统。挑战了多 Agent 系统的优势假设。</span>
-              <span class="lang-en hidden">Given the same thinking token budget, a single-agent LLM performs better than multi-agent systems on multi-hop reasoning tasks. Challenges the assumption of multi-agent superiority.</span>
-            </p>
-            <a href="https://arxiv.org/abs/2604.02460" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">arXiv →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">2026 年 3 月 AI 论文提交量达 1936 篇</span>
-                <span class="lang-en hidden">AI Paper Submissions Reached 1936 in March 2026</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">单月近 2000 篇 AI 论文，学术界的"大模型军备竞赛"同样白热化。</span>
-              <span class="lang-en hidden">Nearly 2,000 AI papers in a single month; the "model arms race" in academia is equally intense.</span>
-            </p>
-            <a href="https://arxiv.org/list/cs.AI/current" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">arXiv AI →</a>
-          </article>
+      {sections.map((section) => (
+        <div class="mb-16">
+          <h2 class="text-2xl font-bold text-gold mb-8 flex items-center">
+            <span class="mr-3">{section.icon}</span>
+            <span class="lang-zh">{section.title.zh}</span>
+            <span class="lang-en hidden">{section.title.en}</span>
+          </h2>
+          <div class="space-y-6">
+            {section.items.map((item) => (
+              <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+                <div class="flex justify-between items-start mb-3">
+                  <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                    <span class="lang-zh">{item.title.zh}</span>
+                    <span class="lang-en hidden">{item.title.en}</span>
+                  </h3>
+                  <span class="text-sm text-gray-500 whitespace-nowrap ml-4">{item.date}</span>
+                </div>
+                <p class="text-gray-400 mb-3">
+                  <span class="lang-zh">{item.summary.zh}</span>
+                  <span class="lang-en hidden">{item.summary.en}</span>
+                </p>
+                <div class="flex flex-wrap gap-4">
+                  {item.links.map((link) => (
+                    <a href={link.href} target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">{link.label}</a>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
+      ))}
 
-      <!-- 社区与工程 -->
-      <div class="mb-16">
-        <h2 class="text-2xl font-bold text-gold mb-8 flex items-center">
-          <span class="mr-3">🔥</span>
-          <span class="lang-zh">社区与工程</span>
-          <span class="lang-en hidden">Community & Engineering</span>
-        </h2>
-        <div class="space-y-6">
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">MCP 协议：本地模型从"缸中之脑"到"系统之神"</span>
-                <span class="lang-en hidden">MCP Protocol: Local Models from "Brain in a Vat" to "God of Systems"</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-07</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">通过 MCP（Model Context Protocol），本地模型可以直接操纵浏览器、读取本地文件。它不再是孤岛，而是能主动"狩猎"数据的智能体。</span>
-              <span class="lang-en hidden">Through MCP (Model Context Protocol), local models can directly manipulate browsers and read local files. It's no longer an island but an agent that actively "hunts" for data.</span>
-            </p>
-            <a href="https://modelcontextprotocol.io/" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors"><span class="lang-zh">MCP 官网 →</span><span class="lang-en hidden">MCP Website →</span></a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">2026 年主流 AI Agent 框架对比：LangGraph vs CrewAI vs AutoGen</span>
-                <span class="lang-en hidden">Comparison of Mainstream AI Agent Frameworks in 2026: LangGraph vs CrewAI vs AutoGen</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-03-17</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">深入对比三大开源框架的架构设计、使用场景与性能表现。对于一人公司，选择正确的框架可能比选择模型更重要。</span>
-              <span class="lang-en hidden">Deep dive into the architecture design, use cases, and performance of three major open-source frameworks. For solopreneurs, choosing the right framework might be more important than choosing the model.</span>
-            </p>
-            <a href="https://freeaitool.com/ai-assistants/029-ai-agent-frameworks-comparison-2026/" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">FreeAITool →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-                <span class="lang-zh">LangChain + MongoDB Partnership：可信数据库上的 AI Agent 栈</span>
-                <span class="lang-en hidden">LangChain + MongoDB Partnership: AI Agent Stack on Trusted Databases</span>
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">2026-04-07</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              <span class="lang-zh">在 MongoDB Atlas 上构建生产级 AI Agent——内置向量搜索、持久记忆、自然语言查询和端到端可观测性。</span>
-              <span class="lang-en hidden">Build production-grade AI agents on MongoDB Atlas—featuring vector search, persistent memory, natural language querying, and end-to-end observability.</span>
-            </p>
-            <a href="https://blog.langchain.com/announcing-the-langchain-mongodb-partnership-the-ai-agent-stack-that-runs-on-the-database-you-already-trust/" target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">LangChain →</a>
-          </article>
-        </div>
-      </div>
-
-      <!-- 返回首页 -->
       <div class="text-center mt-12">
         <a href="/" class="inline-block px-8 py-3 border-2 border-gold text-gold hover:bg-gold hover:text-dark transition-all font-semibold">
           <span class="lang-zh">返回首页</span>

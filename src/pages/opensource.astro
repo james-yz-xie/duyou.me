@@ -4,28 +4,28 @@ import Footer from '../components/Footer.astro';
 
 const recommendations = [
   {
-    zh: '深耕特定领域 AI Agent 技能',
-    en: 'Go deep on domain-specific AI agent skills',
-    detailZh: '与其构建通用型 Agent，不如围绕具体行业或工作流打磨高价值、可复用的 Agent 技能。',
-    detailEn: 'Instead of building a generic agent, focus on reusable high-value skills for a specific industry or workflow.'
+    zh: '深耕 AI 开发工具链',
+    en: 'Go deeper on AI developer tooling',
+    detailZh: '围绕 LLM、Agent、成本治理、测试和可视化的工程链路，仍然有大量真实痛点待解。',
+    detailEn: 'There are still many unsolved pain points across the engineering path around LLMs, agents, cost control, testing, and visualization.'
   },
   {
-    zh: '探索“人格化”AI Agent',
-    en: 'Explore persona-driven AI agents',
-    detailZh: '把记忆、个性和行为模式组合起来，往往比单纯堆模型参数更能提升体验与留存。',
-    detailEn: 'Combining memory, personality, and behavior often improves user experience and retention more than scaling raw model power.'
+    zh: '关注小模型与边缘 AI',
+    en: 'Watch small models and edge AI',
+    detailZh: '像 MOSS-TTS-Nano 这样的 CPU 级模型说明，低成本部署能力本身就是产品机会。',
+    detailEn: 'CPU-class models like MOSS-TTS-Nano show that low-cost deployment is itself becoming a product opportunity.'
   },
   {
-    zh: '关注 Agent 框架与工具链',
-    en: 'Track agent frameworks and tooling',
-    detailZh: '利用 Hermes 等开源框架与相关监控管理工具，可以更快搭建可运行、可观测的 Agent 系统。',
-    detailEn: 'Open frameworks like Hermes and their surrounding observability tools can accelerate delivery of robust agent systems.'
+    zh: '用代理思维重写工作流',
+    en: 'Rewrite workflows with agent thinking',
+    detailZh: '从技能进化、自动评估到内容生产，AI 正在从单点工具走向流程级自动化。',
+    detailEn: 'From skill evolution and automated evaluation to content production, AI is shifting from isolated tools to workflow-level automation.'
   },
   {
-    zh: '拥抱多模态与模型微调',
-    en: 'Adopt multimodality and fine-tuning',
-    detailZh: '掌握多模态模型和本地微调能力，将显著增强 Agent 的感知和交互上限。',
-    detailEn: 'Mastering multimodal models and local fine-tuning expands the perception and interaction ceiling of your agents.'
+    zh: '别忽视基础开发者体验',
+    en: 'Do not ignore core developer experience',
+    detailZh: '终端、网络分析与轻量工具依旧能获得大量关注，说明开发者效率产品仍有广阔空间。',
+    detailEn: 'Terminal tools, network analysis, and lightweight utilities still attract strong attention, which means developer productivity products remain wide open.'
   }
 ];
 
@@ -33,135 +33,126 @@ const sections = [
   {
     icon: '🤖',
     title: {
-      zh: 'AI Agent 核心与生态',
-      en: 'AI Agent Core & Ecosystem'
+      zh: 'AI 开发与智能体',
+      en: 'AI Development & Agents'
     },
     items: [
       {
-        repo: 'xixu-me/awesome-persona-distill-skills',
-        stars: '3295',
+        repo: 'yizhiyanhua-ai/fireworks-tech-graph',
+        stars: '3074',
         summary: {
-          zh: '一个精选的 Agent 技能列表，聚焦人格、关系与方法论视角，对于构建具备情境感知和角色能力的 AI Agent 很有价值。',
-          en: 'A curated collection of agent skills centered on persona, relationships, and operating methodology for building context-aware AI agents.'
+          zh: 'Claude Code 技能，用于生成生产级 SVG + PNG 技术图表，直接提升了 AI 原生文档和架构表达能力。',
+          en: 'A Claude Code skill for generating production-grade SVG and PNG technical diagrams, directly improving AI-native documentation and architecture communication.'
         },
-        href: 'https://github.com/xixu-me/awesome-persona-distill-skills'
+        href: 'https://github.com/yizhiyanhua-ai/fireworks-tech-graph'
       },
       {
-        repo: 'alchaincyf/hermes-agent-orange-book',
-        stars: '1994',
+        repo: 'AgentSeal/codeburn',
+        stars: '1864',
         summary: {
-          zh: 'Nous Research 开源 Agent 框架 Hermes 的实战指南，从入门到深度开发都有覆盖。',
-          en: 'A practical guide to the open-source Hermes agent framework from Nous Research, covering everything from onboarding to advanced development.'
+          zh: '交互式 TUI 仪表板，用来追踪 AI 编码助手的 token 使用与成本，是 AI 开发成本治理的实用工具。',
+          en: 'An interactive TUI dashboard for tracking token usage and spend from AI coding assistants, making it a practical cost-governance tool for AI development.'
         },
-        href: 'https://github.com/alchaincyf/hermes-agent-orange-book'
+        href: 'https://github.com/AgentSeal/codeburn'
       },
       {
-        repo: 'KKKKhazix/khazix-skills',
-        stars: '1650',
+        repo: 'alchaincyf/darwin-skill',
+        stars: '866',
         summary: {
-          zh: '围绕数字角色与具体场景开源的一组 AI 技能集合，展示了如何把能力设计成可复用模块。',
-          en: 'An open set of AI skills built around digital personas and concrete scenarios, showing how capabilities can be packaged as reusable modules.'
+          zh: '一个让 Claude Code 技能通过评估、改进和测试持续进化的系统，体现了 Agent 自我优化的方向。',
+          en: 'A system that evolves Claude Code skills through evaluation, improvement, and testing, pointing toward self-optimizing agents.'
         },
-        href: 'https://github.com/KKKKhazix/khazix-skills'
+        href: 'https://github.com/alchaincyf/darwin-skill'
       },
       {
-        repo: 'adamlyttleapps/claude-skill-app-onboarding-questionnaire',
-        stars: '753',
+        repo: 'alchaincyf/obsidian-ai-orange-book',
+        stars: '638',
         summary: {
-          zh: '一个 Claude Code 技能，用于生成高转化的问卷式产品引导流程，体现了 AI 在增长策略中的落地价值。',
-          en: 'A Claude Code skill for building high-conversion questionnaire-based onboarding flows, showing a concrete AI use case in product growth.'
+          zh: '把 Obsidian 与 Claude Code 结合起来重塑第二大脑工作流，说明 AI 正在进入个人知识系统。',
+          en: 'Combines Obsidian with Claude Code to reshape the second-brain workflow, showing how AI is entering personal knowledge systems.'
         },
-        href: 'https://github.com/adamlyttleapps/claude-skill-app-onboarding-questionnaire'
+        href: 'https://github.com/alchaincyf/obsidian-ai-orange-book'
       },
       {
-        repo: 'tmstack/awesome-persona-skills',
-        stars: '682',
+        repo: 'AMAP-ML/SkillClaw',
+        stars: '625',
         summary: {
-          zh: '另一个高质量的人格技能列表，覆盖同事、老板、前任等角色，再次证明个性化 Agent 的需求正在扩大。',
-          en: 'Another strong collection of persona skills that spans roles like coworkers, bosses, and ex-partners, reinforcing demand for personalized agents.'
+          zh: '通过 Agentic Evolver 让 AI 技能进行集体进化，重点在于群体学习与协作式优化。',
+          en: 'Uses an Agentic Evolver to let AI skills improve collectively, with an emphasis on group learning and collaborative optimization.'
         },
-        href: 'https://github.com/tmstack/awesome-persona-skills'
-      },
-      {
-        repo: 'joeynyc/hermes-hudui',
-        stars: '607',
-        summary: {
-          zh: '为 Hermes 提供 Web UI 监控界面，有助于理解、调试和观察复杂 Agent 的长期行为。',
-          en: 'A Web UI monitor for Hermes that helps teams inspect, debug, and understand long-running agent behavior.'
-        },
-        href: 'https://github.com/joeynyc/hermes-hudui'
-      },
-      {
-        repo: 'alchaincyf/x-mentor-skill',
-        stars: '604',
-        summary: {
-          zh: '蒸馏顶级 X 创作者方法论的导师型技能，体现了 AI 在内容创作和策略辅导上的新机会。',
-          en: 'A mentor-style skill distilled from top X creators, illustrating new opportunities for AI in content strategy and coaching.'
-        },
-        href: 'https://github.com/alchaincyf/x-mentor-skill'
+        href: 'https://github.com/AMAP-ML/SkillClaw'
       }
     ]
   },
   {
     icon: '🧠',
     title: {
-      zh: '大模型与多模态技术',
-      en: 'LLM & Multimodal'
+      zh: 'AI 模型与应用',
+      en: 'AI Models & Applications'
     },
     items: [
       {
-        repo: 'mattmireles/gemma-tuner-multimodal',
-        stars: '1202',
+        repo: 'OpenMOSS/MOSS-TTS-Nano',
+        stars: '1067',
         summary: {
-          zh: '支持在 Apple Silicon 上使用 PyTorch 和 MPS 对 Gemma 系列进行音频、图像与文本的多模态微调，显示出本地高效 AI 开发的趋势。',
-          en: 'Supports multimodal fine-tuning of Gemma models on Apple Silicon with PyTorch and MPS, signaling the rise of efficient local AI development.'
+          zh: '仅 0.1B 参数的多语言语音模型，可在 CPU 上实时运行，为本地和轻量级语音产品打开了更低门槛。',
+          en: 'A 0.1B multilingual speech model that runs in real time on CPU, lowering the barrier for local and lightweight voice products.'
         },
-        href: 'https://github.com/mattmireles/gemma-tuner-multimodal'
+        href: 'https://github.com/OpenMOSS/MOSS-TTS-Nano'
+      },
+      {
+        repo: 'Mouseww/anything-analyzer',
+        stars: '815',
+        summary: {
+          zh: '结合浏览器与 AI，把网站或应用行为分析整理成更易读的文档，适合做产品理解和流程拆解。',
+          en: 'Combines browser automation and AI to turn website or app behavior into readable analysis documents, useful for product understanding and flow breakdowns.'
+        },
+        href: 'https://github.com/Mouseww/anything-analyzer'
+      },
+      {
+        repo: 'yaojingang/GEOFlow',
+        stars: '704',
+        summary: {
+          zh: '围绕地理内容生产构建的自动化系统，把 AI 任务、审核和发布流程串成一体。',
+          en: 'An automation system for geographic content production that links AI tasks, review flows, and publishing into a single pipeline.'
+        },
+        href: 'https://github.com/yaojingang/GEOFlow'
       }
     ]
   },
   {
     icon: '🛠️',
     title: {
-      zh: 'AI 驱动的开发者工具',
-      en: 'AI-Powered Dev Tools'
+      zh: '开发者效率工具',
+      en: 'Developer Productivity Tools'
     },
     items: [
       {
-        repo: 'yizhiyanhua-ai/fireworks-tech-graph',
-        stars: '1238',
+        repo: 'vyfor/rattles',
+        stars: '871',
         summary: {
-          zh: '一个 Claude Code 技能，能够生成生产级 SVG 和 PNG 技术图表，显著提升技术文档与方案表达效率。',
-          en: 'A Claude Code skill that generates production-quality SVG and PNG technical diagrams, greatly improving technical communication.'
+          zh: '为 Rust 应用提供轻量且美观的终端加载动画，典型的“小而精”开发者体验优化。',
+          en: 'Provides lightweight and polished terminal loading animations for Rust apps, a classic example of focused developer experience improvement.'
         },
-        href: 'https://github.com/yizhiyanhua-ai/fireworks-tech-graph'
+        href: 'https://github.com/vyfor/rattles'
       },
       {
-        repo: 'phuryn/claude-usage',
-        stars: '864',
+        repo: 'vercel-labs/wterm',
+        stars: '580',
         summary: {
-          zh: '本地仪表板，用于追踪 Claude Code 的令牌消耗、成本与会话历史，适合团队做 AI 成本治理。',
-          en: 'A local dashboard for tracking Claude Code usage, cost, and session history, useful for AI cost governance.'
+          zh: '一个基于 Web 的终端模拟器，适合远程演示、嵌入式环境和浏览器内命令行体验。',
+          en: 'A web-based terminal emulator suited for remote demos, embedded environments, and browser-native command-line experiences.'
         },
-        href: 'https://github.com/phuryn/claude-usage'
+        href: 'https://github.com/vercel-labs/wterm'
       },
       {
-        repo: 'QLHazyCoder/codex-oauth-automation-extension',
-        stars: '766',
+        repo: 'retlehs/quien',
+        stars: '560',
         summary: {
-          zh: '面向 OpenAI 生态工作流的浏览器自动化扩展，展示了围绕 AI 产品的辅助工具仍有很强需求。',
-          en: 'A browser automation extension for OpenAI ecosystem workflows, showing the continuing demand for operational tooling around AI products.'
+          zh: '一个更完整的 whois 和域名情报工具包，面向日常网络信息查询与运维分析。',
+          en: 'A more complete whois and domain-intelligence toolkit for everyday network lookups and operational analysis.'
         },
-        href: 'https://github.com/QLHazyCoder/codex-oauth-automation-extension'
-      },
-      {
-        repo: 'nashsu/llm_wiki',
-        stars: '763',
-        summary: {
-          zh: '一款跨平台桌面应用，可把文档组织成互联知识库，为 RAG 和持续知识维护提供了新的思路。',
-          en: 'A cross-platform desktop app that turns documents into an interconnected knowledge base, offering a practical angle on RAG and persistent knowledge maintenance.'
-        },
-        href: 'https://github.com/nashsu/llm_wiki'
+        href: 'https://github.com/retlehs/quien'
       }
     ]
   },
@@ -173,31 +164,40 @@ const sections = [
     },
     items: [
       {
-        repo: 'farzaa/clicky',
-        stars: '3842',
+        repo: 'sogonov/anubis',
+        stars: '632',
         summary: {
-          zh: '关注度极高，可能代表了某种创新的 Web 产品形态、游戏机制或前端实验，值得继续观察。',
-          en: 'A breakout project with strong attention, likely representing a fresh web product pattern, game mechanic, or frontend experiment worth watching.'
+          zh: '一个 Android 应用管理器，围绕连接状态和应用组管理提供更精细的控制能力。',
+          en: 'An Android app manager that provides more fine-grained control through connection-state and application-group management.'
         },
-        href: 'https://github.com/farzaa/clicky'
+        href: 'https://github.com/sogonov/anubis'
       },
       {
-        repo: 'wxtsky/CodeIsland',
-        stars: '853',
+        repo: 'patterniha/SNI-Spoofing',
+        stars: '609',
         summary: {
-          zh: '趋势项目，可能是新的代码学习平台、开发环境或技术沙箱，具备潜在教育和社区价值。',
-          en: 'A trending project that may point to a new code-learning platform, developer environment, or technical sandbox with community potential.'
+          zh: '一个围绕 TLS / SNI 行为与流量路径研究的低层网络实验项目，适合协议与网络环境研究场景。',
+          en: 'A low-level networking experiment around TLS / SNI behavior and traffic-path research, relevant to protocol and network-environment analysis.'
         },
-        href: 'https://github.com/wxtsky/CodeIsland'
+        href: 'https://github.com/patterniha/SNI-Spoofing'
       },
       {
-        repo: 'xtclovver/RKNHardering',
-        stars: '693',
+        repo: 'sterlingcrispin/nothing-ever-happens',
+        stars: '776',
         summary: {
-          zh: '可能与系统加固、软件强化或底层基础设施相关，值得在安全与工程交叉领域继续跟踪。',
-          en: 'Likely related to system hardening, software reinforcement, or low-level infrastructure, making it worth tracking at the intersection of security and engineering.'
+          zh: '一个自动参与预测市场的实验机器人，用戏谑方式表达对市场机制和叙事偏差的观察。',
+          en: 'An experimental prediction-market bot that uses satire to comment on market mechanics and narrative bias.'
         },
-        href: 'https://github.com/xtclovver/RKNHardering'
+        href: 'https://github.com/sterlingcrispin/nothing-ever-happens'
+      },
+      {
+        repo: 'andrewjiang/palantir-for-family-trips',
+        stars: '496',
+        summary: {
+          zh: '一个“Palantir 风格”的家庭旅行规划仪表板，把复杂协作型出行组织可视化。',
+          en: 'A “Palantir-style” family trip planning dashboard that visualizes complex collaborative travel coordination.'
+        },
+        href: 'https://github.com/andrewjiang/palantir-for-family-trips'
       }
     ]
   }
@@ -216,8 +216,8 @@ const sections = [
         <span class='lang-en hidden'>Promising open-source infrastructure projects tracked automatically by the GitHub Scout Agent</span>
       </p>
       <p class='text-center text-gray-600 text-sm mb-4'>
-        <span class='lang-zh'>最后更新：2026年4月12日</span>
-        <span class='lang-en hidden'>Last updated: Apr 12, 2026</span>
+        <span class='lang-zh'>最后更新：2026年4月16日</span>
+        <span class='lang-en hidden'>Last updated: Apr 16, 2026</span>
       </p>
       <div class='h-1 w-16 bg-emerald-400 mx-auto mb-16'></div>
 
@@ -229,8 +229,8 @@ const sections = [
         </h2>
         <div class='text-gray-300 space-y-4 leading-relaxed'>
           <p>
-            <span class='lang-zh'>本周 GitHub 趋势清晰表明，<strong class='text-white'>AI Agent 生态系统正在经历爆发式增长与专业化分层</strong>。技能、人格与任务编排，正在成为构建高效 Agent 的核心变量。与此同时，多模态微调、成本治理与知识库构建等配套能力，也在快速走向实用化。</span>
-            <span class='lang-en hidden'>This week on GitHub, one signal stands out clearly: <strong class='text-white'>the AI agent ecosystem is moving through explosive growth and rapid specialization</strong>. Skills, personas, and task orchestration are becoming core building blocks for effective agents. At the same time, multimodal fine-tuning, cost governance, and knowledge-base tooling are becoming increasingly practical.</span>
+            <span class='lang-zh'>本周 GitHub 热门项目最强的共识，是<strong class='text-white'>AI 正在深度融入开发流程</strong>。从图表生成、成本治理、技能优化，到轻量化语音模型和自动化工作流，开发者不再只是“调用模型”，而是在系统性重写自己的生产方式。</span>
+            <span class='lang-en hidden'>The clearest GitHub signal this cycle is that <strong class='text-white'>AI is moving deeper into the development workflow</strong>. From diagram generation and cost governance to skill optimization, lightweight speech models, and workflow automation, developers are no longer just calling models—they are rewriting how they work.</span>
           </p>
           <div class='mt-6 p-5 bg-dark/80 border-l-4 border-emerald-400 shadow-inner'>
             <h3 class='text-white font-bold mb-3'>

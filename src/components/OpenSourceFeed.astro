@@ -1,65 +1,76 @@
 ---
+const topProjects = [
+  {
+    icon: '🧠',
+    title: {
+      zh: 'fireworks-tech-graph：AI 文档与架构图表生成器',
+      en: 'fireworks-tech-graph: AI Diagram Generator for Docs and Architecture'
+    },
+    stars: '⭐ 3.1k',
+    summary: {
+      zh: '一个 Claude Code 技能，用于生成生产级 SVG+PNG 技术图表。它直指 AI 开发流程中的可视化表达痛点。',
+      en: 'A Claude Code skill for generating production-grade SVG and PNG technical diagrams, directly addressing visualization bottlenecks in AI-native workflows.'
+    },
+    href: 'https://github.com/yizhiyanhua-ai/fireworks-tech-graph'
+  },
+  {
+    icon: '🚀',
+    title: {
+      zh: 'codeburn：AI 编码成本追踪 TUI 仪表板',
+      en: 'codeburn: TUI Dashboard for AI Coding Cost Tracking'
+    },
+    stars: '⭐ 1.9k',
+    summary: {
+      zh: '通过交互式终端仪表板追踪 token 使用与成本，说明“AI 开发成本治理”正在成为新基础设施。',
+      en: 'An interactive terminal dashboard for tracking token usage and spend, showing how AI cost governance is becoming a new layer of infrastructure.'
+    },
+    href: 'https://github.com/AgentSeal/codeburn'
+  },
+  {
+    icon: '💡',
+    title: {
+      zh: 'MOSS-TTS-Nano：能跑在 CPU 上的轻量语音模型',
+      en: 'MOSS-TTS-Nano: A Lightweight Speech Model That Runs on CPU'
+    },
+    stars: '⭐ 1.1k',
+    summary: {
+      zh: '0.1B 参数的多语言语音生成模型，突出信号是“小模型 + 边缘部署”正在打开更低成本的 AI 产品形态。',
+      en: 'A 0.1B multilingual speech model whose real signal is the rise of small models and edge deployment as a lower-cost product path.'
+    },
+    href: 'https://github.com/OpenMOSS/MOSS-TTS-Nano'
+  }
+];
 ---
 
 <section id="opensource-feed" class="bg-dark px-4 py-20 border-t border-emerald-400/10">
   <div class="max-w-5xl mx-auto">
-    <!-- 中文内容 -->
     <div class="lang-zh">
       <h2 class="text-4xl font-bold text-center mb-4 text-white">
         开源<span class="text-emerald-400">热点周报</span>
       </h2>
       <p class="text-center text-gray-400 mb-4">由 GitHub Scout Agent 自动追踪的最具潜力的开源项目</p>
-      <p class="text-center text-gray-600 text-sm mb-4">最后更新：2026年4月12日</p>
-      <div class="h-1 w-16 bg-emerald-400 mx-auto mb-16"></div>
+      <p class="text-center text-gray-600 text-sm mb-4">最后更新：2026年4月16日</p>
+      <div class="h-1 w-16 bg-emerald-400 mx-auto mb-10"></div>
+
+      <div class="mb-12 p-6 bg-emerald-400/5 border border-emerald-400/25 rounded-lg text-gray-300 leading-relaxed">
+        本期最强信号是<strong class="text-white">AI 深度进入开发流程</strong>：从图表生成、成本追踪、技能进化到轻量级模型，开发者正在系统性地重写自己的工作流，而不仅仅是在“加一个聊天框”。
+      </div>
 
       <div class="space-y-6">
-        <!-- 开源项 1 -->
-        <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-              🧠 awesome-persona-distill-skills：AI Agent 人格化技能集合
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 3.3k</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            汇集了基于特定人物、关系和场景的 AI Agent 技能，展示了 AI Agent 人格化和情境化的巨大潜力。为特定行业开发高度专业化的 Agent 技能，是蓝海市场。
-          </p>
-          <div class="flex gap-4">
-            <a href="https://github.com/xixu-me/awesome-persona-distill-skills" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </div>
-        </article>
-
-        <!-- 开源项 2 -->
-        <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-              🚀 hermes-agent-orange-book：Hermes Agent 框架实战指南
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 2.0k</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            关于 Nous Research 开源 AI Agent 框架 Hermes 的实战指南，提供从入门到精通的 Agent 构建完整路径。
-          </p>
-          <div class="flex gap-4">
-            <a href="https://github.com/alchaincyf/hermes-agent-orange-book" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </div>
-        </article>
-
-        <!-- 开源项 3 -->
-        <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-              💡 gemma-tuner-multimodal：Apple Silicon 本地微调大模型
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 1.2k</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            在 Apple Silicon 上使用 PyTorch + Metal Performance Shaders 对 Gemma 4 模型进行多模态（音频/图像/文本）微调，大幅降低个人开发者进行大模型优化的门槛。
-          </p>
-          <div class="flex gap-4">
-            <a href="https://github.com/mattmireles/gemma-tuner-multimodal" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </div>
-        </article>
+        {topProjects.map((project) => (
+          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
+                {project.icon} {project.title.zh}
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">{project.stars}</span>
+            </div>
+            <p class="text-gray-400 mb-3">{project.summary.zh}</p>
+            <div class="flex gap-4">
+              <a href={project.href} target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
+            </div>
+          </article>
+        ))}
       </div>
 
       <div class="text-center mt-12">
@@ -69,63 +80,33 @@
       </div>
     </div>
     
-    <!-- 英文内容 -->
     <div class="lang-en hidden">
       <h2 class="text-4xl font-bold text-center mb-4 text-white">
         Open Source <span class="text-emerald-400">Hotspot Weekly</span>
       </h2>
-      <p class="text-center text-gray-400 mb-4">Most promising open source projects automatically tracked by GitHub Scout Agent</p>
-      <p class="text-center text-gray-600 text-sm mb-4">Last updated: April 12, 2026</p>
-      <div class="h-1 w-16 bg-emerald-400 mx-auto mb-16"></div>
+      <p class="text-center text-gray-400 mb-4">Most promising open-source projects automatically tracked by GitHub Scout Agent</p>
+      <p class="text-center text-gray-600 text-sm mb-4">Last updated: April 16, 2026</p>
+      <div class="h-1 w-16 bg-emerald-400 mx-auto mb-10"></div>
+
+      <div class="mb-12 p-6 bg-emerald-400/5 border border-emerald-400/25 rounded-lg text-gray-300 leading-relaxed">
+        The clearest signal this cycle is <strong class="text-white">AI moving deeper into the development workflow</strong>: from diagram generation and spend tracking to skill evolution and lightweight models, developers are rewriting how they work rather than merely adding a chat box.
+      </div>
 
       <div class="space-y-6">
-        <!-- 开源项 1 -->
-        <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-              🧠 awesome-persona-distill-skills: AI Agent Persona Skills Collection
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 3.3k</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            Collects AI Agent skills based on specific characters, relationships, and scenarios, demonstrating the huge potential of AI Agent personalization and contextualization. Developing highly specialized Agent skills for specific industries is a blue ocean market.
-          </p>
-          <div class="flex gap-4">
-            <a href="https://github.com/xixu-me/awesome-persona-distill-skills" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </div>
-        </article>
-
-        <!-- 开源项 2 -->
-        <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-              🚀 hermes-agent-orange-book: Hermes Agent Framework Practical Guide
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 2.0k</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            Practical guide for Nous Research's open source AI Agent framework Hermes, providing a complete path from beginner to expert in Agent building.
-          </p>
-          <div class="flex gap-4">
-            <a href="https://github.com/alchaincyf/hermes-agent-orange-book" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </div>
-        </article>
-
-        <!-- 开源项 3 -->
-        <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-              💡 gemma-tuner-multimodal: Apple Silicon Local LLM Fine-tuning
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 1.2k</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            Multi-modal (audio/image/text) fine-tuning of Gemma 4 models on Apple Silicon using PyTorch + Metal Performance Shaders, significantly lowering the barrier for individual developers to optimize large models.
-          </p>
-          <div class="flex gap-4">
-            <a href="https://github.com/mattmireles/gemma-tuner-multimodal" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </div>
-        </article>
+        {topProjects.map((project) => (
+          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
+                {project.icon} {project.title.en}
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">{project.stars}</span>
+            </div>
+            <p class="text-gray-400 mb-3">{project.summary.en}</p>
+            <div class="flex gap-4">
+              <a href={project.href} target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
+            </div>
+          </article>
+        ))}
       </div>
 
       <div class="text-center mt-12">
