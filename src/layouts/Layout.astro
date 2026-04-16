@@ -1,22 +1,115 @@
 ---
 import '../styles/global.css';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
 
 interface Props {
   title?: string;
+  titleZh?: string;
+  titleEn?: string;
+  description?: string;
+  descriptionZh?: string;
+  descriptionEn?: string;
 }
 
-const { title = '督友 - AI独立开发者' } = Astro.props;
+const { 
+  title,
+  titleZh = '督友 - AI独立开发者',
+  titleEn = 'DuYou - AI Indie Developer',
+  description,
+  descriptionZh = '一人公司展示墙 - eBay支付和AI专家，现为AI独立开发者，专注于督友项目',
+  descriptionEn = 'A solo builder showcase by James Xie, former eBay payments technical lead and AI indie developer focused on DuYou and enterprise AI delivery.'
+} = Astro.props;
+
+// If title is provided, use it for both for backward compatibility
+const finalTitleZh = title || titleZh;
+const finalTitleEn = titleEn || (title ? title.replace('James Xie | 独有·我', 'James Xie | Duyou·Me') : titleEn);
+const finalDescriptionZh = description || descriptionZh;
+const finalDescriptionEn = descriptionEn || (description ? description : descriptionEn);
+const siteUrl = 'https://duyou.me';
+const finalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const finalShareImage = `${siteUrl}/delivery_hero.png`;
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="一人公司展示墙 - eBay支付和AI专家，现为AI独立开发者，专注于督友项目" />
-    <title>{title}</title>
+    <meta name="description" data-zh={finalDescriptionZh} data-en={finalDescriptionEn} content={finalDescriptionZh} />
+    <link rel="canonical" href={finalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="duyou.me" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:url" content={finalUrl} />
+    <meta property="og:image" content={finalShareImage} />
+    <meta property="og:title" data-zh={finalTitleZh} data-en={finalTitleEn} content={finalTitleZh} />
+    <meta property="og:description" data-zh={finalDescriptionZh} data-en={finalDescriptionEn} content={finalDescriptionZh} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@amirightnowok" />
+    <meta name="twitter:creator" content="@amirightnowok" />
+    <meta name="twitter:image" content={finalShareImage} />
+    <meta name="twitter:title" data-zh={finalTitleZh} data-en={finalTitleEn} content={finalTitleZh} />
+    <meta name="twitter:description" data-zh={finalDescriptionZh} data-en={finalDescriptionEn} content={finalDescriptionZh} />
+    <title data-zh={finalTitleZh} data-en={finalTitleEn}>{finalTitleZh}</title>
   </head>
   <body class="bg-dark text-white">
+    <LanguageSwitcher />
     <slot />
+
+    <script is:inline>
+      // 核心语言切换逻辑
+      function updateLanguage() {
+        const lang = document.documentElement.lang;
+        
+        // 1. 更新内容显示
+        document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('hidden', lang !== 'zh'));
+        document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang !== 'en'));
+        
+        // 2. 更新页面标题
+        const titleEl = document.querySelector('title');
+        if (titleEl) {
+          const zh = titleEl.getAttribute('data-zh');
+          const en = titleEl.getAttribute('data-en');
+          if (zh && en) {
+            document.title = lang === 'zh' ? zh : en;
+          }
+        }
+
+        // 3. 更新 meta description
+        const descriptionEl = document.querySelector('meta[name="description"]');
+        if (descriptionEl) {
+          const zh = descriptionEl.getAttribute('data-zh');
+          const en = descriptionEl.getAttribute('data-en');
+          if (zh && en) {
+            descriptionEl.setAttribute('content', lang === 'zh' ? zh : en);
+          }
+        }
+
+        // 4. 更新 og / twitter 标题与描述
+        const metaPairs = [
+          'meta[property="og:title"]',
+          'meta[property="og:description"]',
+          'meta[name="twitter:title"]',
+          'meta[name="twitter:description"]'
+        ];
+
+        metaPairs.forEach((selector) => {
+          const el = document.querySelector(selector);
+          if (!el) return;
+          const zh = el.getAttribute('data-zh');
+          const en = el.getAttribute('data-en');
+          if (zh && en) {
+            el.setAttribute('content', lang === 'zh' ? zh : en);
+          }
+        });
+      }
+      
+      // 初始化执行一次
+      updateLanguage();
+      
+      // 监听全局语言变更事件
+      document.addEventListener('languageChanged', updateLanguage);
+    </script>
   </body>
 </html>

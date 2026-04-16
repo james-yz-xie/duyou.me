@@ -1,21 +1,48 @@
 ---
 const edges = [
   {
-    title: "Zero Token Runtime Cost",
-    label: "零运行成本",
-    description: "传统的 UI 模拟方案需要持续消耗大量 LLM Token 来理解界面，而我们的方案基于标准化 CLI。除了初次适配外，运行过程中的 Token 消耗几乎为零。",
+    title: {
+      zh: "零令牌运行成本",
+      en: "Zero Token Runtime Cost"
+    },
+    label: {
+      zh: "零运行成本",
+      en: "Zero Runtime Cost"
+    },
+    description: {
+      zh: "传统的 UI 模拟方案需要持续消耗大量 LLM Token 来理解界面，而我们的方案基于标准化 CLI。除了初次适配外，运行过程中的 Token 消耗几乎为零。",
+      en: "Traditional UI simulation requires massive token consumption. Our CLI-based solution has near-zero operational token costs after initial adaptation."
+    },
     icon: "💎"
   },
   {
-    title: "Deterministic & Reliable",
-    label: "确定性与可靠性",
-    description: "拒绝“一本正经胡说八道”。利用自研驱动引擎的确定性逻辑和验证套件，确保 AI 对专业软件的每一次调用都精准无误，满足金融级严苛要求。",
+    title: {
+      zh: "确定性与可靠性",
+      en: "Deterministic & Reliable"
+    },
+    label: {
+      zh: "确定性与可靠性",
+      en: "Deterministic & Reliable"
+    },
+    description: {
+      zh: "拒绝“一本正经胡说八道”。利用自研驱动引擎的确定性逻辑和验证套件，确保 AI 对专业软件的每一次调用都精准无误，满足金融级严苛要求。",
+      en: "Reject hallucinations. Our deterministic engine ensures every AI software call is precise and meets rigorous enterprise requirements."
+    },
     icon: "⚙️"
   },
   {
-    title: "Enterprise Compliance",
-    label: "企业级合规方案",
-    description: "通过浏览器原子化适配与私有部署，我们不依赖第三方不稳定的 API，且全流程支持本地化审计，确保企业核心数据资产的绝对主权。",
+    title: {
+      zh: "企业级合规",
+      en: "Enterprise Compliance"
+    },
+    label: {
+      zh: "企业级合规方案",
+      en: "Enterprise Compliance"
+    },
+    description: {
+      zh: "通过浏览器原子化适配与私有部署，我们不依赖第三方不稳定的 API，且全流程支持本地化审计，确保企业核心数据资产的绝对主权。",
+      en: "Private deployment and atomized adaptation ensure data sovereignty and local auditing without reliance on unstable third-party APIs."
+    },
     icon: "🏛️"
   }
 ];
@@ -26,26 +53,48 @@ const edges = [
     <div class="grid lg:grid-cols-2 gap-16 items-center">
       <div>
         <h2 class="text-3xl md:text-5xl font-bold text-white mb-8 leading-tight">
-          为什么选择我们作为您的 <br/>
-          <span class="text-gold italic">AI 连接伙伴？</span>
+          <div class="lang-zh">
+            为什么选择我们作为您的 <br/>
+            <span class="text-gold italic">AI 连接伙伴？</span>
+          </div>
+          <div class="lang-en hidden">
+            Why Choose Us as Your <br/>
+            <span class="text-gold italic">AI Connectivity Partner?</span>
+          </div>
         </h2>
         <div class="h-1 w-24 bg-gold mb-10"></div>
-        <p class="text-gray-400 text-lg mb-12">
-          在 AI 泡沫中，我们提供的是实打实的“工业级基建”。不是简单的咨询，而是让 AI 真正接管您的资产。
-        </p>
-        
+        <div class="lang-zh">
+          <p class="text-gray-400 text-lg mb-12">
+            在 AI 泡沫中，我们提供的是实打实的“工业级基建”。不是简单的咨询，而是让 AI 真正接管您的资产。
+          </p>
+        </div>
+        <div class="lang-en hidden">
+          <p class="text-gray-400 text-lg mb-12">
+            In the AI bubble, we provide solid "industrial-grade infrastructure." Not just consulting, but enabling AI to truly take over your assets.
+          </p>
+        </div>
+
         <div class="space-y-6">
           <div class="flex items-center gap-4 text-white">
             <div class="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center text-gold bg-gold/5 italic font-bold">01</div>
-            <span class="text-xl font-semibold">让 AI Agent 像资深员工一样操作软件</span>
+            <span class="text-xl font-semibold">
+              <span class="lang-zh">让 AI Agent 像资深员工一样操作软件</span>
+              <span class="lang-en hidden">Let AI Agents operate software like senior employees</span>
+            </span>
           </div>
           <div class="flex items-center gap-4 text-white">
             <div class="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center text-gold bg-gold/5 italic font-bold">02</div>
-            <span class="text-xl font-semibold">将 20 年遗留系统瞬间转为 AGI 接口</span>
+            <span class="text-xl font-semibold">
+              <span class="lang-zh">将 20 年遗留系统瞬间转为 AGI 接口</span>
+              <span class="lang-en hidden">Instantly turn 20-year legacy systems into AGI interfaces</span>
+            </span>
           </div>
           <div class="flex items-center gap-4 text-white">
             <div class="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center text-gold bg-gold/5 italic font-bold">03</div>
-            <span class="text-xl font-semibold">大幅降低生产环境的 AI 运行开支</span>
+            <span class="text-xl font-semibold">
+              <span class="lang-zh">大幅降低生产环境的 AI 运行开支</span>
+              <span class="lang-en hidden">Significantly reduce AI operational costs in production</span>
+            </span>
           </div>
         </div>
       </div>
@@ -56,9 +105,18 @@ const edges = [
             <div class="flex gap-6">
               <div class="text-3xl pt-1">{edge.icon}</div>
               <div>
-                <span class="text-[10px] uppercase tracking-widest text-gold/60 font-bold block mb-1">{edge.label}</span>
-                <h4 class="text-xl font-bold text-white mb-2">{edge.title}</h4>
-                <p class="text-gray-400 text-sm leading-relaxed">{edge.description}</p>
+                <span class="text-[10px] uppercase tracking-widest text-gold/60 font-bold block mb-1">
+                  <span class="lang-zh">{edge.label.zh}</span>
+                  <span class="lang-en hidden">{edge.label.en}</span>
+                </span>
+                <h4 class="text-xl font-bold text-white mb-2">
+                  <span class="lang-zh">{edge.title.zh}</span>
+                  <span class="lang-en hidden">{edge.title.en}</span>
+                </h4>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                  <span class="lang-zh">{edge.description.zh}</span>
+                  <span class="lang-en hidden">{edge.description.en}</span>
+                </p>
               </div>
             </div>
           </div>
@@ -70,3 +128,4 @@ const edges = [
   <!-- Decorative glow -->
   <div class="absolute right-0 bottom-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-[120px] -mr-64 -mb-64"></div>
 </section>
+

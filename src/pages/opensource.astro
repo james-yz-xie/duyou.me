@@ -1,274 +1,292 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+
+const recommendations = [
+  {
+    zh: '深耕特定领域 AI Agent 技能',
+    en: 'Go deep on domain-specific AI agent skills',
+    detailZh: '与其构建通用型 Agent，不如围绕具体行业或工作流打磨高价值、可复用的 Agent 技能。',
+    detailEn: 'Instead of building a generic agent, focus on reusable high-value skills for a specific industry or workflow.'
+  },
+  {
+    zh: '探索“人格化”AI Agent',
+    en: 'Explore persona-driven AI agents',
+    detailZh: '把记忆、个性和行为模式组合起来，往往比单纯堆模型参数更能提升体验与留存。',
+    detailEn: 'Combining memory, personality, and behavior often improves user experience and retention more than scaling raw model power.'
+  },
+  {
+    zh: '关注 Agent 框架与工具链',
+    en: 'Track agent frameworks and tooling',
+    detailZh: '利用 Hermes 等开源框架与相关监控管理工具，可以更快搭建可运行、可观测的 Agent 系统。',
+    detailEn: 'Open frameworks like Hermes and their surrounding observability tools can accelerate delivery of robust agent systems.'
+  },
+  {
+    zh: '拥抱多模态与模型微调',
+    en: 'Adopt multimodality and fine-tuning',
+    detailZh: '掌握多模态模型和本地微调能力，将显著增强 Agent 的感知和交互上限。',
+    detailEn: 'Mastering multimodal models and local fine-tuning expands the perception and interaction ceiling of your agents.'
+  }
+];
+
+const sections = [
+  {
+    icon: '🤖',
+    title: {
+      zh: 'AI Agent 核心与生态',
+      en: 'AI Agent Core & Ecosystem'
+    },
+    items: [
+      {
+        repo: 'xixu-me/awesome-persona-distill-skills',
+        stars: '3295',
+        summary: {
+          zh: '一个精选的 Agent 技能列表，聚焦人格、关系与方法论视角，对于构建具备情境感知和角色能力的 AI Agent 很有价值。',
+          en: 'A curated collection of agent skills centered on persona, relationships, and operating methodology for building context-aware AI agents.'
+        },
+        href: 'https://github.com/xixu-me/awesome-persona-distill-skills'
+      },
+      {
+        repo: 'alchaincyf/hermes-agent-orange-book',
+        stars: '1994',
+        summary: {
+          zh: 'Nous Research 开源 Agent 框架 Hermes 的实战指南，从入门到深度开发都有覆盖。',
+          en: 'A practical guide to the open-source Hermes agent framework from Nous Research, covering everything from onboarding to advanced development.'
+        },
+        href: 'https://github.com/alchaincyf/hermes-agent-orange-book'
+      },
+      {
+        repo: 'KKKKhazix/khazix-skills',
+        stars: '1650',
+        summary: {
+          zh: '围绕数字角色与具体场景开源的一组 AI 技能集合，展示了如何把能力设计成可复用模块。',
+          en: 'An open set of AI skills built around digital personas and concrete scenarios, showing how capabilities can be packaged as reusable modules.'
+        },
+        href: 'https://github.com/KKKKhazix/khazix-skills'
+      },
+      {
+        repo: 'adamlyttleapps/claude-skill-app-onboarding-questionnaire',
+        stars: '753',
+        summary: {
+          zh: '一个 Claude Code 技能，用于生成高转化的问卷式产品引导流程，体现了 AI 在增长策略中的落地价值。',
+          en: 'A Claude Code skill for building high-conversion questionnaire-based onboarding flows, showing a concrete AI use case in product growth.'
+        },
+        href: 'https://github.com/adamlyttleapps/claude-skill-app-onboarding-questionnaire'
+      },
+      {
+        repo: 'tmstack/awesome-persona-skills',
+        stars: '682',
+        summary: {
+          zh: '另一个高质量的人格技能列表，覆盖同事、老板、前任等角色，再次证明个性化 Agent 的需求正在扩大。',
+          en: 'Another strong collection of persona skills that spans roles like coworkers, bosses, and ex-partners, reinforcing demand for personalized agents.'
+        },
+        href: 'https://github.com/tmstack/awesome-persona-skills'
+      },
+      {
+        repo: 'joeynyc/hermes-hudui',
+        stars: '607',
+        summary: {
+          zh: '为 Hermes 提供 Web UI 监控界面，有助于理解、调试和观察复杂 Agent 的长期行为。',
+          en: 'A Web UI monitor for Hermes that helps teams inspect, debug, and understand long-running agent behavior.'
+        },
+        href: 'https://github.com/joeynyc/hermes-hudui'
+      },
+      {
+        repo: 'alchaincyf/x-mentor-skill',
+        stars: '604',
+        summary: {
+          zh: '蒸馏顶级 X 创作者方法论的导师型技能，体现了 AI 在内容创作和策略辅导上的新机会。',
+          en: 'A mentor-style skill distilled from top X creators, illustrating new opportunities for AI in content strategy and coaching.'
+        },
+        href: 'https://github.com/alchaincyf/x-mentor-skill'
+      }
+    ]
+  },
+  {
+    icon: '🧠',
+    title: {
+      zh: '大模型与多模态技术',
+      en: 'LLM & Multimodal'
+    },
+    items: [
+      {
+        repo: 'mattmireles/gemma-tuner-multimodal',
+        stars: '1202',
+        summary: {
+          zh: '支持在 Apple Silicon 上使用 PyTorch 和 MPS 对 Gemma 系列进行音频、图像与文本的多模态微调，显示出本地高效 AI 开发的趋势。',
+          en: 'Supports multimodal fine-tuning of Gemma models on Apple Silicon with PyTorch and MPS, signaling the rise of efficient local AI development.'
+        },
+        href: 'https://github.com/mattmireles/gemma-tuner-multimodal'
+      }
+    ]
+  },
+  {
+    icon: '🛠️',
+    title: {
+      zh: 'AI 驱动的开发者工具',
+      en: 'AI-Powered Dev Tools'
+    },
+    items: [
+      {
+        repo: 'yizhiyanhua-ai/fireworks-tech-graph',
+        stars: '1238',
+        summary: {
+          zh: '一个 Claude Code 技能，能够生成生产级 SVG 和 PNG 技术图表，显著提升技术文档与方案表达效率。',
+          en: 'A Claude Code skill that generates production-quality SVG and PNG technical diagrams, greatly improving technical communication.'
+        },
+        href: 'https://github.com/yizhiyanhua-ai/fireworks-tech-graph'
+      },
+      {
+        repo: 'phuryn/claude-usage',
+        stars: '864',
+        summary: {
+          zh: '本地仪表板，用于追踪 Claude Code 的令牌消耗、成本与会话历史，适合团队做 AI 成本治理。',
+          en: 'A local dashboard for tracking Claude Code usage, cost, and session history, useful for AI cost governance.'
+        },
+        href: 'https://github.com/phuryn/claude-usage'
+      },
+      {
+        repo: 'QLHazyCoder/codex-oauth-automation-extension',
+        stars: '766',
+        summary: {
+          zh: '面向 OpenAI 生态工作流的浏览器自动化扩展，展示了围绕 AI 产品的辅助工具仍有很强需求。',
+          en: 'A browser automation extension for OpenAI ecosystem workflows, showing the continuing demand for operational tooling around AI products.'
+        },
+        href: 'https://github.com/QLHazyCoder/codex-oauth-automation-extension'
+      },
+      {
+        repo: 'nashsu/llm_wiki',
+        stars: '763',
+        summary: {
+          zh: '一款跨平台桌面应用，可把文档组织成互联知识库，为 RAG 和持续知识维护提供了新的思路。',
+          en: 'A cross-platform desktop app that turns documents into an interconnected knowledge base, offering a practical angle on RAG and persistent knowledge maintenance.'
+        },
+        href: 'https://github.com/nashsu/llm_wiki'
+      }
+    ]
+  },
+  {
+    icon: '🚀',
+    title: {
+      zh: '其他值得关注项目',
+      en: 'Other Noteworthy Projects'
+    },
+    items: [
+      {
+        repo: 'farzaa/clicky',
+        stars: '3842',
+        summary: {
+          zh: '关注度极高，可能代表了某种创新的 Web 产品形态、游戏机制或前端实验，值得继续观察。',
+          en: 'A breakout project with strong attention, likely representing a fresh web product pattern, game mechanic, or frontend experiment worth watching.'
+        },
+        href: 'https://github.com/farzaa/clicky'
+      },
+      {
+        repo: 'wxtsky/CodeIsland',
+        stars: '853',
+        summary: {
+          zh: '趋势项目，可能是新的代码学习平台、开发环境或技术沙箱，具备潜在教育和社区价值。',
+          en: 'A trending project that may point to a new code-learning platform, developer environment, or technical sandbox with community potential.'
+        },
+        href: 'https://github.com/wxtsky/CodeIsland'
+      },
+      {
+        repo: 'xtclovver/RKNHardering',
+        stars: '693',
+        summary: {
+          zh: '可能与系统加固、软件强化或底层基础设施相关，值得在安全与工程交叉领域继续跟踪。',
+          en: 'Likely related to system hardening, software reinforcement, or low-level infrastructure, making it worth tracking at the intersection of security and engineering.'
+        },
+        href: 'https://github.com/xtclovver/RKNHardering'
+      }
+    ]
+  }
+];
 ---
 
-<Layout title="开源热点周报 | 谢灵江">
-  <section class="bg-dark px-4 py-20 min-h-screen border-t border-emerald-400/10">
-    <div class="max-w-6xl mx-auto">
-      <h1 class="text-4xl font-bold text-center mb-4 text-white">
-        开源<span class="text-emerald-400">热点周报</span>
+<Layout titleZh='开源热点周报 | 谢灵江' titleEn='Open Source Weekly | James Xie' descriptionZh='每周开源热点追踪，聚焦 AI Agent、开发工具、多模态与高潜力基础设施项目。' descriptionEn='A weekly open-source digest focused on AI agents, developer tools, multimodal advances, and promising infrastructure projects.'>
+  <section class='bg-dark px-4 py-20 min-h-screen border-t border-emerald-400/10'>
+    <div class='max-w-6xl mx-auto'>
+      <h1 class='text-4xl font-bold text-center mb-4 text-white'>
+        <span class='lang-zh'>开源<span class='text-emerald-400'>热点周报</span></span>
+        <span class='lang-en hidden'>Open Source <span class='text-emerald-400'>Weekly</span></span>
       </h1>
-      <p class="text-center text-gray-400 mb-12">由 GitHub Scout Agent 自动追踪的最具潜力的开源基础设施项目</p>
-      <p class="text-center text-gray-600 text-sm mb-4">最后更新：2026年4月12日</p>
-      <div class="h-1 w-16 bg-emerald-400 mx-auto mb-16"></div>
+      <p class='text-center text-gray-400 mb-12'>
+        <span class='lang-zh'>由 GitHub Scout Agent 自动追踪的最具潜力的开源基础设施项目</span>
+        <span class='lang-en hidden'>Promising open-source infrastructure projects tracked automatically by the GitHub Scout Agent</span>
+      </p>
+      <p class='text-center text-gray-600 text-sm mb-4'>
+        <span class='lang-zh'>最后更新：2026年4月12日</span>
+        <span class='lang-en hidden'>Last updated: Apr 12, 2026</span>
+      </p>
+      <div class='h-1 w-16 bg-emerald-400 mx-auto mb-16'></div>
 
-      <!-- 趋势总结 -->
-      <div class="mb-16 p-8 bg-emerald-400/5 border border-emerald-400/30 rounded-lg">
-        <h2 class="text-2xl font-bold text-emerald-400 mb-4 flex items-center">
-          <span class="mr-3">🧠</span> 首要信号 (Executive Summary)
+      <div class='mb-16 p-8 bg-emerald-400/5 border border-emerald-400/30 rounded-lg'>
+        <h2 class='text-2xl font-bold text-emerald-400 mb-4 flex items-center'>
+          <span class='mr-3'>🧠</span>
+          <span class='lang-zh'>首要信号</span>
+          <span class='lang-en hidden'>Executive Summary</span>
         </h2>
-        <div class="text-gray-300 space-y-4 leading-relaxed">
+        <div class='text-gray-300 space-y-4 leading-relaxed'>
           <p>
-            本周的GitHub趋势清晰地表明，<strong class="text-white">AI Agent生态系统正在经历一场爆炸式增长和专业化浪潮</strong>。核心信号在于“技能（Skills）”和“人格（Persona）”成为构建高效 AI Agent 的关键要素。大量项目围绕如何赋予 AI Agent 特定能力、使其模拟人类角色（如同事、导师）或处理特定任务（如代码绘图、应用引导问卷）展开，体现了从通用大模型向垂直、定制化 AI Agent 应用的深刻转变。同时，对于大模型本身的优化（如多模态微调）和实用化管理（如成本追踪、知识库构建）也受到高度关注。
+            <span class='lang-zh'>本周 GitHub 趋势清晰表明，<strong class='text-white'>AI Agent 生态系统正在经历爆发式增长与专业化分层</strong>。技能、人格与任务编排，正在成为构建高效 Agent 的核心变量。与此同时，多模态微调、成本治理与知识库构建等配套能力，也在快速走向实用化。</span>
+            <span class='lang-en hidden'>This week on GitHub, one signal stands out clearly: <strong class='text-white'>the AI agent ecosystem is moving through explosive growth and rapid specialization</strong>. Skills, personas, and task orchestration are becoming core building blocks for effective agents. At the same time, multimodal fine-tuning, cost governance, and knowledge-base tooling are becoming increasingly practical.</span>
           </p>
-          <div class="mt-6 p-5 bg-dark/80 border-l-4 border-emerald-400 shadow-inner">
-            <h3 class="text-white font-bold mb-3">💡 对独立开发者的建议：</h3>
-            <ul class="list-none text-gray-400 space-y-3">
-              <li><span class="text-emerald-400 mr-2">1.</span> <strong>深耕特定领域AI Agent技能</strong>：与其构建通用型Agent，不如专注于为特定行业或工作流程开发高价值的、可复用的“Agent技能”，解决实际痛点。</li>
-              <li><span class="text-emerald-400 mr-2">2.</span> <strong>探索“人格化”AI Agent</strong>：利用“Persona Distill”等概念，创建具有独特个性、记忆和行为模式的 AI Agent，这能显著提升用户体验和实用性。</li>
-              <li><span class="text-emerald-400 mr-2">3.</span> <strong>关注Agent框架和工具</strong>：利用如 Hermes 等开源 Agent 框架，以及相关的监控和管理工具，加速开发进程并确保稳定运行。</li>
-              <li><span class="text-emerald-400 mr-2">4.</span> <strong>拥抱多模态与模型微调</strong>：掌握多模态 AI 模型的微调技术（如 Gemma Multimodal），将为 Agent 带来更强大的感知和交互能力。</li>
+          <div class='mt-6 p-5 bg-dark/80 border-l-4 border-emerald-400 shadow-inner'>
+            <h3 class='text-white font-bold mb-3'>
+              <span class='lang-zh'>💡 对独立开发者的建议：</span>
+              <span class='lang-en hidden'>💡 Advice for indie builders:</span>
+            </h3>
+            <ul class='list-none text-gray-400 space-y-3'>
+              {recommendations.map((item, index) => (
+                <li>
+                  <span class='text-emerald-400 mr-2'>{index + 1}.</span>
+                  <strong>
+                    <span class='lang-zh'>{item.zh}</span>
+                    <span class='lang-en hidden'>{item.en}</span>
+                  </strong>
+                  <span class='lang-zh'>：{item.detailZh}</span>
+                  <span class='lang-en hidden'>: {item.detailEn}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       </div>
 
-      <!-- AI Agent 核心与生态 -->
-      <div class="mb-16">
-        <h2 class="text-2xl font-bold text-emerald-400 mb-8 flex items-center">
-          <span class="mr-3">🤖</span> AI Agent 核心与生态 (AI Agent Core & Ecosystem)
-        </h2>
-        <div class="space-y-6">
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                xixu-me/awesome-persona-distill-skills
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 3295</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              这是一个精选的Agent技能列表，聚焦于人物、关系和方法论视角，对于构建具有特定“人格”和情境感知能力的 AI Agent 至关重要。
-            </p>
-            <div class="flex flex-wrap gap-4">
-              <a href="https://github.com/xixu-me/awesome-persona-distill-skills" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-            </div>
-          </article>
-
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                alchaincyf/hermes-agent-orange-book
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 1994</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              该项目提供了 Nous Research 开源 AI Agent 框架 Hermes 的从入门到精通实战指南，是深入理解和开发 AI Agent 的宝贵资源。
-            </p>
-            <a href="https://github.com/alchaincyf/hermes-agent-orange-book" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                KKKKhazix/khazix-skills
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 1650</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              这是数字生命卡兹克开源的 AI 技能集合，展示了如何为特定数字角色或场景设计和实现一套实用的 AI 能力。
-            </p>
-            <a href="https://github.com/KKKKhazix/khazix-skills" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                adamlyttleapps/claude-skill-app-onboarding-questionnaire
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 753</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              一个 Claude Code 技能，能根据顶级订阅应用的成功模式，设计并构建高转化率的问卷式应用引导流程，体现了 AI 在产品增长策略中的应用潜力。
-            </p>
-            <a href="https://github.com/adamlyttleapps/claude-skill-app-onboarding-questionnaire" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                tmstack/awesome-persona-skills
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 682</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              又一个精选的“人格技能”列表，包括同事、老板、前任等多样化角色，进一步印证了 AI Agent 个性化和情境化的巨大需求。
-            </p>
-            <a href="https://github.com/tmstack/awesome-persona-skills" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                joeynyc/hermes-hudui
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 607</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              为 Hermes（一个具有持久记忆的 AI Agent）提供 Web UI 意识监控器，对于理解和调试复杂 AI Agent 的行为至关重要。
-            </p>
-            <a href="https://github.com/joeynyc/hermes-hudui" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                alchaincyf/x-mentor-skill
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 604</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              一个X导师技能，蒸馏了 6 位顶级 X 创作者的方法论，构建了一套完整的选题-写作-增长操作手册，展示了 AI 在内容创作和策略指导方面的应用。
-            </p>
-            <a href="https://github.com/alchaincyf/x-mentor-skill" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
+      {sections.map((section) => (
+        <div class='mb-16'>
+          <h2 class='text-2xl font-bold text-emerald-400 mb-8 flex items-center'>
+            <span class='mr-3'>{section.icon}</span>
+            <span class='lang-zh'>{section.title.zh}</span>
+            <span class='lang-en hidden'>{section.title.en}</span>
+          </h2>
+          <div class='space-y-6'>
+            {section.items.map((item) => (
+              <article class='group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50'>
+                <div class='flex justify-between items-start mb-3'>
+                  <h3 class='text-lg font-bold text-white group-hover:text-emerald-400 transition-colors'>
+                    {item.repo}
+                  </h3>
+                  <span class='text-sm text-gray-500 whitespace-nowrap ml-4'>⭐ {item.stars}</span>
+                </div>
+                <p class='text-gray-400 mb-3'>
+                  <span class='lang-zh'>{item.summary.zh}</span>
+                  <span class='lang-en hidden'>{item.summary.en}</span>
+                </p>
+                <div class='flex flex-wrap gap-4'>
+                  <a href={item.href} target='_blank' rel='noopener' class='text-emerald-400 text-sm hover:text-white transition-colors'>GitHub →</a>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
+      ))}
 
-      <!-- 大模型与多模态技术 -->
-      <div class="mb-16">
-        <h2 class="text-2xl font-bold text-emerald-400 mb-8 flex items-center">
-          <span class="mr-3">🧠</span> 大模型与多模态技术 (LLM & Multimodal)
-        </h2>
-        <div class="space-y-6">
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                mattmireles/gemma-tuner-multimodal
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 1202</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              该项目支持在 Apple Silicon 上使用 PyTorch 和 Metal Performance Shaders 对 Gemma 4 和 3n 进行音频、图像和文本的多模态微调，预示着本地高效 AI 开发的趋势。
-            </p>
-            <div class="flex flex-wrap gap-4">
-              <a href="https://github.com/mattmireles/gemma-tuner-multimodal" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-            </div>
-          </article>
-        </div>
-      </div>
-
-      <!-- AI 驱动的开发者工具 -->
-      <div class="mb-16">
-        <h2 class="text-2xl font-bold text-emerald-400 mb-8 flex items-center">
-          <span class="mr-3">🛠️</span> AI 驱动的开发者工具 (AI-Powered Dev Tools)
-        </h2>
-        <div class="space-y-6">
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                yizhiyanhua-ai/fireworks-tech-graph
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 1238</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              一个 Claude Code 技能，能够生成生产质量的 SVG+PNG 技术图表，支持多种图表类型和视觉风格，极大提升了技术文档和设计的效率。
-            </p>
-            <a href="https://github.com/yizhiyanhua-ai/fireworks-tech-graph" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                phuryn/claude-usage
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 864</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              一个本地仪表板，用于追踪 Claude Code 的令牌使用、成本和会话历史，对于开发者和团队有效管理 AI API 开销和洞察使用模式非常有帮助。
-            </p>
-            <a href="https://github.com/phuryn/claude-usage" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                QLHazyCoder/codex-oauth-automation-extension
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 766</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              这款 Chrome 扩展支持 OpenAI OAuth 注册、验证码获取、CPA 回调验证与自动恢复，大大简化了与 OpenAI 生态系统的交互流程。
-            </p>
-            <a href="https://github.com/QLHazyCoder/codex-oauth-automation-extension" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                nashsu/llm_wiki
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 763</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              LLM Wiki是一款跨平台桌面应用，能自动将文档转化为有组织、互联的知识库，通过增量构建和维护持久性维基，提供了 RAG 技术的新思路。
-            </p>
-            <a href="https://github.com/nashsu/llm_wiki" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-        </div>
-      </div>
-
-      <!-- 其他值得关注项目 -->
-      <div class="mb-16">
-        <h2 class="text-2xl font-bold text-emerald-400 mb-8 flex items-center">
-          <span class="mr-3">🚀</span> 其他值得关注项目 (Other Noteworthy)
-        </h2>
-        <div class="space-y-6">
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                farzaa/clicky
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 3842</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              获得了极高的关注度，可能是一个创新的 Web 应用、游戏或前端实验，值得进一步探索。
-            </p>
-            <a href="https://github.com/farzaa/clicky" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-          
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                wxtsky/CodeIsland
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 853</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              作为趋势项目，可能是一个新的代码学习平台、开发环境或技术沙箱。
-            </p>
-            <a href="https://github.com/wxtsky/CodeIsland" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-
-          <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
-            <div class="flex justify-between items-start mb-3">
-              <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
-                xtclovver/RKNHardering
-              </h3>
-              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ 693</span>
-            </div>
-            <p class="text-gray-400 mb-3">
-              可能与系统安全加固、软件强化或逆向工程相关的新型基础设施。
-            </p>
-            <a href="https://github.com/xtclovver/RKNHardering" target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
-          </article>
-        </div>
-      </div>
-
-      <!-- 返回首页 -->
-      <div class="text-center mt-12">
-        <a href="/" class="inline-block px-8 py-3 border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-dark transition-all font-semibold">
-          返回首页
+      <div class='text-center mt-12'>
+        <a href='/' class='inline-block px-8 py-3 border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-dark transition-all font-semibold'>
+          <span class='lang-zh'>返回首页</span>
+          <span class='lang-en hidden'>Back to Home</span>
         </a>
       </div>
     </div>

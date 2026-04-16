@@ -1,156 +1,226 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+
+const articles = [
+  {
+    title: {
+      zh: '对标美国六巨头，解读中国 AI 的"一超多强、四龙夺珠"',
+      en: 'China AI vs. the U.S. Big Six: Mapping the One Superpower, Many Strong Players, and Four Dragons Race'
+    },
+    category: {
+      zh: '产业分析',
+      en: 'Industry Analysis'
+    },
+    excerpt: {
+      zh: '2026 年，中国 AI 告别"百模大战"的浮躁，进入残酷的"应用收割期"。华为的算力底座稳了吗？Kimi 和豆包谁是 C 端之王？对标美国六大科技巨头，我们的差距在哪里、机会在哪里？',
+      en: 'In 2026, China AI is moving beyond the frenzy of the model gold rush into a brutal application consolidation phase. Is Huawei’s compute foundation solid enough? Who wins the consumer layer, Kimi or Doubao? Against the U.S. Big Six, where are the real gaps and openings?'
+    },
+    status: {
+      zh: '已发布',
+      en: 'Published'
+    }
+  },
+  {
+    title: {
+      zh: '当 API 已死：2026 一人公司的"视觉突围"指南',
+      en: 'When APIs Are Dead: A 2026 Vision Breakout Guide for the One-Person Company'
+    },
+    category: {
+      zh: '实战指南',
+      en: 'Practical Guide'
+    },
+    excerpt: {
+      zh: '如果 API 是大厂施舍的窄门，那视觉（Vision）就是我们打破围墙的攻城锤。写给那些不甘于被"围墙花园"困住的独立开发者。',
+      en: 'If APIs are the narrow gate controlled by big platforms, vision is the battering ram that breaks the wall. Written for indie builders who refuse to be trapped inside a walled garden.'
+    },
+    status: {
+      zh: '已发布',
+      en: 'Published'
+    }
+  },
+  {
+    title: {
+      zh: '手把手部署 Deep-Claw：0 成本打造本地"视觉打工人"',
+      en: 'Deploy Deep-Claw Step by Step: Build a Local Vision Worker at Near-Zero Cost'
+    },
+    category: {
+      zh: '教程',
+      en: 'Tutorial'
+    },
+    excerpt: {
+      zh: '保姆级教程：基于 DeepSeek Janus-Pro，在本地搭建视觉智能体。无需云端 API，完全离线运行。',
+      en: 'A hands-on walkthrough for building a local vision agent with DeepSeek Janus-Pro. No cloud API required. Fully offline by design.'
+    },
+    status: {
+      zh: '已发布',
+      en: 'Published'
+    }
+  },
+  {
+    title: {
+      zh: 'OpenClaw 深度解构：当 Agent 第一次拥有了"海马体"',
+      en: 'Dissecting OpenClaw: The First Time an Agent Truly Got a Hippocampus'
+    },
+    category: {
+      zh: '架构分析',
+      en: 'Architecture Review'
+    },
+    excerpt: {
+      zh: '记忆，是智能体对抗熵增的唯一武器。深入剖析 Agent 记忆系统的架构设计。',
+      en: 'Memory is the only real weapon agents have against entropy. This piece breaks down the architecture behind agent memory systems.'
+    },
+    status: {
+      zh: '已发布',
+      en: 'Published'
+    }
+  },
+  {
+    title: {
+      zh: 'AI 一人公司的真相：不是杠杆，是枷锁',
+      en: 'The Truth About the AI One-Person Company: Not Leverage, but a New Set of Chains'
+    },
+    category: {
+      zh: '反思',
+      en: 'Reflection'
+    },
+    excerpt: {
+      zh: '当你的公司有 4 个数字员工，当你每天只需运行一行命令就能生成深度长文——这不是自由，这是另一种形式的囚禁。',
+      en: 'When your company has four digital employees and one command can generate a long-form essay every day, that is not freedom. It is another form of captivity.'
+    },
+    status: {
+      zh: '已发布',
+      en: 'Published'
+    }
+  },
+  {
+    title: {
+      zh: '从图灵到 AGI：76 年 AI 激荡史与关键人物图谱',
+      en: 'From Turing to AGI: 76 Years of AI Upheaval and the People Who Shaped It'
+    },
+    category: {
+      zh: '历史',
+      en: 'History'
+    },
+    excerpt: {
+      zh: '站在 2026 年的门槛，ChatGPT 已成日常。但这是一场跨越 76 年的马拉松，充满了天才的狂想、资本的博弈、学派的倾轧。',
+      en: 'By 2026, ChatGPT already feels ordinary. But the road here was a 76-year marathon of genius, capital, factional battles, and repeated reinvention.'
+    },
+    status: {
+      zh: '已发布',
+      en: 'Published'
+    }
+  },
+  {
+    title: {
+      zh: 'AI 真正落地的 3 条路径：工具、流程、组织',
+      en: 'Three Real Paths to AI Adoption: Tools, Workflow, and Organization'
+    },
+    category: {
+      zh: '落地实践',
+      en: 'Execution'
+    },
+    excerpt: {
+      zh: '一线落地复盘，拒绝空洞愿景。AI 不是万能药，落地需要从工具、流程、组织三个维度系统性推进。',
+      en: 'A field-tested review of real adoption work, not empty vision decks. AI is not a silver bullet; execution must happen across tools, processes, and organizational design.'
+    },
+    status: {
+      zh: '已发布',
+      en: 'Published'
+    }
+  },
+  {
+    title: {
+      zh: '手把手：把大模型微调成你的私人助理（M3 Max 实战版）',
+      en: 'Fine-Tune a Frontier Model Into Your Personal Assistant: An M3 Max Field Guide'
+    },
+    category: {
+      zh: '实战',
+      en: 'Hands-on'
+    },
+    excerpt: {
+      zh: '基于真实项目的实操记录，拒绝云评测。在 MacBook Pro M3 Max 64GB 上完成 QLoRA 微调全流程。',
+      en: 'A real project log instead of benchmark theater. This article walks through the full QLoRA fine-tuning flow on a 64GB MacBook Pro M3 Max.'
+    },
+    status: {
+      zh: '已发布',
+      en: 'Published'
+    }
+  },
+  {
+    title: {
+      zh: '从"一本正经胡说八道"到"三思而后行"：AI Agent 的五种思维模式',
+      en: 'From Confident Nonsense to Deliberate Reasoning: Five Thinking Modes of AI Agents'
+    },
+    category: {
+      zh: '深度解析',
+      en: 'Deep Dive'
+    },
+    excerpt: {
+      zh: 'AI 变强的真正质变在于"思维模式"的重构。揭秘 AI Agent 的五种思维模式，解构它们的大脑。',
+      en: 'The real step-change in AI capability comes from restructuring how models think. This article unpacks five thinking modes behind modern AI agents.'
+    },
+    status: {
+      zh: '已发布',
+      en: 'Published'
+    }
+  }
+];
 ---
 
-<Layout title="AI 研究成果 | 谢灵江">
+<Layout titleZh="AI 研究成果 | 谢灵江" titleEn="AI Research | James Xie" descriptionZh="谢灵江的 AI 研究成果页，收录产业分析、Agent 架构、本地部署与实战方法论。" descriptionEn="James Xie's AI research archive covering industry analysis, agent architecture, local deployment, and practical execution insights.">
   <section class="bg-dark px-4 py-20 min-h-screen">
     <div class="max-w-6xl mx-auto">
       <h1 class="text-4xl font-bold text-center mb-4 text-white">
-        AI 研究<span class="text-gold">成果</span>
+        <span class="lang-zh">AI 研究<span class="text-gold">成果</span></span>
+        <span class="lang-en hidden">AI <span class="text-gold">Research</span></span>
       </h1>
-      <p class="text-center text-gray-400 mb-12">公众号「谢先生的AI深析札记」已发布文章</p>
-      <p class="text-center text-gray-600 text-sm mb-4">最后更新：2026年4月12日</p>
+      <p class="text-center text-gray-400 mb-12">
+        <span class="lang-zh">公众号「谢先生的AI深析札记」已发布文章</span>
+        <span class="lang-en hidden">Published articles from the WeChat newsletter "Mr. Xie’s AI Deep Dive Notes"</span>
+      </p>
+      <p class="text-center text-gray-600 text-sm mb-4">
+        <span class="lang-zh">最后更新：2026年4月12日</span>
+        <span class="lang-en hidden">Last updated: Apr 12, 2026</span>
+      </p>
       <div class="h-1 w-16 bg-gold mx-auto mb-4"></div>
       
       <p class="text-center mb-12">
         <a href="weixin://contacts/profile/gh_f297261425ba" class="text-gold hover:text-white transition-colors">
-          关注公众号阅读全文 →
+          <span class="lang-zh">关注公众号阅读全文 →</span>
+          <span class="lang-en hidden">Follow on WeChat for the full articles →</span>
         </a>
       </p>
 
       <div class="space-y-8">
-        <!-- 文章 1 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              对标美国六巨头，解读中国 AI 的"一超多强、四龙夺珠"
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">产业分析</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            2026 年，中国 AI 告别"百模大战"的浮躁，进入残酷的"应用收割期"。华为的算力底座稳了吗？Kimi 和豆包谁是 C 端之王？对标美国六大科技巨头，我们的差距在哪里、机会在哪里？
-          </p>
-          <span class="text-gray-500 text-sm">已发布</span>
-        </article>
-
-        <!-- 文章 2 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              当 API 已死：2026 一人公司的"视觉突围"指南
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">实战指南</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            如果 API 是大厂施舍的窄门，那视觉（Vision）就是我们打破围墙的攻城锤。写给那些不甘于被"围墙花园"困住的独立开发者。
-          </p>
-          <span class="text-gray-500 text-sm">已发布</span>
-        </article>
-
-        <!-- 文章 3 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              手把手部署 Deep-Claw：0 成本打造本地"视觉打工人"
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">教程</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            保姆级教程：基于 DeepSeek Janus-Pro，在本地搭建视觉智能体。无需云端 API，完全离线运行。
-          </p>
-          <span class="text-gray-500 text-sm">已发布</span>
-        </article>
-
-        <!-- 文章 4 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              OpenClaw 深度解构：当 Agent 第一次拥有了"海马体"
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">架构分析</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            记忆，是智能体对抗熵增的唯一武器。深入剖析 Agent 记忆系统的架构设计。
-          </p>
-          <span class="text-gray-500 text-sm">已发布</span>
-        </article>
-
-        <!-- 文章 5 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              AI 一人公司的真相：不是杠杆，是枷锁
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">反思</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            当你的公司有 4 个数字员工，当你每天只需运行一行命令就能生成深度长文——这不是自由，这是另一种形式的囚禁。
-          </p>
-          <span class="text-gray-500 text-sm">已发布</span>
-        </article>
-
-        <!-- 文章 6 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              从图灵到 AGI：76 年 AI 激荡史与关键人物图谱
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">历史</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            站在 2026 年的门槛，ChatGPT 已成日常。但这是一场跨越 76 年的马拉松，充满了天才的狂想、资本的博弈、学派的倾轧。
-          </p>
-          <span class="text-gray-500 text-sm">已发布</span>
-        </article>
-
-        <!-- 文章 7 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              AI 真正落地的 3 条路径：工具、流程、组织
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">落地实践</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            一线落地复盘，拒绝空洞愿景。AI 不是万能药，落地需要从工具、流程、组织三个维度系统性推进。
-          </p>
-          <span class="text-gray-500 text-sm">已发布</span>
-        </article>
-
-        <!-- 文章 8 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              手把手：把大模型微调成你的私人助理（M3 Max 实战版）
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">实战</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            基于真实项目的实操记录，拒绝云评测。在 MacBook Pro M3 Max 64GB 上完成 QLoRA 微调全流程。
-          </p>
-          <span class="text-gray-500 text-sm">已发布</span>
-        </article>
-
-        <!-- 文章 9 -->
-        <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
-              从"一本正经胡说八道"到"三思而后行"：AI Agent 的五种思维模式
-            </h3>
-            <span class="text-sm text-gray-500 whitespace-nowrap ml-4">深度解析</span>
-          </div>
-          <p class="text-gray-400 mb-3">
-            AI 变强的真正质变在于"思维模式"的重构。揭秘 AI Agent 的五种思维模式，解构它们的大脑。
-         </p>
-          <span class="text-gray-500 text-sm">已发布</span>
-        </article>
+        {articles.map((article) => (
+          <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+            <div class="flex justify-between items-start mb-3">
+              <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                <span class="lang-zh">{article.title.zh}</span>
+                <span class="lang-en hidden">{article.title.en}</span>
+              </h3>
+              <span class="text-sm text-gray-500 whitespace-nowrap ml-4">
+                <span class="lang-zh">{article.category.zh}</span>
+                <span class="lang-en hidden">{article.category.en}</span>
+              </span>
+            </div>
+            <p class="text-gray-400 mb-3">
+              <span class="lang-zh">{article.excerpt.zh}</span>
+              <span class="lang-en hidden">{article.excerpt.en}</span>
+            </p>
+            <span class="text-gray-500 text-sm">
+              <span class="lang-zh">{article.status.zh}</span>
+              <span class="lang-en hidden">{article.status.en}</span>
+            </span>
+          </article>
+        ))}
       </div>
 
-      <!-- 返回首页 -->
       <div class="text-center mt-12">
         <a href="/" class="inline-block px-8 py-3 border-2 border-gold text-gold hover:bg-gold hover:text-dark transition-all font-semibold">
-          返回首页
+          <span class="lang-zh">返回首页</span>
+          <span class="lang-en hidden">Back to Home</span>
         </a>
       </div>
     </div>

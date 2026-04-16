@@ -1,0 +1,42 @@
+---
+---
+
+<div class="language-switcher fixed top-4 right-4 z-50">
+  <button id="language-toggle" class="px-4 py-2 bg-gold text-dark font-semibold rounded-md hover:bg-gold-dark transition-all">
+    中文 / English
+  </button>
+</div>
+
+<script>
+  // 语言切换功能
+  const toggleBtn = document.getElementById('language-toggle');
+  const langKey = 'preferredLanguage';
+  
+  // 初始化语言
+  function initLanguage() {
+    const savedLang = localStorage.getItem(langKey) || 'zh';
+    document.documentElement.lang = savedLang;
+    updateContent(savedLang);
+  }
+  
+  // 切换语言
+  toggleBtn.addEventListener('click', () => {
+    const currentLang = document.documentElement.lang;
+    const newLang = currentLang === 'zh' ? 'en' : 'zh';
+    localStorage.setItem(langKey, newLang);
+    document.documentElement.lang = newLang;
+    updateContent(newLang);
+  });
+  
+  // 更新内容
+  function updateContent(lang) {
+    // 更新语言切换按钮文本
+    toggleBtn.textContent = lang === 'zh' ? '中文 / English' : 'English / 中文';
+    
+    // 触发自定义事件，通知 Layout 和其他组件更新
+    document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+  }
+  
+  // 初始化
+  initLanguage();
+</script>

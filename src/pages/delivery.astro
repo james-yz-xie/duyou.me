@@ -11,7 +11,12 @@ import PasscodeLock from '../components/delivery/PasscodeLock.astro';
 import FAQ from '../components/delivery/FAQ.astro';
 ---
 
-<Layout title="企业的 AI 技能递送者 | duyou.me · 行业领先的企业信息 AI 化方案">
+<Layout 
+  titleZh="企业的 AI 技能递送者 | duyou.me · 行业领先的企业信息 AI 化方案"
+  titleEn="Enterprise AI Skills Delivery | duyou.me · Leading Solutions for AI Transformation"
+  descriptionZh="企业 AI 技能递送方案页，聚焦遗留系统接入、私有部署、确定性自动化与合规落地。"
+  descriptionEn="Enterprise AI delivery solutions focused on legacy system connectivity, private deployment, deterministic automation, and compliant rollout."
+>
   <PasscodeLock />
   <main id="main-content" class="bg-dark">
     <!-- Hero Section -->
@@ -20,8 +25,11 @@ import FAQ from '../components/delivery/FAQ.astro';
     <!-- Connectivity Gap / Intro Quote -->
     <section class="py-20 px-4">
       <div class="max-w-4xl mx-auto text-center">
-        <blockquote class="text-3xl md:text-4xl font-serif italic text-white/90 leading-snug">
+        <blockquote class="lang-zh text-3xl md:text-4xl font-serif italic text-white/90 leading-snug">
           "连接，是智能化的第一步。我们让 AI 走进业务逻辑，真正触碰您的核心资产。"
+        </blockquote>
+        <blockquote class="lang-en hidden text-3xl md:text-4xl font-serif italic text-white/90 leading-snug">
+          "Connectivity is the first step towards intelligence. We bring AI into business logic, truly touching your core assets."
         </blockquote>
       </div>
     </section>
@@ -33,13 +41,24 @@ import FAQ from '../components/delivery/FAQ.astro';
     <section id="presentation-viewer" class="bg-dark/50 py-24 px-4 overflow-hidden">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16">
-          <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
-            方案<span class="text-gold">在线阅读</span>
-          </h2>
-          <div class="h-1 w-16 bg-gold mx-auto mb-8"></div>
-          <p class="text-gray-400 max-w-2xl mx-auto">
-            基于微软官方预览服务，为您原汁原味呈现业务架构预演。
-          </p>
+          <div class="lang-zh">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+              方案<span class="text-gold">在线阅读</span>
+            </h2>
+            <div class="h-1 w-16 bg-gold mx-auto mb-8"></div>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+              基于微软官方预览服务，为您原汁原味呈现业务架构预演。
+            </p>
+          </div>
+          <div class="lang-en hidden">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+              Solution <span class="text-gold">Online Reading</span>
+            </h2>
+            <div class="h-1 w-16 bg-gold mx-auto mb-8"></div>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+              Based on Microsoft's official preview service, presenting a native business architecture preview for you.
+            </p>
+          </div>
         </div>
 
         <div class="relative w-full aspect-video bg-black border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
@@ -52,12 +71,22 @@ import FAQ from '../components/delivery/FAQ.astro';
         </div>
         
         <div class="mt-8 flex justify-center gap-6">
-           <a href="/Agent_Native_Enterprise.pptx" download class="text-gold text-sm underline px-4 py-2 hover:bg-gold/10 transition-colors">
-              下载原始 PPT 文档
-           </a>
-           <a href="/Agent_Native_Enterprise.pdf" target="_blank" class="text-white/50 text-sm px-4 py-2 hover:text-white transition-colors">
-              查看 PDF 备用版
-           </a>
+           <div class="lang-zh flex gap-6">
+             <a href="/Agent_Native_Enterprise.pptx" download class="text-gold text-sm underline px-4 py-2 hover:bg-gold/10 transition-colors">
+                下载原始 PPT 文档
+             </a>
+             <a href="/Agent_Native_Enterprise.pdf" target="_blank" class="text-white/50 text-sm px-4 py-2 hover:text-white transition-colors">
+                查看 PDF 备用版
+             </a>
+           </div>
+           <div class="lang-en hidden flex gap-6">
+             <a href="/Agent_Native_Enterprise.pptx" download class="text-gold text-sm underline px-4 py-2 hover:bg-gold/10 transition-colors">
+                Download Original PPT
+             </a>
+             <a href="/Agent_Native_Enterprise.pdf" target="_blank" class="text-white/50 text-sm px-4 py-2 hover:text-white transition-colors">
+                View PDF Version
+             </a>
+           </div>
         </div>
       </div>
     </section>
@@ -77,19 +106,37 @@ import FAQ from '../components/delivery/FAQ.astro';
     <!-- Final CTA -->
     <section class="py-32 px-4 relative overflow-hidden bg-gradient-to-b from-dark to-[#0a0a0a]">
       <div class="max-w-4xl mx-auto text-center relative z-10">
-        <h2 class="text-3xl md:text-5xl font-bold text-white mb-8">
-          与其追逐虚幻的 AI 概念 <br/><span class="text-gold italic">不如交付可以跑通的流程</span>
-        </h2>
-        <p class="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
-          无论是遗留系统改造、还是专业软件深度适配，我们只讲<b>工程落地与确定性产出</b>。
-        </p>
-        <div class="flex justify-center flex-wrap gap-6">
-          <a href="mailto:xie.james@hotmail.com" class="px-12 py-5 bg-gold text-dark font-black tracking-widest text-lg hover:scale-105 transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)]">
-            立即开启合作
-          </a>
-          <a href="/" class="px-12 py-5 border-2 border-white/20 text-white font-bold text-lg hover:bg-white/10 transition-all">
-            返回首页
-          </a>
+        <div class="lang-zh">
+          <h2 class="text-3xl md:text-5xl font-bold text-white mb-8">
+            与其追逐虚幻的 AI 概念 <br/><span class="text-gold italic">不如交付可以跑通的流程</span>
+          </h2>
+          <p class="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
+            无论是遗留系统改造、还是专业软件深度适配，我们只讲<b>工程落地与确定性产出</b>。
+          </p>
+          <div class="flex justify-center flex-wrap gap-6">
+            <a href="mailto:xie.james@hotmail.com" class="px-12 py-5 bg-gold text-dark font-black tracking-widest text-lg hover:scale-105 transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)]">
+              立即开启合作
+            </a>
+            <a href="/" class="px-12 py-5 border-2 border-white/20 text-white font-bold text-lg hover:bg-white/10 transition-all">
+              返回首页
+            </a>
+          </div>
+        </div>
+        <div class="lang-en hidden">
+          <h2 class="text-3xl md:text-5xl font-bold text-white mb-8">
+            Instead of Chasing Vague AI Concepts <br/><span class="text-gold italic">Deliver Proven Workflows</span>
+          </h2>
+          <p class="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">
+            Whether it's legacy system transformation or professional software adaptation, we focus on <b>engineering implementation and deterministic output</b>.
+          </p>
+          <div class="flex justify-center flex-wrap gap-6">
+            <a href="mailto:xie.james@hotmail.com" class="px-12 py-5 bg-gold text-dark font-black tracking-widest text-lg hover:scale-105 transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)]">
+              Start Partnership
+            </a>
+            <a href="/" class="px-12 py-5 border-2 border-white/20 text-white font-bold text-lg hover:bg-white/10 transition-all">
+              Back to Home
+            </a>
+          </div>
         </div>
       </div>
       

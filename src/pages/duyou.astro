@@ -1,238 +1,147 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
----
 
-<Layout title="督友小程序 | 架构深度解析 · duyou.me">
-  <main class="bg-dark">
-    <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 px-4 overflow-hidden">
-      <div class="absolute inset-0 z-0">
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-gold/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/4"></div>
-      </div>
+const strategyCards = [
+  {
+    title: {
+      zh: '隐私优先',
+      en: 'Privacy First'
+    },
+    body: {
+      zh: '习惯内容、目标与进度仅自己可见。在群组内仅同步“已打卡/未打卡”状态，既保护隐私，又利用社交压力形成强约束。',
+      en: 'Habits, goals, and progress remain private by default. Inside a group, only the completed or not completed status is synchronized, preserving privacy while keeping social accountability.'
+    },
+    icon: 'shield'
+  },
+  {
+    title: {
+      zh: '双社交场景',
+      en: 'Social Synergy'
+    },
+    body: {
+      zh: '结合熟人社交的高粘性监督与陌生人社交的兴趣匹配，把“变好”和“交友”深度绑定。',
+      en: 'It combines the stickiness of familiar accountability with the discovery power of interest-based matching, tying self-improvement directly to social connection.'
+    },
+    icon: 'users'
+  }
+];
 
-      <div class="max-w-5xl mx-auto relative z-10 text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 border border-gold/20 text-gold text-xs font-bold tracking-widest uppercase mb-8">
-          <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-gold"></span>
-          </span>
-          已稳定运行 2+ 年
-        </div>
-        
-        <h1 class="text-4xl md:text-7xl font-bold text-white mb-6">
-          督友 <span class="text-gold italic">DuYou</span>
-        </h1>
-        <p class="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-          一款为“强迫症”设计的轻社群自律监督应用。<br/>
-          采用 <span class="text-white border-b border-gold/50">Hybrid Cloud</span> 混合云架构，核心解决弱网/断网环境下的数据确定性问题。
-        </p>
+const roadmap = [
+  {
+    phase: {
+      zh: '阶段 01 / MVP',
+      en: 'PHASE 01 / MVP'
+    },
+    title: {
+      zh: '极简自用版',
+      en: 'Minimal Self-Use Version'
+    },
+    items: {
+      zh: ['私密习惯管理', '日历热力图统计', '微信群机器人同步'],
+      en: ['Private habit management', 'Calendar heatmap analytics', 'WeChat group bot sync']
+    }
+  },
+  {
+    phase: {
+      zh: '阶段 02 / 社交化',
+      en: 'PHASE 02 / SOCIAL'
+    },
+    title: {
+      zh: '兴趣社交化',
+      en: 'Interest-Based Social Layer'
+    },
+    items: {
+      zh: ['熟人小群 / 兴趣群', '补签卡 / 连胜保护', '属性勋章系统'],
+      en: ['Close-friend groups and interest groups', 'Recovery cards and streak protection', 'Trait and badge system']
+    }
+  },
+  {
+    phase: {
+      zh: '阶段 03 / 商业化',
+      en: 'PHASE 03 / BUSINESS'
+    },
+    title: {
+      zh: '商业化探索',
+      en: 'Commercial Exploration'
+    },
+    items: {
+      zh: ['保证金挑战赛', '个性化增值服务', '高端行业 / 兴趣圈子'],
+      en: ['Deposit-based challenges', 'Personalized premium services', 'High-end professional and interest circles']
+    }
+  }
+];
 
-        <div class="flex justify-center gap-6">
-          <a href="https://github.com/james-yz-xie/duyou-wechat-miniprogram" target="_blank" class="px-8 py-4 bg-gold text-dark font-black tracking-widest hover:scale-105 transition-all shadow-xl shadow-gold/10">
-            GITHUB REPO
-          </a>
-          <a href="/" class="px-8 py-4 border border-white/20 text-white font-bold hover:bg-white/5 transition-all">
-            返回首页
-          </a>
-        </div>
-      </div>
-    </section>
+const metrics = [
+  {
+    value: {
+      zh: 'API 优先',
+      en: 'API First'
+    },
+    detail: {
+      zh: 'RESTful 架构 / Spring Boot 驱动',
+      en: 'RESTful architecture powered by Spring Boot'
+    }
+  },
+  {
+    value: {
+      zh: '自动降级',
+      en: 'Automatic Fallback'
+    },
+    detail: {
+      zh: '弱网环境下 0 感知切换本地存储',
+      en: 'Switches to local storage transparently under poor connectivity'
+    }
+  },
+  {
+    value: {
+      zh: '云端托管',
+      en: 'Cloud Hosted'
+    },
+    detail: {
+      zh: '微信云托管容器化部署 / MySQL 持久化',
+      en: 'WeChat Cloud Container deployment with MySQL persistence'
+    }
+  }
+];
 
-    <!-- Product Strategy (BRD Insights) -->
-    <section class="py-24 px-4 relative">
-      <div class="max-w-5xl mx-auto">
-        <div class="mb-16 text-center">
-          <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">产品<span class="text-gold">内核</span>与规划</h2>
-          <div class="h-1 w-16 bg-gold mx-auto mb-8"></div>
-          <p class="text-2xl md:text-3xl font-serif italic text-white/90">
-            “有人盯，才坚持；坚持着，就遇见”
-          </p>
-        </div>
+const architectureLayers = [
+  {
+    index: '01',
+    title: {
+      zh: '用户界面层',
+      en: 'UI Layer'
+    },
+    body: {
+      zh: '原生微信小程序开发，包括首页打卡、习惯管理、多维统计及个人中心，目标是实现稳定顺滑的高频交互。',
+      en: 'Built as a native WeChat Mini Program covering daily check-ins, habit management, analytics, and personal profile flows with a strong focus on fluid interaction.'
+    }
+  },
+  {
+    index: '02',
+    title: {
+      zh: '存储与中间件层',
+      en: 'Storage Layer'
+    },
+    body: {
+      zh: '核心策略是 API 优先加本地缓存双模式，通过统一的 storage.js 屏蔽读写细节，保证离线时的数据连续性。',
+      en: 'The core strategy combines API-first access with local cache fallback. A unified storage.js layer hides read and write complexity and keeps data consistent offline.'
+    }
+  },
+  {
+    index: '03',
+    title: {
+      zh: '基础设施层',
+      en: 'Infrastructure Layer'
+    },
+    body: {
+      zh: '基于微信云托管部署，后端采用 Spring Boot 微服务，数据库使用云托管 MySQL，兼顾扩展性与稳定性。',
+      en: 'Deployment runs on WeChat Cloud Container, with Spring Boot microservices on the backend and managed MySQL for persistence, balancing scale and reliability.'
+    }
+  }
+];
 
-        <div class="grid md:grid-cols-2 gap-12 mb-20">
-          <!-- Logic Card 1 -->
-          <div class="p-8 rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/10">
-            <h3 class="text-2xl font-bold text-gold mb-4 flex items-center gap-3">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-              隐私优先 (Privacy First)
-            </h3>
-            <p class="text-gray-400 leading-relaxed">
-              习惯内容、目标与进度仅自己可见。在群组内仅同步“已打卡/未打卡”状态，充分保护用户隐私的同时利用社交压力形成“强迫症式自律”。
-            </p>
-          </div>
-
-          <!-- Logic Card 2 -->
-          <div class="p-8 rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/10">
-            <h3 class="text-2xl font-bold text-gold mb-4 flex items-center gap-3">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-              双社交场景 (Social Synergy)
-            </h3>
-            <p class="text-gray-400 leading-relaxed">
-              结合熟人社交（高粘性的家庭/情侣监督）与陌生人社交（按兴趣/地域匹配且以自律程度为推荐标准），将“变好”与“交友”深度绑定。
-            </p>
-          </div>
-        </div>
-
-        <!-- Roadmap -->
-        <div class="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12">
-          <h3 class="text-xl font-bold text-white mb-10 text-center uppercase tracking-widest">演进路线图 / Roadmap</h3>
-          <div class="grid md:grid-cols-3 gap-8 relative">
-            <!-- Phase 1 -->
-            <div class="relative z-10">
-              <div class="text-gold font-bold mb-2">PHASE 01 / MVP</div>
-              <div class="text-white font-bold text-lg mb-4">极简自用版</div>
-              <ul class="text-gray-500 text-sm space-y-2">
-                <li>• 私密习惯管理</li>
-                <li>• 日历热力图统计</li>
-                <li>• 微信群机器人同步</li>
-              </ul>
-            </div>
-            <!-- Phase 2 -->
-            <div class="relative z-10">
-              <div class="text-gold font-bold mb-2">PHASE 02 / SOCIAL</div>
-              <div class="text-white font-bold text-lg mb-4">兴趣社交化</div>
-              <ul class="text-gray-500 text-sm space-y-2">
-                <li>• 熟人小群/兴趣群</li>
-                <li>• 补签卡/连胜保护</li>
-                <li>• 属性勋章系统</li>
-              </ul>
-            </div>
-            <!-- Phase 3 -->
-            <div class="relative z-10">
-              <div class="text-gold font-bold mb-2">PHASE 03 / BUSINESS</div>
-              <div class="text-white font-bold text-lg mb-4">商业化探索</div>
-              <ul class="text-gray-500 text-sm space-y-2">
-                <li>• 保证金挑战赛</li>
-                <li>• 个性化增值服务</li>
-                <li>• 高端行业/兴趣圈子</li>
-              </ul>
-            </div>
-            
-            <!-- Link line for desktop -->
-            <div class="hidden md:block absolute top-12 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent z-0"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Key Metrics / Features -->
-    <section class="py-20 bg-black/40 border-y border-white/5">
-      <div class="max-w-6xl mx-auto px-4">
-        <div class="grid md:grid-cols-3 gap-12">
-          <div class="text-center">
-            <div class="text-4xl font-bold text-gold mb-2">API 优先</div>
-            <p class="text-gray-500 text-sm italic">RESTful 架构 / Spring Boot 驱动</p>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl font-bold text-gold mb-2">自动降级</div>
-            <p class="text-gray-500 text-sm italic">弱网环境下 0 感知切换本地存储</p>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl font-bold text-gold mb-2">云端托管</div>
-            <p class="text-gray-500 text-sm italic">微信云托管容器化部署 / MySQL 持久化</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Architecture Section -->
-    <section class="py-24 px-4">
-      <div class="max-w-5xl mx-auto">
-        <div class="mb-16">
-          <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">系统<span class="text-gold">架构</span>设计</h2>
-          <div class="h-1 w-16 bg-gold mb-8"></div>
-          <p class="text-gray-400 max-w-2xl leading-relaxed italic border-l-2 border-gold/30 pl-6">
-            “架构的价值不仅仅在于功能的实现，更在于系统在极端边界情况下的鲁棒性。”
-          </p>
-        </div>
-
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
-          <div class="space-y-8">
-            <div class="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-gold/30 transition-all group">
-              <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-3">
-                <span class="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center text-gold text-sm">01</span>
-                用户界面层 (UI Layer)
-              </h3>
-              <p class="text-gray-400 text-sm">
-                原生微信小程序开发，包括首页打卡、习惯管理、多维统计及个人中心。极致追求 60fps 的流畅交互体验。
-              </p>
-            </div>
-
-            <div class="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-gold/30 transition-all group">
-              <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-3">
-                <span class="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center text-gold text-sm">02</span>
-                存储与中间件层 (Storage Layer)
-              </h3>
-              <p class="text-gray-400 text-sm">
-                核心逻辑：API 优先 + 本地缓存双模式。封装 `storage.js` 实现数据双写与读屏蔽，确保数据在离线状态下的连贯性。
-              </p>
-            </div>
-
-            <div class="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-gold/30 transition-all group">
-              <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-3">
-                <span class="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center text-gold text-sm">03</span>
-                基础设施层 (Infra Layer)
-              </h3>
-              <p class="text-gray-400 text-sm">
-                基于微信云托管（Cloud Container）部署，后端采用微服务化设计的 Spring Boot，数据库使用高可用的云托管 MySQL。
-              </p>
-            </div>
-          </div>
-
-          <!-- Stylized Architecture Diagram -->
-          <div class="relative p-8 rounded-2xl bg-[#0a0a0a] border border-white/10 shadow-2xl">
-             <div class="flex flex-col gap-6">
-                <!-- UI -->
-                <div class="p-4 bg-gold/10 border border-gold/30 rounded-lg text-center text-gold font-bold text-xs tracking-tighter">APP UI (Mini Program)</div>
-                <!-- Connector -->
-                <div class="flex justify-center"><div class="w-px h-6 bg-white/10"></div></div>
-                <!-- Business Logic -->
-                <div class="grid grid-cols-2 gap-4">
-                  <div class="p-3 bg-white/5 border border-white/10 rounded-lg text-center text-white text-[10px] flex flex-col items-center gap-2">
-                    <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    API CLIENT
-                  </div>
-                  <div class="p-3 bg-white/5 border border-white/10 rounded-lg text-center text-white text-[10px] flex flex-col items-center gap-2">
-                    <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                    LOCAL STORAGE
-                  </div>
-                </div>
-                <!-- System -->
-                <div class="p-4 bg-white/5 border border-white/20 rounded-lg text-center text-white text-xs font-mono italic">
-                  WECHAT CLOUD CONTAINER
-                </div>
-                <div class="p-3 bg-gold/5 border border-gold/10 rounded-lg text-center text-gray-500 text-[10px]">
-                  SPRING BOOT + MYSQL
-                </div>
-             </div>
-             
-             <!-- Glow -->
-             <div class="absolute inset-0 bg-gold/5 blur-3xl rounded-full z-0 opacity-50"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Technical Code Feature -->
-    <section class="py-24 bg-dark/50 px-4 border-t border-white/5">
-      <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl font-bold text-white mb-4">核心逻辑：自动降级机制</h2>
-          <p class="text-gray-400">当 API 请求失败（由于网络波动或环境异常）时，系统会自动切换至本地持久化层。</p>
-        </div>
-
-        <div class="rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-black/50">
-          <div class="bg-white/5 px-6 py-3 border-b border-white/10 flex items-center justify-between">
-            <span class="text-gray-500 text-xs font-mono uppercase tracking-widest leading-none">utils/storage.js</span>
-            <div class="flex gap-1.5">
-              <div class="w-2.5 h-2.5 rounded-full bg-rose-500/50"></div>
-              <div class="w-2.5 h-2.5 rounded-full bg-gold/50"></div>
-              <div class="w-2.5 h-2.5 rounded-full bg-emerald-500/50"></div>
-            </div>
-          </div>
-          <pre class="p-8 text-sm overflow-x-auto text-gold/80"><code class="font-mono leading-relaxed">{`
-// 网络请求失败时自动降级
+const zhCodeSnippet = `// 网络请求失败时自动降级
 async function getHabits() {
   if (useApi) {
     try {
@@ -245,23 +154,261 @@ async function getHabits() {
     }
   }
   return wx.getStorageSync('habits') || [];
-}
-`}</code></pre>
+}`;
+
+const enCodeSnippet = `// Automatically fall back on request failure
+async function getHabits() {
+  if (useApi) {
+    try {
+      const habits = await api.getHabits();
+      wx.setStorageSync('habits', habits); // sync cache after success
+      return habits;
+    } catch (error) {
+      console.warn('API request failed, falling back to offline mode');
+      return wx.getStorageSync('habits') || []; // offline fallback
+    }
+  }
+  return wx.getStorageSync('habits') || [];
+}`;
+---
+
+<Layout titleZh='督友小程序 | 架构深度解析 · duyou.me' titleEn='DuYou Mini Program | Architecture Deep Dive · duyou.me' descriptionZh='督友小程序架构解析，展示混合云、自律打卡产品设计与弱网自动降级机制。' descriptionEn='An architecture deep dive into the DuYou mini program, covering hybrid cloud design, accountability product strategy, and automatic offline fallback.'>
+  <main class='bg-dark'>
+    <section class='relative pt-32 pb-20 px-4 overflow-hidden'>
+      <div class='absolute inset-0 z-0'>
+        <div class='absolute top-0 right-0 w-[600px] h-[600px] bg-gold/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/4'></div>
+      </div>
+
+      <div class='max-w-5xl mx-auto relative z-10 text-center'>
+        <div class='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 border border-gold/20 text-gold text-xs font-bold tracking-widest uppercase mb-8'>
+          <span class='relative flex h-2 w-2'>
+            <span class='animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75'></span>
+            <span class='relative inline-flex rounded-full h-2 w-2 bg-gold'></span>
+          </span>
+          <span class='lang-zh'>已稳定运行 2+ 年</span>
+          <span class='lang-en hidden'>Stable in production for 2+ years</span>
+        </div>
+        
+        <h1 class='text-4xl md:text-7xl font-bold text-white mb-6'>
+          督友 <span class='text-gold italic'>DuYou</span>
+        </h1>
+        <div class='text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed'>
+          <p class='lang-zh'>
+            一款为“强迫症”设计的轻社群自律监督应用。<br />
+            采用 <span class='text-white border-b border-gold/50'>混合云架构</span>，核心解决弱网 / 断网环境下的数据确定性问题。
+          </p>
+          <p class='lang-en hidden'>
+            A lightweight community accountability app designed for disciplined people who need external pressure to stay consistent.<br />
+            It uses a <span class='text-white border-b border-gold/50'>hybrid cloud architecture</span> to guarantee data consistency under unstable or offline network conditions.
+          </p>
+        </div>
+
+        <div class='flex justify-center gap-6'>
+          <a href='https://github.com/james-yz-xie/duyou-wechat-miniprogram' target='_blank' class='px-8 py-4 bg-gold text-dark font-black tracking-widest hover:scale-105 transition-all shadow-xl shadow-gold/10'>
+            GITHUB REPO
+          </a>
+          <a href='/' class='px-8 py-4 border border-white/20 text-white font-bold hover:bg-white/5 transition-all'>
+            <span class='lang-zh'>返回首页</span>
+            <span class='lang-en hidden'>Back to Home</span>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- Project Timeline Footer Link -->
-    <section class="py-32 px-4 text-center">
-      <div class="max-w-2xl mx-auto">
-        <h3 class="text-2xl font-bold text-white mb-8 italic">“我们无法预知用户何时断网，<br/>但我们可以预知此时代码该如何优雅处理。”</h3>
-        <div class="flex justify-center gap-6">
-           <a href="https://github.com/james-yz-xie/duyou-wechat-miniprogram" target="_blank" class="text-gold underline hover:text-white transition-colors">
-             查看完整源码
-           </a>
-           <a href="/#achievements" class="text-gray-500 hover:text-white transition-colors">
-             返回核心成果
-           </a>
+    <section class='py-24 px-4 relative'>
+      <div class='max-w-5xl mx-auto'>
+        <div class='mb-16 text-center'>
+          <h2 class='text-3xl md:text-5xl font-bold text-white mb-6'>
+            <span class='lang-zh'>产品<span class='text-gold'>内核</span>与规划</span>
+            <span class='lang-en hidden'>Product <span class='text-gold'>Core</span> & Roadmap</span>
+          </h2>
+          <div class='h-1 w-16 bg-gold mx-auto mb-8'></div>
+          <p class='text-2xl md:text-3xl font-serif italic text-white/90'>
+            <span class='lang-zh'>“有人盯，才坚持；坚持着，就遇见”</span>
+            <span class='lang-en hidden'>“Consistency grows when someone is watching, and connection starts when consistency is visible.”</span>
+          </p>
+        </div>
+
+        <div class='grid md:grid-cols-2 gap-12 mb-20'>
+          {strategyCards.map((card) => (
+            <div class='p-8 rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/10'>
+              <h3 class='text-2xl font-bold text-gold mb-4 flex items-center gap-3'>
+                <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  {card.icon === 'shield' ? (
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'></path>
+                  ) : (
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z'></path>
+                  )}
+                </svg>
+                <span class='lang-zh'>{card.title.zh}</span>
+                <span class='lang-en hidden'>{card.title.en}</span>
+              </h3>
+              <p class='text-gray-400 leading-relaxed'>
+                <span class='lang-zh'>{card.body.zh}</span>
+                <span class='lang-en hidden'>{card.body.en}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div class='bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12'>
+          <h3 class='text-xl font-bold text-white mb-10 text-center uppercase tracking-widest'>
+            <span class='lang-zh'>演进路线图</span>
+            <span class='lang-en hidden'>Roadmap</span>
+          </h3>
+          <div class='grid md:grid-cols-3 gap-8 relative'>
+            {roadmap.map((phase) => (
+              <div class='relative z-10'>
+                <div class='text-gold font-bold mb-2'>
+                  <span class='lang-zh'>{phase.phase.zh}</span>
+                  <span class='lang-en hidden'>{phase.phase.en}</span>
+                </div>
+                <div class='text-white font-bold text-lg mb-4'>
+                  <span class='lang-zh'>{phase.title.zh}</span>
+                  <span class='lang-en hidden'>{phase.title.en}</span>
+                </div>
+                <ul class='text-gray-500 text-sm space-y-2'>
+                  <li class='lang-zh'>• {phase.items.zh[0]}</li>
+                  <li class='lang-zh'>• {phase.items.zh[1]}</li>
+                  <li class='lang-zh'>• {phase.items.zh[2]}</li>
+                  <li class='lang-en hidden'>• {phase.items.en[0]}</li>
+                  <li class='lang-en hidden'>• {phase.items.en[1]}</li>
+                  <li class='lang-en hidden'>• {phase.items.en[2]}</li>
+                </ul>
+              </div>
+            ))}
+            <div class='hidden md:block absolute top-12 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent z-0'></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class='py-20 bg-black/40 border-y border-white/5'>
+      <div class='max-w-6xl mx-auto px-4'>
+        <div class='grid md:grid-cols-3 gap-12'>
+          {metrics.map((metric) => (
+            <div class='text-center'>
+              <div class='text-4xl font-bold text-gold mb-2'>
+                <span class='lang-zh'>{metric.value.zh}</span>
+                <span class='lang-en hidden'>{metric.value.en}</span>
+              </div>
+              <p class='text-gray-500 text-sm italic'>
+                <span class='lang-zh'>{metric.detail.zh}</span>
+                <span class='lang-en hidden'>{metric.detail.en}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class='py-24 px-4'>
+      <div class='max-w-5xl mx-auto'>
+        <div class='mb-16'>
+          <h2 class='text-3xl md:text-5xl font-bold text-white mb-6'>
+            <span class='lang-zh'>系统<span class='text-gold'>架构</span>设计</span>
+            <span class='lang-en hidden'>System <span class='text-gold'>Architecture</span></span>
+          </h2>
+          <div class='h-1 w-16 bg-gold mb-8'></div>
+          <p class='text-gray-400 max-w-2xl leading-relaxed italic border-l-2 border-gold/30 pl-6'>
+            <span class='lang-zh'>“架构的价值不仅仅在于功能的实现，更在于系统在极端边界情况下的鲁棒性。”</span>
+            <span class='lang-en hidden'>“The value of architecture is not just feature delivery, but the robustness of the system under extreme boundary conditions.”</span>
+          </p>
+        </div>
+
+        <div class='grid lg:grid-cols-2 gap-16 items-center'>
+          <div class='space-y-8'>
+            {architectureLayers.map((layer) => (
+              <div class='p-6 rounded-xl bg-white/5 border border-white/10 hover:border-gold/30 transition-all group'>
+                <h3 class='text-xl font-bold text-white mb-4 flex items-center gap-3'>
+                  <span class='w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center text-gold text-sm'>{layer.index}</span>
+                  <span class='lang-zh'>{layer.title.zh}</span>
+                  <span class='lang-en hidden'>{layer.title.en}</span>
+                </h3>
+                <p class='text-gray-400 text-sm'>
+                  <span class='lang-zh'>{layer.body.zh}</span>
+                  <span class='lang-en hidden'>{layer.body.en}</span>
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div class='relative p-8 rounded-2xl bg-[#0a0a0a] border border-white/10 shadow-2xl'>
+            <div class='flex flex-col gap-6'>
+              <div class='p-4 bg-gold/10 border border-gold/30 rounded-lg text-center text-gold font-bold text-xs tracking-tighter'>
+                <span class='lang-zh'>应用界面（小程序）</span>
+                <span class='lang-en hidden'>APP UI (Mini Program)</span>
+              </div>
+              <div class='flex justify-center'><div class='w-px h-6 bg-white/10'></div></div>
+              <div class='grid grid-cols-2 gap-4'>
+                <div class='p-3 bg-white/5 border border-white/10 rounded-lg text-center text-white text-[10px] flex flex-col items-center gap-2'>
+                  <svg class='w-4 h-4 text-gold' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 10V3L4 14h7v7l9-11h-7z'></path></svg>
+                  <span class='lang-zh'>API 客户端</span>
+                  <span class='lang-en hidden'>API CLIENT</span>
+                </div>
+                <div class='p-3 bg-white/5 border border-white/10 rounded-lg text-center text-white text-[10px] flex flex-col items-center gap-2'>
+                  <svg class='w-4 h-4 text-gold' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10'></path></svg>
+                  <span class='lang-zh'>本地存储</span>
+                  <span class='lang-en hidden'>LOCAL STORAGE</span>
+                </div>
+              </div>
+              <div class='p-4 bg-white/5 border border-white/20 rounded-lg text-center text-white text-xs font-mono italic'>
+                <span class='lang-zh'>微信云托管容器</span>
+                <span class='lang-en hidden'>WECHAT CLOUD CONTAINER</span>
+              </div>
+              <div class='p-3 bg-gold/5 border border-gold/10 rounded-lg text-center text-gray-500 text-[10px]'>
+                SPRING BOOT + MYSQL
+              </div>
+            </div>
+            <div class='absolute inset-0 bg-gold/5 blur-3xl rounded-full z-0 opacity-50'></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class='py-24 bg-dark/50 px-4 border-t border-white/5'>
+      <div class='max-w-5xl mx-auto'>
+        <div class='text-center mb-16'>
+          <h2 class='text-3xl font-bold text-white mb-4'>
+            <span class='lang-zh'>核心逻辑：自动降级机制</span>
+            <span class='lang-en hidden'>Core Logic: Automatic Fallback Mechanism</span>
+          </h2>
+          <p class='text-gray-400'>
+            <span class='lang-zh'>当 API 请求失败（由于网络波动或环境异常）时，系统会自动切换至本地持久化层。</span>
+            <span class='lang-en hidden'>When API requests fail because of unstable networks or runtime issues, the system automatically switches to the local persistence layer.</span>
+          </p>
+        </div>
+
+        <div class='rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-black/50'>
+          <div class='bg-white/5 px-6 py-3 border-b border-white/10 flex items-center justify-between'>
+            <span class='text-gray-500 text-xs font-mono uppercase tracking-widest leading-none'>utils/storage.js</span>
+            <div class='flex gap-1.5'>
+              <div class='w-2.5 h-2.5 rounded-full bg-rose-500/50'></div>
+              <div class='w-2.5 h-2.5 rounded-full bg-gold/50'></div>
+              <div class='w-2.5 h-2.5 rounded-full bg-emerald-500/50'></div>
+            </div>
+          </div>
+          <pre class='lang-zh p-8 text-sm overflow-x-auto text-gold/80'><code class='font-mono leading-relaxed'>{zhCodeSnippet}</code></pre>
+          <pre class='lang-en hidden p-8 text-sm overflow-x-auto text-gold/80'><code class='font-mono leading-relaxed'>{enCodeSnippet}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class='py-32 px-4 text-center'>
+      <div class='max-w-2xl mx-auto'>
+        <h3 class='text-2xl font-bold text-white mb-8 italic'>
+          <span class='lang-zh'>“我们无法预知用户何时断网，<br />但我们可以预知此时代码该如何优雅处理。”</span>
+          <span class='lang-en hidden'>“We cannot predict when users will lose connection,<br />but we can decide in advance how gracefully the code should respond.”</span>
+        </h3>
+        <div class='flex justify-center gap-6'>
+          <a href='https://github.com/james-yz-xie/duyou-wechat-miniprogram' target='_blank' class='text-gold underline hover:text-white transition-colors'>
+            <span class='lang-zh'>查看完整源码</span>
+            <span class='lang-en hidden'>View Full Source</span>
+          </a>
+          <a href='/#achievements' class='text-gray-500 hover:text-white transition-colors'>
+            <span class='lang-zh'>返回核心成果</span>
+            <span class='lang-en hidden'>Back to Highlights</span>
+          </a>
         </div>
       </div>
     </section>

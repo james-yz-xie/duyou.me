@@ -2,33 +2,69 @@
 const services = [
   {
     title: "Legacy2API",
-    subtitle: "Web 系统接口化 (Browser-Native)",
-    description: "针对无 API 的内网 OA、旧版 CRM 及繁琐的网页系统，利用浏览器复用技术转化为标准化接口。零 Token 运行成本，确保账号环境绝对安全。",
-    features: ["内网穿透与适配", "自动化操作流水线", "确定性执行结果"],
+    subtitle: {
+      zh: "Web 系统接口化 (Browser-Native)",
+      en: "Web System Interface (Browser-Native)"
+    },
+    description: {
+      zh: "针对无 API 的内网 OA、旧版 CRM 及繁琐的网页系统，利用浏览器复用技术转化为标准化接口。零 Token 运行成本，确保账号环境绝对安全。",
+      en: "Standardize interfaces for internal OA, legacy CRM, and complex web systems without APIs using browser reuse technology. Zero token cost, ensuring absolute account security."
+    },
+    features: {
+      zh: ["内网穿透与适配", "自动化操作流水线", "确定性执行结果"],
+      en: ["Intranet Penetration & Adaptation", "Automated Operation Pipeline", "Deterministic Execution Results"]
+    },
     icon: "🌐",
     color: "gold"
   },
   {
     title: "App-Native",
-    subtitle: "专业软件 AI 赋能 (Automation-Engine)",
-    description: "通过 7 阶段自动化管道，将 CAD、ERP 客户端、财务软件等复杂桌面端工具“命令行化”，让 AI 代理能够调用真实软件后端完成任务。",
-    features: ["跨平台桌面端适配", "软件逻辑深度抽象", "复杂工作流自动化"],
+    subtitle: {
+      zh: "专业软件 AI 赋能 (Automation-Engine)",
+      en: "Professional Software AI Empowerment"
+    },
+    description: {
+      zh: "通过 7 阶段自动化管道，将 CAD、ERP 客户端、财务软件等复杂桌面端工具“命令行化”，让 AI 代理能够调用真实软件后端完成任务。",
+      en: "Convert complex desktop tools like CAD, ERP, and financial software into 'command-line' versions via a 7-stage pipeline, allowing AI agents to call real software backends."
+    },
+    features: {
+      zh: ["跨平台桌面端适配", "软件逻辑深度抽象", "复杂工作流自动化"],
+      en: ["Cross-platform Desktop Adaptation", "Deep Software Logic Abstraction", "Complex Workflow Automation"]
+    },
     icon: "💻",
     color: "gold"
   },
   {
     title: "Private-Compute",
-    subtitle: "安全算力环境部署 (Cloud/Hybrid)",
-    description: "为企业提供私有化大模型部署方案（DeepSeek / Llama 等），支持混合云架构，确保敏感业务数据不出内网，建立企业级安全防线。",
-    features: ["模型私有化微调", "内网环境深度调试", "混合云算力调度"],
+    subtitle: {
+      zh: "安全算力环境部署 (Cloud/Hybrid)",
+      en: "Secure Computing Environment (Cloud/Hybrid)"
+    },
+    description: {
+      zh: "为企业提供私有化大模型部署方案（DeepSeek / Llama 等），支持混合云架构，确保敏感业务数据不出内网，建立企业级安全防线。",
+      en: "Private LLM deployment (DeepSeek / Llama, etc.) with hybrid cloud support. Ensures sensitive data stays within the intranet, establishing enterprise-grade security."
+    },
+    features: {
+      zh: ["模型私有化微调", "内网环境深度调试", "混合云算力调度"],
+      en: ["Private Model Fine-tuning", "Intranet Environment Debugging", "Hybrid Cloud Computing Scheduling"]
+    },
     icon: "🛡️",
     color: "gold"
   },
   {
     title: "Unified-Agent",
-    subtitle: "AI Agent 平台整合 (Service-Hub)",
-    description: "通过统一指挥中心整合所有工具资产。利用自定义技能库（SKILL.md）实现企业能力的数字化沉淀，让 AI 代理具备可发现、可学习的进化能力。",
-    features: ["CLI-Hub 工具聚合", "企业专属技能库建设", "员工 AI 使用培训"],
+    subtitle: {
+      zh: "AI Agent 平台整合 (Service-Hub)",
+      en: "AI Agent Platform Integration (Service-Hub)"
+    },
+    description: {
+      zh: "通过统一指挥中心整合所有工具资产。利用自定义技能库（SKILL.md）实现企业能力的数字化沉淀，让 AI 代理具备可发现、可学习的进化能力。",
+      en: "Integrate all tool assets through a unified command center. Use custom skill libraries (SKILL.md) for digital capability accumulation, enabling AI agents to evolve."
+    },
+    features: {
+      zh: ["CLI-Hub 工具聚合", "企业专属技能库建设", "员工 AI 使用培训"],
+      en: ["CLI-Hub Tool Aggregation", "Enterprise Skill Library Building", "AI Usage Training for Employees"]
+    },
     icon: "🏗️",
     color: "gold"
   }
@@ -39,12 +75,20 @@ const services = [
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-20">
       <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
-        核心服务<span class="text-gold">模块</span>
+        <span class="lang-zh">核心服务<span class="text-gold">模块</span></span>
+        <span class="lang-en hidden">Core Service <span class="text-gold">Modules</span></span>
       </h2>
       <div class="h-1 w-16 bg-gold mx-auto mb-8"></div>
-      <p class="text-gray-400 max-w-2xl mx-auto text-lg">
-        从底层的算力基建，到顶层的软件赋能，我们提供端到端的“企业信息 AI 化”解决方案。
-      </p>
+      <div class="lang-zh">
+        <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+          从底层的算力基建，到顶层的软件赋能，我们提供端到端的“企业信息 AI 化”解决方案。
+        </p>
+      </div>
+      <div class="lang-en hidden">
+        <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+          From infrastructure to software empowerment, we provide end-to-end "Enterprise Information AI-fication" solutions.
+        </p>
+      </div>
     </div>
 
     <div class="grid md:grid-cols-2 gap-8">
@@ -59,17 +103,23 @@ const services = [
             </div>
             
             <h3 class="text-gold font-bold tracking-widest text-sm mb-2 uppercase">{service.title}</h3>
-            <h4 class="text-2xl font-bold text-white mb-4">{service.subtitle}</h4>
+            
+            <h4 class="text-2xl font-bold text-white mb-4">
+              <span class="lang-zh">{service.subtitle.zh}</span>
+              <span class="lang-en hidden">{service.subtitle.en}</span>
+            </h4>
             
             <p class="text-gray-400 mb-8 leading-relaxed text-sm h-24">
-              {service.description}
+              <span class="lang-zh">{service.description.zh}</span>
+              <span class="lang-en hidden">{service.description.en}</span>
             </p>
             
             <ul class="space-y-3 border-t border-white/10 pt-6">
-              {service.features.map(feature => (
+              {service.features.zh.map((feature, idx) => (
                 <li class="flex items-center gap-3 text-xs text-gray-300">
                   <span class="w-1.5 h-1.5 bg-gold rounded-full shadow-[0_0_8px_gold]"></span>
-                  {feature}
+                  <span class="lang-zh">{feature}</span>
+                  <span class="lang-en hidden">{service.features.en[idx]}</span>
                 </li>
               ))}
             </ul>

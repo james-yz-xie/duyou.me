@@ -1,29 +1,44 @@
 ---
 const tiers = [
   {
-    name: "私有算力环境部署",
-    mode: "一次性实施费",
-    desc: "含私有模型部署、微调、内网环境调试及混合云架构设计。"
+    name: { zh: "私有算力环境部署", en: "Private Compute Deployment" },
+    mode: { zh: "一次性实施费", en: "One-time Fee" },
+    desc: { 
+      zh: "含私有模型部署、微调、内网环境调试及混合云架构设计。",
+      en: "Includes private model deployment, fine-tuning, intranet debugging, and hybrid cloud design."
+    }
   },
   {
-    name: "专业软件 CLI 化适配",
-    mode: "案软件复杂度",
-    desc: "针对如 CAD、ERP 客户端等桌面软件，执行 7 阶段自动化管道。"
+    name: { zh: "专业软件 CLI 化适配", en: "Software CLI Adaptation" },
+    mode: { zh: "按软件复杂度", en: "By Complexity" },
+    desc: { 
+      zh: "针对如 CAD、ERP 客户端等桌面软件，执行 7 阶段自动化管道。",
+      en: "For desktop software like CAD/ERP, executing a 7-stage automation pipeline."
+    }
   },
   {
-    name: "Web 系统接口化适配",
-    mode: "按适配器数量",
-    desc: "针对 OA/CRM 等 Web 系统，包含适配器生成、验证及防检测配置。"
+    name: { zh: "Web 系统接口化适配", en: "Web System Interface" },
+    mode: { zh: "按适配器数量", en: "By Adapters" },
+    desc: { 
+      zh: "针对 OA/CRM 等 Web 系统，包含适配器生成、验证及防检测配置。",
+      en: "For web systems like OA/CRM, including generation, validation, and anti-detection."
+    }
   },
   {
-    name: "AI Agent 平台集成",
-    mode: "一次性实施费",
-    desc: "整合所有工具至 CLI-Hub，由专属技能库（SKILL.md）提供发现能力。"
+    name: { zh: "AI Agent 平台集成", en: "AI Agent Integration" },
+    mode: { zh: "一次性实施费", en: "One-time Fee" },
+    desc: { 
+      zh: "整合所有工具至 CLI-Hub，由专属技能库（SKILL.md）提供发现能力。",
+      en: "Integrating all tools into CLI-Hub, enabled by exclusive skill libraries (SKILL.md)."
+    }
   },
   {
-    name: "年度技术服务/维护",
-    mode: "年度订阅 (可选)",
-    desc: "包含 UI/逻辑变更后的适配器更新、模型版本升级及远程支持。"
+    name: { zh: "年度技术服务/维护", en: "Annual Maintenance" },
+    mode: { zh: "年度订阅 (可选)", en: "Annual (Optional)" },
+    desc: { 
+      zh: "包含 UI/逻辑变更后的适配器更新、模型版本升级及远程支持。",
+      en: "Includes adapter updates for UI changes, model upgrades, and remote support."
+    }
   }
 ];
 ---
@@ -31,8 +46,16 @@ const tiers = [
 <section class="bg-dark py-24 px-4 overflow-hidden">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold text-white mb-4">服务范畴与<span class="text-gold">合作模式</span></h2>
-      <p class="text-gray-400">所有服务项目均支持分阶段迭代，助力企业以最小试错成本进入 AI 化轨道。</p>
+      <h2 class="text-3xl font-bold text-white mb-4">
+        <span class="lang-zh">服务范畴与<span class="text-gold">合作模式</span></span>
+        <span class="lang-en hidden">Service Scope & <span class="text-gold">Business Model</span></span>
+      </h2>
+      <div class="lang-zh">
+        <p class="text-gray-400">所有服务项目均支持分阶段迭代，助力企业以最小试错成本进入 AI 化轨道。</p>
+      </div>
+      <div class="lang-en hidden">
+        <p class="text-gray-400">All services support phased iteration, helping enterprises enter the AI track with minimum trial costs.</p>
+      </div>
     </div>
 
     <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl">
@@ -40,31 +63,56 @@ const tiers = [
         <table class="w-full text-left border-collapse">
           <thead>
             <tr class="border-b border-white/10 bg-gold/5">
-              <th class="p-6 text-gold text-sm font-bold uppercase tracking-wider">服务项目</th>
-              <th class="p-6 text-gold text-sm font-bold uppercase tracking-wider">交付模式</th>
-              <th class="p-6 text-gold text-sm font-bold uppercase tracking-wider">业务明细说明</th>
+              <th class="p-6 text-gold text-sm font-bold uppercase tracking-wider">
+                <span class="lang-zh">服务项目</span>
+                <span class="lang-en hidden">Service Item</span>
+              </th>
+              <th class="p-6 text-gold text-sm font-bold uppercase tracking-wider">
+                <span class="lang-zh">交付模式</span>
+                <span class="lang-en hidden">Delivery Mode</span>
+              </th>
+              <th class="p-6 text-gold text-sm font-bold uppercase tracking-wider">
+                <span class="lang-zh">业务明细说明</span>
+                <span class="lang-en hidden">Business Details</span>
+              </th>
             </tr>
           </thead>
           <tbody class="text-gray-300">
             {tiers.map(tier => (
               <tr class="border-b border-white/5 hover:bg-white/5 transition-colors group">
-                <td class="p-6 font-bold text-white group-hover:text-gold transition-colors whitespace-nowrap">{tier.name}</td>
-                <td class="p-6 text-sm">{tier.mode}</td>
-                <td class="p-6 text-sm text-gray-400 leading-relaxed">{tier.desc}</td>
+                <td class="p-6 font-bold text-white group-hover:text-gold transition-colors whitespace-nowrap">
+                  <span class="lang-zh">{tier.name.zh}</span>
+                  <span class="lang-en hidden">{tier.name.en}</span>
+                </td>
+                <td class="p-6 text-sm">
+                  <span class="lang-zh">{tier.mode.zh}</span>
+                  <span class="lang-en hidden">{tier.mode.en}</span>
+                </td>
+                <td class="p-6 text-sm text-gray-400 leading-relaxed">
+                  <span class="lang-zh">{tier.desc.zh}</span>
+                  <span class="lang-en hidden">{tier.desc.en}</span>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
       <div class="p-6 bg-gold/5 text-center text-xs text-gray-400">
-        所有商业合作均通过详细业务评估后确定具体落地路径，确保 100% 交付确定性。
+        <span class="lang-zh">所有商业合作均通过详细业务评估后确定具体落地路径，确保 100% 交付确定性。</span>
+        <span class="lang-en hidden">All collaborations determine the specific implementation path after a detailed assessment, ensuring 100% delivery certainty.</span>
       </div>
     </div>
     
     <div class="mt-16 text-center">
       <div class="inline-flex items-center gap-6 p-6 rounded-lg border border-gold/20 bg-gold/5">
-         <span class="text-gold font-bold">💡 核心护城河：</span>
-         <span class="text-gray-300 text-sm">为您积累的专属企业技能库（SKILL.md）是无法被复制的数字化资产。</span>
+         <span class="text-gold font-bold">💡 
+           <span class="lang-zh">核心护城河：</span>
+           <span class="lang-en hidden">Core Moat:</span>
+         </span>
+         <span class="text-gray-300 text-sm">
+           <span class="lang-zh">为您积累的专属企业技能库（SKILL.md）是无法被复制的数字化资产。</span>
+           <span class="lang-en hidden">The exclusive enterprise skill library (SKILL.md) accumulated for you is an irreplaceable digital asset.</span>
+         </span>
       </div>
     </div>
   </div>
