@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0d14" />
+      <stop offset="100%" stop-color="#19130d" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="1025" cy="118" r="170" fill="#d4af37" opacity="0.14" />
+  <circle cx="920" cy="148" r="96" fill="#60a5fa" opacity="0.14" />
+  <rect x="72" y="68" width="210" height="38" rx="19" fill="#60a5fa" opacity="0.14" stroke="#60a5fa" stroke-opacity="0.45" />
+  <text x="98" y="93" fill="#bfdbfe" font-size="20" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">DuYou Mini Program</text>
+  <text x="72" y="210" fill="#ffffff" font-size="74" font-weight="700" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">督友小程序</text>
+  <text x="72" y="276" fill="#d4af37" font-size="38" font-weight="600" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">Hybrid Cloud · Accountability · Offline Fallback</text>
+  <rect x="72" y="322" width="430" height="4" rx="2" fill="#d4af37" />
+  <text x="72" y="390" fill="#e5e7eb" font-size="28" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">为自律监督而设计的轻社群应用与架构深度解析</text>
+  <text x="72" y="438" fill="#9ca3af" font-size="24" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">Product strategy and system design for a reliable habit accountability app.</text>
+  <text x="72" y="548" fill="#ffffff" font-size="24" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">James Xie · duyou.me</text>
+</svg>

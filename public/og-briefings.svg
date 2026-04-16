@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b0b10" />
+      <stop offset="100%" stop-color="#15161e" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="1025" cy="115" r="165" fill="#d4af37" opacity="0.14" />
+  <circle cx="980" cy="170" r="70" fill="#ffffff" opacity="0.05" />
+  <rect x="72" y="68" width="204" height="38" rx="19" fill="#d4af37" opacity="0.14" stroke="#d4af37" stroke-opacity="0.45" />
+  <text x="98" y="93" fill="#f5d77f" font-size="20" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">AI Frontier Weekly</text>
+  <text x="72" y="210" fill="#ffffff" font-size="74" font-weight="700" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">AI 前沿周报</text>
+  <text x="72" y="276" fill="#d4af37" font-size="38" font-weight="600" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">Big Tech · Academia · Community Engineering</text>
+  <rect x="72" y="322" width="448" height="4" rx="2" fill="#d4af37" />
+  <text x="72" y="390" fill="#e5e7eb" font-size="28" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">汇总大厂动态、学术进展与社区工程趋势</text>
+  <text x="72" y="438" fill="#9ca3af" font-size="24" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">A weekly signal board for frontier AI moves, research, and tooling.</text>
+  <text x="72" y="548" fill="#ffffff" font-size="24" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">duyou.me</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#09100d" />
+      <stop offset="100%" stop-color="#0f1914" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="1015" cy="122" r="170" fill="#34d399" opacity="0.18" />
+  <circle cx="140" cy="530" r="180" fill="#34d399" opacity="0.08" />
+  <rect x="72" y="68" width="228" height="38" rx="19" fill="#34d399" opacity="0.14" stroke="#34d399" stroke-opacity="0.45" />
+  <text x="98" y="93" fill="#a7f3d0" font-size="20" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">Open Source Weekly</text>
+  <text x="72" y="210" fill="#ffffff" font-size="74" font-weight="700" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">开源热点周报</text>
+  <text x="72" y="276" fill="#34d399" font-size="38" font-weight="600" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">AI Agents · Dev Tools · Multimodal · Infrastructure</text>
+  <rect x="72" y="322" width="460" height="4" rx="2" fill="#34d399" />
+  <text x="72" y="390" fill="#e5e7eb" font-size="28" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">聚焦最有潜力的开源基础设施与 Agent 生态</text>
+  <text x="72" y="438" fill="#9ca3af" font-size="24" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">A curated signal board for high-potential open-source projects.</text>
+  <text x="72" y="548" fill="#ffffff" font-size="24" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">duyou.me</text>
+</svg>

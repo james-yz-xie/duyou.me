@@ -9,6 +9,9 @@ interface Props {
   description?: string;
   descriptionZh?: string;
   descriptionEn?: string;
+  ogImage?: string;
+  ogImageAltZh?: string;
+  ogImageAltEn?: string;
 }
 
 const { 
@@ -17,7 +20,10 @@ const {
   titleEn = 'DuYou - AI Indie Developer',
   description,
   descriptionZh = '一人公司展示墙 - eBay支付和AI专家，现为AI独立开发者，专注于督友项目',
-  descriptionEn = 'A solo builder showcase by James Xie, former eBay payments technical lead and AI indie developer focused on DuYou and enterprise AI delivery.'
+  descriptionEn = 'A solo builder showcase by James Xie, former eBay payments technical lead and AI indie developer focused on DuYou and enterprise AI delivery.',
+  ogImage = '/og-home.svg',
+  ogImageAltZh,
+  ogImageAltEn
 } = Astro.props;
 
 // If title is provided, use it for both for backward compatibility
@@ -27,7 +33,11 @@ const finalDescriptionZh = description || descriptionZh;
 const finalDescriptionEn = descriptionEn || (description ? description : descriptionEn);
 const siteUrl = 'https://duyou.me';
 const finalUrl = new URL(Astro.url.pathname, siteUrl).toString();
-const finalShareImage = `${siteUrl}/delivery_hero.png`;
+const finalShareImage = new URL(ogImage, siteUrl).toString();
+const finalShareImageAltZh = ogImageAltZh || `${finalTitleZh} 分享图`;
+const finalShareImageAltEn = ogImageAltEn || `${finalTitleEn} social sharing image`;
+const finalShareImageWidth = '1200';
+const finalShareImageHeight = '630';
 ---
 
 <!doctype html>
@@ -43,12 +53,16 @@ const finalShareImage = `${siteUrl}/delivery_hero.png`;
     <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:url" content={finalUrl} />
     <meta property="og:image" content={finalShareImage} />
+    <meta property="og:image:width" content={finalShareImageWidth} />
+    <meta property="og:image:height" content={finalShareImageHeight} />
+    <meta property="og:image:alt" data-zh={finalShareImageAltZh} data-en={finalShareImageAltEn} content={finalShareImageAltZh} />
     <meta property="og:title" data-zh={finalTitleZh} data-en={finalTitleEn} content={finalTitleZh} />
     <meta property="og:description" data-zh={finalDescriptionZh} data-en={finalDescriptionEn} content={finalDescriptionZh} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@amirightnowok" />
     <meta name="twitter:creator" content="@amirightnowok" />
     <meta name="twitter:image" content={finalShareImage} />
+    <meta name="twitter:image:alt" data-zh={finalShareImageAltZh} data-en={finalShareImageAltEn} content={finalShareImageAltZh} />
     <meta name="twitter:title" data-zh={finalTitleZh} data-en={finalTitleEn} content={finalTitleZh} />
     <meta name="twitter:description" data-zh={finalDescriptionZh} data-en={finalDescriptionEn} content={finalDescriptionZh} />
     <title data-zh={finalTitleZh} data-en={finalTitleEn}>{finalTitleZh}</title>
@@ -90,8 +104,10 @@ const finalShareImage = `${siteUrl}/delivery_hero.png`;
         const metaPairs = [
           'meta[property="og:title"]',
           'meta[property="og:description"]',
+          'meta[property="og:image:alt"]',
           'meta[name="twitter:title"]',
-          'meta[name="twitter:description"]'
+          'meta[name="twitter:description"]',
+          'meta[name="twitter:image:alt"]'
         ];
 
         metaPairs.forEach((selector) => {

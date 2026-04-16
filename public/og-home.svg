@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b0b10" />
+      <stop offset="100%" stop-color="#17141f" />
+    </linearGradient>
+    <radialGradient id="glow" cx="0.8" cy="0.2" r="0.9">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+  <circle cx="1030" cy="120" r="150" fill="#d4af37" opacity="0.12" />
+  <circle cx="180" cy="540" r="180" fill="#ffffff" opacity="0.04" />
+  <rect x="72" y="68" width="170" height="38" rx="19" fill="#d4af37" opacity="0.14" stroke="#d4af37" stroke-opacity="0.45" />
+  <text x="98" y="93" fill="#f5d77f" font-size="20" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">duyou.me</text>
+  <text x="72" y="205" fill="#ffffff" font-size="76" font-weight="700" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">独有·我</text>
+  <text x="72" y="270" fill="#d4af37" font-size="40" font-weight="600" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">Duyou · Me</text>
+  <text x="72" y="350" fill="#e5e7eb" font-size="30" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">AI 研究 · 企业 AI 技能递送 · 督友项目</text>
+  <text x="72" y="398" fill="#9ca3af" font-size="25" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">AI Research · Enterprise AI Delivery · DuYou</text>
+  <rect x="72" y="438" width="360" height="4" rx="2" fill="#d4af37" />
+  <text x="72" y="515" fill="#f3f4f6" font-size="24" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">支付与 AI 专家 James Xie 的个人站点</text>
+  <text x="72" y="555" fill="#9ca3af" font-size="20" font-family="'SF Pro Display','PingFang SC','Helvetica Neue',Arial,sans-serif">Former eBay payments technical lead · AI indie developer</text>
+</svg>

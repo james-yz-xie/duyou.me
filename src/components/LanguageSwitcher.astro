@@ -12,11 +12,17 @@
   const toggleBtn = document.getElementById('language-toggle');
   const langKey = 'preferredLanguage';
   
+  function detectBrowserLanguage() {
+    const browserLang = navigator.languages?.[0] || navigator.language || 'zh';
+    return browserLang.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+  }
+
   // 初始化语言
   function initLanguage() {
-    const savedLang = localStorage.getItem(langKey) || 'zh';
-    document.documentElement.lang = savedLang;
-    updateContent(savedLang);
+    const savedLang = localStorage.getItem(langKey);
+    const initialLang = savedLang || detectBrowserLanguage();
+    document.documentElement.lang = initialLang;
+    updateContent(initialLang);
   }
   
   // 切换语言
