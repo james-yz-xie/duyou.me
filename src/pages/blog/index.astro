@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Layout 
+  titleZh="Solo 日志 | 谢灵江" 
+  titleEn="Solo Log | James Xie" 
+  descriptionZh="谢灵江的 Solo 开发日志，记录一人公司的成长与思考。" 
+  descriptionEn="James Xie's solo development log, documenting the growth and reflections of a one-person company."
+  ogImage="/og-home.svg"
+>
+  <section class="bg-dark px-4 py-20 min-h-screen">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-4xl font-bold text-center mb-4 text-white">
+        <span class="lang-zh">Solo <span class="text-gold">日志</span></span>
+        <span class="lang-en hidden">Solo <span class="text-gold">Log</span></span>
+      </h1>
+      <p class="text-center text-gray-400 mb-12">
+        <span class="lang-zh">记录一人公司的成长与思考</span>
+        <span class="lang-en hidden">Documenting the growth and reflections of a one-person company</span>
+      </p>
+      <div class="h-1 w-16 bg-gold mx-auto mb-16"></div>
+
+      {sortedPosts.length > 0 ? (
+        <div class="space-y-8">
+          {sortedPosts.map((post) => (
+            <article class="group p-6 border-l-2 border-gold/30 hover:border-gold transition-colors hover:bg-dark/50">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="text-lg font-bold text-white group-hover:text-gold transition-colors">
+                  <span class="lang-zh">{post.data.title.zh}</span>
+                  <span class="lang-en hidden">{post.data.title.en}</span>
+                </h3>
+                <span class="text-sm text-gray-500 whitespace-nowrap ml-4">
+                  {post.data.date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </span>
+              </div>
+              <p class="text-gray-400 mb-4">
+                <span class="lang-zh">{post.data.description.zh}</span>
+                <span class="lang-en hidden">{post.data.description.en}</span>
+              </p>
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-3 py-1 text-xs bg-gold/10 text-gold rounded-full">{post.data.category}</span>
+                {post.data.tags?.map((tag) => (
+                  <span class="px-3 py-1 text-xs bg-white/5 text-gray-400 rounded-full">{tag}</span>
+                ))}
+              </div>
+              <a href={`/blog/${post.slug}`} class="inline-block text-gold hover:text-white transition-colors text-sm font-semibold">
+                <span class="lang-zh">阅读全文 →</span>
+                <span class="lang-en hidden">Read more →</span>
+              </a>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-20">
+          <p class="text-gray-500">
+            <span class="lang-zh">暂无博客文章</span>
+            <span class="lang-en hidden">No blog posts yet</span>
+          </p>
+        </div>
+      )}
+
+      <div class="text-center mt-12">
+        <a href="/" class="inline-block px-8 py-3 border-2 border-gold text-gold hover:bg-gold hover:text-dark transition-all font-semibold">
+          <span class="lang-zh">返回首页</span>
+          <span class="lang-en hidden">Back to Home</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <Footer />
+</Layout>
