@@ -4,7 +4,7 @@ title:
   en: "WeChat Official Account Launch: The Birth of AI Deep Analysis Notes"
 description:
   zh: "记录「谢先生的AI深析札记」公众号的创立过程和初期规划。"
-  en: "Documenting the creation process and initial planning of the "Mr. Xie's AI Deep Analysis Notes" WeChat official account."
+  en: "Documenting the creation process and initial planning of the 'Mr. Xie's AI Deep Analysis Notes' WeChat official account."
 date: "2026-01-15"
 category: "里程碑"
 tags:
