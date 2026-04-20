@@ -4,7 +4,7 @@ title:
   en: "Video Account Operation: The Path of AI-Driven Health Science Popularization"
 description:
   zh: "记录「黄帝内经每天趣味一分钟」视频号的运营历程和AI应用。"
-  en: "Documenting the operation journey and AI application of the "Huangdi Neijing One Fun Minute Daily" video account."
+  en: "Documenting the operation journey and AI application of the 'Huangdi Neijing One Fun Minute Daily' video account."
 date: "2026-02-10"
 category: "里程碑"
 tags:
