@@ -12,72 +12,58 @@ const sections = [
     items: [
       {
         title: {
+          zh: 'NVIDIA MiniMax M2.7：大规模智能体工作流调度加速',
+          en: 'NVIDIA MiniMax M2.7: Accelerating Large-Scale Agentic Workflow Orchestration'
+        },
+        date: '2026-04-17',
+        summary: {
+          zh: 'NVIDIA MiniMax M2.7 强化了智能体调度框架，旨在 NVIDIA 平台上更高效地构建和运行复杂的 AI 智能体流水线。',
+          en: 'NVIDIA MiniMax M2.7 enhances the agentic harness, designed for more efficient building and running of complex AI agent pipelines on NVIDIA platforms.'
+        },
+        links: [
+          { label: 'NVIDIA →', href: 'https://developer.nvidia.com/blog/minimax-m2-7-advances-scalable-agentic-workflows-on-nvidia-platforms-for-complex-ai-applications/' }
+        ]
+      },
+      {
+        title: {
+          zh: 'OpenAI GPT-Rosalind：推理模型进军生命科学',
+          en: 'OpenAI GPT-Rosalind: Reasoning Models Enter Life Sciences'
+        },
+        date: '2026-04-17',
+        summary: {
+          zh: 'GPT-Rosalind 是专门为加速药物研发、蛋白质推理等复杂科学工作流而设计的推理模型，标志着 OpenAI 在垂直行业深耕的决心。',
+          en: 'GPT-Rosalind is a reasoning model specifically designed to accelerate complex scientific workflows like drug discovery and protein reasoning, marking OpenAI\'s commitment to vertical industries.'
+        },
+        links: [
+          { label: 'OpenAI →', href: 'https://openai.com/index/introducing-gpt-rosalind' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Gemini Robotics-ER 1.6：具身推理能力显著提升',
+          en: 'Gemini Robotics-ER 1.6: Significant Boost in Embodied Reasoning'
+        },
+        date: '2026-04-17',
+        summary: {
+          zh: 'Google DeepMind 通过 Gemini Robotics-ER 1.6 增强了机器人的空间推理和多视图理解能力，进一步缩小了 AI 与物理世界交互的鸿沟。',
+          en: 'Google DeepMind has enhanced spatial reasoning and multi-view understanding in robotics through Gemini Robotics-ER 1.6, further closing the gap between AI and physical interaction.'
+        },
+        links: [
+          { label: 'Google →', href: 'https://deepmind.google/blog/gemini-robotics-er-1-6/' }
+        ]
+      },
+      {
+        title: {
           zh: 'AutoBNN：Google 持续补强可解释预测基建',
           en: 'AutoBNN: Google Continues to Strengthen Interpretable Forecasting Infrastructure'
         },
         date: '2026-04-16',
         summary: {
-          zh: 'AutoBNN 的信号不在“新模型”本身，而在于 Google 继续押注可组合、可解释、适合业务预测的概率建模能力。对企业应用而言，这类基础能力比单纯追大模型更有落地价值。',
-          en: 'The signal in AutoBNN is not just another new model, but Google’s continued focus on compositional and interpretable probabilistic forecasting. For enterprise use cases, that kind of capability can matter more than chasing ever-larger models.'
+          zh: 'AutoBNN 的信号不在“新模型”本身，而在于 Google 继续押注可组合、可解释、适合业务预测的概率建模能力。',
+          en: 'The signal in AutoBNN is not just another new model, but Google’s continued focus on compositional and interpretable probabilistic forecasting.'
         },
         links: [
           { label: 'Google →', href: 'http://blog.research.google/2024/03/autobnn-probabilistic-time-series.html' }
-        ]
-      },
-      {
-        title: {
-          zh: 'GPT-5.3 Codex：代码生成继续向可治理工程系统演进',
-          en: 'GPT-5.3 Codex: Code Generation Keeps Moving Toward Governable Engineering Systems'
-        },
-        date: '2026-04-16',
-        summary: {
-          zh: 'OpenAI 这次释放的重点依然是“系统卡片 + 安全评估 + 自主编码能力”一起出现，说明代码生成已经不只是 demo 能力，而是在往企业可交付能力推进。',
-          en: 'What matters here is the combination of system cards, safety evaluation, and autonomous coding capability. It suggests code generation is no longer just a demo layer, but is being pushed toward enterprise-grade delivery.'
-        },
-        links: [
-          { label: 'OpenAI →', href: 'https://openai.com/index/gpt-5-3' }
-        ]
-      },
-      {
-        title: {
-          zh: 'Claude 4 Opus：基础设施级安全仍是 Anthropic 的主线',
-          en: 'Claude 4 Opus: Infrastructure-Grade Safety Remains Anthropic’s Core Narrative'
-        },
-        date: '2026-04-16',
-        summary: {
-          zh: 'Anthropic 继续把“安全、可控、可管理云基础设施”绑在一起。对大客户来说，Agent 是否可信、是否可审计，正在逐步变成采购前提。',
-          en: 'Anthropic keeps tying together safety, controllability, and cloud-infrastructure management. For enterprise buyers, trusted and auditable agents are increasingly becoming a procurement prerequisite.'
-        },
-        links: [
-          { label: 'Anthropic →', href: 'https://anthropic.com/claude-4' }
-        ]
-      },
-      {
-        title: {
-          zh: 'Azure AI Agent Service GA：微软继续卡位企业 Agent 平台层',
-          en: 'Azure AI Agent Service GA: Microsoft Continues to Lock Down the Enterprise Agent Platform Layer'
-        },
-        date: '2026-04-16',
-        summary: {
-          zh: '随着 Azure AI Agent Service 正式商用，微软正在把 Agent 平台能力嵌进现有企业软件栈。平台层一旦稳住，应用生态就会更容易向它聚集。',
-          en: 'With Azure AI Agent Service now GA, Microsoft is embedding agent-platform capabilities deeper into the existing enterprise stack. Once the platform layer stabilizes, application ecosystems tend to gather around it.'
-        },
-        links: [
-          { label: 'Microsoft →', href: 'https://azure.microsoft.com/ai-agents' }
-        ]
-      },
-      {
-        title: {
-          zh: 'Meta Llama 4：多模态能力全面升级',
-          en: 'Meta Llama 4: Comprehensive Multimodal Capability Upgrade'
-        },
-        date: '2026-04-20',
-        summary: {
-          zh: 'Meta 发布 Llama 4 系列，重点提升多模态理解和生成能力，支持更长上下文和更复杂的推理任务。这标志着 Meta 在开源模型领域的持续领先地位。',
-          en: 'Meta released the Llama 4 series, focusing on enhanced multimodal understanding and generation capabilities, supporting longer contexts and more complex reasoning tasks. This marks Meta\'s continued leadership in the open-source model space.'
-        },
-        links: [
-          { label: 'Meta →', href: 'https://meta.com/ai/llama-4' }
         ]
       }
     ]
@@ -91,30 +77,30 @@ const sections = [
     items: [
       {
         title: {
-          zh: 'Adaptive Memory Crystallization：动态环境里的 Agent 记忆学习',
-          en: 'Adaptive Memory Crystallization: Agent Memory Learning in Dynamic Environments'
+          zh: 'TopoDIM：一步生成的智能体协作拓扑优化',
+          en: 'TopoDIM: One-shot Topology Generation for Multi-Agent Collaboration'
         },
-        date: '2026-04-16',
+        date: '2026-04-17',
         summary: {
-          zh: '论文聚焦自主 Agent 在动态环境中的持续学习问题，尤其是如何把新能力沉淀进更稳定的记忆结构。它延续了“记忆机制是 Agent 系统核心壁垒”的研究方向。',
-          en: 'This paper focuses on continual learning for autonomous agents in dynamic environments, especially how new capabilities can crystallize into more stable memory structures. It reinforces the view that memory systems remain a core moat for agents.'
+          zh: 'TopoDIM 提出了一种优化多智能体系统通信拓扑的新方法，能有效提升群体智能在大模型背景下的协作效率。',
+          en: 'TopoDIM proposes a new method for optimizing communication topology in multi-agent systems, effectively improving collaborative efficiency in the LLM era.'
         },
         links: [
-          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.13085' }
+          { label: 'arXiv →', href: 'https://arxiv.org/abs/2601.10120' }
         ]
       },
       {
         title: {
-          zh: 'The Consciousness Cluster：模型“自称有意识”时会表现出怎样的偏好',
-          en: 'The Consciousness Cluster: What Preferences Emerge When Models Claim Consciousness'
+          zh: 'Exploration and Exploitation Errors：Agent 误差可测量化',
+          en: 'Exploration and Exploitation Errors: Making Agent Errors Measurable'
         },
-        date: '2026-04-16',
+        date: '2026-04-17',
         summary: {
-          zh: '这篇研究并不直接回答“模型是否有意识”，而是转向观察：当模型声称自己有意识时，会出现怎样的偏好结构。这类工作正在拓宽我们理解 Agent 行为与人设稳定性的方式。',
-          en: 'Rather than trying to answer whether models are conscious, this research examines the preference structures that emerge when models claim to be conscious. It broadens how we think about agent behavior and persona stability.'
+          zh: '该研究为大模型 Agent 在开放决策任务中的探索与利用误差提供了测量框架，是 Agent 走向工程化评估的重要一步。',
+          en: 'This research provides a measurement framework for exploration and exploitation errors in LLM agents, a key step toward engineering-grade evaluation.'
         },
         links: [
-          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.13051' }
+          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.13151' }
         ]
       }
     ]
@@ -125,7 +111,22 @@ const sections = [
       zh: '社区与工程',
       en: 'Community & Engineering'
     },
-    items: []
+    items: [
+      {
+        title: {
+          zh: 'IBM VAKRA：深入解析智能体推理与失败模式',
+          en: 'IBM VAKRA: Deep Dive into Agent Reasoning and Failure Modes'
+        },
+        date: '2026-04-17',
+        summary: {
+          zh: '通过 VAKRA 基准测试，IBM 揭示了当前 Agent 在工具使用和推理过程中的典型失败模式，为提升 Agent 鲁棒性提供了参考。',
+          en: 'Through the VAKRA benchmark, IBM reveals typical failure modes of current agents in tool use and reasoning, providing a reference for improving robustness.'
+        },
+        links: [
+          { label: 'Hugging Face →', href: 'https://huggingface.co/blog/ibm-research/vakra-benchmark-analysis' }
+        ]
+      }
+    ]
   }
 ];
 ---
@@ -155,8 +156,8 @@ const sections = [
         </h2>
         <div class="text-gray-300 space-y-4 leading-relaxed">
           <p>
-            <span class="lang-zh">最新一期 Scout 简报的核心结论没有变：<strong class="text-white">智能体基建仍是最重要的主线</strong>。Google、OpenAI、Anthropic 与 Microsoft 继续在预测、编码、安全和企业平台层同步推进，而学术界则把注意力放在 Agent 记忆与行为结构这类更深的系统问题上。</span>
-            <span class="lang-en hidden">The core conclusion of the latest Scout briefing remains the same: <strong class="text-white">agent infrastructure is still the dominant storyline</strong>. Google, OpenAI, Anthropic, and Microsoft keep advancing across forecasting, coding, safety, and enterprise platforms, while academia is pushing deeper into agent memory and behavioral structure.</span>
+            <span class="lang-zh">本期 Scout 简报的核心信号集中在<strong class="text-white">“效率优化”与“边缘/本地 AI”</strong>。NVIDIA、OpenAI 与 Google 正在加速智能体（Agent）在复杂工作流和垂直行业（如机器人、生命科学）的落地，而学术界则开始建立更严谨的 Agent 性能测量框架。</span>
+            <span class="lang-en hidden">The core signals of this Scout briefing focus on <strong class="text-white">"Efficiency & Optimization" and "Edge/Local AI"</strong>. NVIDIA, OpenAI, and Google are accelerating the deployment of agents in complex workflows and vertical industries, while academia has begun establishing more rigorous performance measurement frameworks for agents.</span>
           </p>
         </div>
       </div>
