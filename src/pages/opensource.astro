@@ -4,28 +4,28 @@ import Footer from '../components/Footer.astro';
 
 const recommendations = [
   {
-    zh: '深耕 AI 开发工具链',
-    en: 'Go deeper on AI developer tooling',
-    detailZh: '围绕 LLM、Agent、成本治理、测试和可视化的工程链路，仍然有大量真实痛点待解。',
-    detailEn: 'There are still many unsolved pain points across the engineering path around LLMs, agents, cost control, testing, and visualization.'
+    zh: '关注 Agent Skills 生态位',
+    en: 'Watch the Agent Skills niche',
+    detailZh: '多个项目采用 "Skill" 命名和 MCP 架构，预示着 AI 能力分发市场正在形成。',
+    detailEn: 'Multiple projects using "Skill" naming and MCP architecture signal an emerging AI capability market.'
   },
   {
-    zh: '关注小模型与边缘 AI',
-    en: 'Watch small models and edge AI',
-    detailZh: '像 MOSS-TTS-Nano 这样的 CPU 级模型说明，低成本部署能力本身就是产品机会。',
-    detailEn: 'CPU-class models like MOSS-TTS-Nano show that low-cost deployment is itself becoming a product opportunity.'
+    zh: '自愈合自动化是新方向',
+    en: 'Self-healing automation is the new frontier',
+    detailZh: '像 browser-harness 这样的自愈合框架解决了 AI 自动化中最脆弱的环节。',
+    detailEn: 'Self-healing frameworks like browser-harness solve the most fragile parts of AI automation.'
   },
   {
-    zh: '用代理思维重写工作流',
-    en: 'Rewrite workflows with agent thinking',
-    detailZh: '从技能进化、自动评估到内容生产，AI 正在从单点工具走向流程级自动化。',
-    detailEn: 'From skill evolution and automated evaluation to content production, AI is shifting from isolated tools to workflow-level automation.'
+    zh: '闭源模型的开源重构',
+    en: 'Open source reconstruction of closed models',
+    detailZh: '社区对 Claude Mythos 等尖端模型的逆向工程热情极高，值得技术型开发者跟进。',
+    detailEn: 'Community passion for reverse-engineering models like Claude Mythos is high—worth following for technical builders.'
   },
   {
-    zh: '别忽视基础开发者体验',
-    en: 'Do not ignore core developer experience',
-    detailZh: '终端、网络分析与轻量工具依旧能获得大量关注，说明开发者效率产品仍有广阔空间。',
-    detailEn: 'Terminal tools, network analysis, and lightweight utilities still attract strong attention, which means developer productivity products remain wide open.'
+    zh: '产品即情报的订阅模式',
+    en: 'Product-as-Intelligence subscription model',
+    detailZh: 'BuilderPulse 证明了为开发者提供 AI 驱动的每日情报本身就是一个可行的产品形态。',
+    detailEn: 'BuilderPulse shows that providing AI-driven daily intelligence for developers is a viable product form.'
   }
 ];
 
@@ -33,229 +33,175 @@ const sections = [
   {
     icon: '🤖',
     title: {
-      zh: 'AI 开发与智能体',
-      en: 'AI Development & Agents'
+      zh: 'AI 智能体与技能生态',
+      en: 'AI Agents & Skill Ecosystem'
     },
     items: [
       {
-        repo: 'yizhiyanhua-ai/fireworks-tech-graph',
-        stars: '3074',
+        repo: 'browser-use/browser-harness',
+        stars: '2747',
         summary: {
-          zh: 'Claude Code 技能，用于生成生产级 SVG + PNG 技术图表，直接提升了 AI 原生文档和架构表达能力。',
-          en: 'A Claude Code skill for generating production-grade SVG and PNG technical diagrams, directly improving AI-native documentation and architecture communication.'
+          zh: '自愈合浏览器框架让 LLM 能够可靠地完成网页任务，解决了 AI 自动化中最脆弱的 UI 变动问题。',
+          en: 'A self-healing browser framework allowing LLMs to reliably complete web tasks, solving the most fragile UI change issues.'
         },
-        href: 'https://github.com/yizhiyanhua-ai/fireworks-tech-graph'
+        href: 'https://github.com/browser-use/browser-harness'
       },
       {
-        repo: 'AgentSeal/codeburn',
-        stars: '1864',
+        repo: 'lewislulu/html-ppt-skill',
+        stars: '1533',
         summary: {
-          zh: '交互式 TUI 仪表板，用来追踪 AI 编码助手的 token 使用与成本，是 AI 开发成本治理的实用工具。',
-          en: 'An interactive TUI dashboard for tracking token usage and spend from AI coding assistants, making it a practical cost-governance tool for AI development.'
+          zh: '将 HTML 演示文稿制作封装为标准化的 Agent Skill，展示了“技能化”作为 AI 能力分发的新范式。',
+          en: 'Encapsulating HTML PPT production as an Agent Skill, showcasing "skillization" as a new paradigm for AI capability distribution.'
         },
-        href: 'https://github.com/AgentSeal/codeburn'
+        href: 'https://github.com/lewislulu/html-ppt-skill'
       },
       {
-        repo: 'alchaincyf/darwin-skill',
-        stars: '866',
+        repo: 'Manavarya09/design-extract',
+        stars: '1106',
         summary: {
-          zh: '一个让 Claude Code 技能通过评估、改进和测试持续进化的系统，体现了 Agent 自我优化的方向。',
-          en: 'A system that evolves Claude Code skills through evaluation, improvement, and testing, pointing toward self-optimizing agents.'
+          zh: '一键提取网站设计系统并支持多平台输出，适配 MCP 架构，成为 Claude Code/Cursor 的即插即用能力。',
+          en: 'Extract website design systems with one click, supporting multi-platform output and MCP architecture for plug-and-play use.'
         },
-        href: 'https://github.com/alchaincyf/darwin-skill'
+        href: 'https://github.com/Manavarya09/design-extract'
       },
       {
-        repo: 'alchaincyf/obsidian-ai-orange-book',
-        stars: '638',
+        repo: 'cathrynlavery/diagram-design',
+        stars: '773',
         summary: {
-          zh: '把 Obsidian 与 Claude Code 结合起来重塑第二大脑工作流，说明 AI 正在进入个人知识系统。',
-          en: 'Combines Obsidian with Claude Code to reshape the second-brain workflow, showing how AI is entering personal knowledge systems.'
+          zh: '为 Claude Code 提供 13 种高质量图表类型，专注专业级可视化表达。',
+          en: 'Provides 13 high-quality diagram types for Claude Code, focusing on professional-grade technical visualization.'
         },
-        href: 'https://github.com/alchaincyf/obsidian-ai-orange-book'
-      },
-      {
-        repo: 'AMAP-ML/SkillClaw',
-        stars: '625',
-        summary: {
-          zh: '通过 Agentic Evolver 让 AI 技能进行集体进化，重点在于群体学习与协作式优化。',
-          en: 'Uses an Agentic Evolver to let AI skills improve collectively, with an emphasis on group learning and collaborative optimization.'
-        },
-        href: 'https://github.com/AMAP-ML/SkillClaw'
-      },
-      {
-        repo: 'OpenAI/evals',
-        stars: '1245',
-        summary: {
-          zh: 'OpenAI 开源的评估框架，用于测试和评估 AI 模型的能力和安全性，为模型开发提供标准化的测试方法。',
-          en: 'OpenAI\'s open-source evaluation framework for testing and assessing AI model capabilities and safety, providing standardized testing methods for model development.'
-        },
-        href: 'https://github.com/OpenAI/evals'
+        href: 'https://github.com/cathrynlavery/diagram-design'
       }
     ]
   },
   {
-    icon: '🧠',
+    icon: '🏗️',
     title: {
-      zh: 'AI 模型与应用',
-      en: 'AI Models & Applications'
+      zh: 'AI 基础架构与模型',
+      en: 'AI Infrastructure & Models'
     },
     items: [
       {
-        repo: 'OpenMOSS/MOSS-TTS-Nano',
-        stars: '1067',
+        repo: 'Robbyant/lingbot-map',
+        stars: '2802',
         summary: {
-          zh: '仅 0.1B 参数的多语言语音模型，可在 CPU 上实时运行，为本地和轻量级语音产品打开了更低门槛。',
-          en: 'A 0.1B multilingual speech model that runs in real time on CPU, lowering the barrier for local and lightweight voice products.'
+          zh: '用于从流式数据重建场景的前馈 3D 基础模型，代表了多模态 AI 向真实世界理解迈进。',
+          en: 'A feed-forward 3D foundation model for scene reconstruction from streaming data, moving multimodal AI toward real-world understanding.'
         },
-        href: 'https://github.com/OpenMOSS/MOSS-TTS-Nano'
+        href: 'https://github.com/Robbyant/lingbot-map'
       },
       {
-        repo: 'Mouseww/anything-analyzer',
-        stars: '815',
+        repo: 'kyegomez/OpenMythos',
+        stars: '2222',
         summary: {
-          zh: '结合浏览器与 AI，把网站或应用行为分析整理成更易读的文档，适合做产品理解和流程拆解。',
-          en: 'Combines browser automation and AI to turn website or app behavior into readable analysis documents, useful for product understanding and flow breakdowns.'
+          zh: '基于公开文献重构 Claude Mythos 架构，体现了社区对闭源模型“逆向工程”的热情。',
+          en: 'Reconstructing Claude Mythos architecture from first principles, reflecting community passion for reverse-engineering.'
         },
-        href: 'https://github.com/Mouseww/anything-analyzer'
+        href: 'https://github.com/kyegomez/OpenMythos'
       },
       {
-        repo: 'yaojingang/GEOFlow',
-        stars: '704',
+        repo: 'WeaveMindAI/weft',
+        stars: '893',
         summary: {
-          zh: '围绕地理内容生产构建的自动化系统，把 AI 任务、审核和发布流程串成一体。',
-          en: 'An automation system for geographic content production that links AI tasks, review flows, and publishing into a single pipeline.'
+          zh: '专为 AI 系统设计的新编程语言，标志着 AI 原生计算范式的深度探索。',
+          en: 'A new programming language designed specifically for AI systems, marking a deep exploration of AI-native computing.'
         },
-        href: 'https://github.com/yaojingang/GEOFlow'
+        href: 'https://github.com/WeaveMindAI/weft'
       }
     ]
   },
   {
     icon: '🛠️',
     title: {
-      zh: '开发者效率工具',
-      en: 'Developer Productivity Tools'
+      zh: '开发者工具',
+      en: 'Developer Tools'
     },
     items: [
       {
-        repo: 'vyfor/rattles',
-        stars: '871',
-        summary: {
-          zh: '为 Rust 应用提供轻量且美观的终端加载动画，典型的“小而精”开发者体验优化。',
-          en: 'Provides lightweight and polished terminal loading animations for Rust apps, a classic example of focused developer experience improvement.'
-        },
-        href: 'https://github.com/vyfor/rattles'
-      },
-      {
         repo: 'vercel-labs/wterm',
-        stars: '580',
+        stars: '2137',
         summary: {
-          zh: '一个基于 Web 的终端模拟器，适合远程演示、嵌入式环境和浏览器内命令行体验。',
-          en: 'A web-based terminal emulator suited for remote demos, embedded environments, and browser-native command-line experiences.'
+          zh: 'Vercel 推出的高性能 Web 终端模拟器，为云端开发环境和协作工具提供基础组件。',
+          en: 'High-performance web terminal emulator by Vercel, providing core components for cloud development and collaboration.'
         },
         href: 'https://github.com/vercel-labs/wterm'
-      },
-      {
-        repo: 'retlehs/quien',
-        stars: '560',
-        summary: {
-          zh: '一个更完整的 whois 和域名情报工具包，面向日常网络信息查询与运维分析。',
-          en: 'A more complete whois and domain-intelligence toolkit for everyday network lookups and operational analysis.'
-        },
-        href: 'https://github.com/retlehs/quien'
       }
     ]
   },
   {
-    icon: '🚀',
+    icon: '📊',
     title: {
-      zh: '其他值得关注项目',
-      en: 'Other Noteworthy Projects'
+      zh: '数据与情报',
+      en: 'Data & Intelligence'
     },
     items: [
       {
-        repo: 'sogonov/anubis',
-        stars: '632',
+        repo: 'BuilderPulse/BuilderPulse',
+        stars: '991',
         summary: {
-          zh: '一个 Android 应用管理器，围绕连接状态和应用组管理提供更精细的控制能力。',
-          en: 'An Android app manager that provides more fine-grained control through connection-state and application-group management.'
+          zh: '为独立开发者提供每日 AI 驱动情报服务，“产品即情报”的订阅模式实践。',
+          en: 'Daily AI-driven intelligence for independent developers, a practice of the "Product-as-Intelligence" subscription model.'
         },
-        href: 'https://github.com/sogonov/anubis'
+        href: 'https://github.com/BuilderPulse/BuilderPulse'
       },
       {
-        repo: 'patterniha/SNI-Spoofing',
-        stars: '609',
+        repo: 'wbh604/UZI-Skill',
+        stars: '906',
         summary: {
-          zh: '一个围绕 TLS / SNI 行为与流量路径研究的低层网络实验项目，适合协议与网络环境研究场景。',
-          en: 'A low-level networking experiment around TLS / SNI behavior and traffic-path research, relevant to protocol and network-environment analysis.'
+          zh: '整合投资名家方法论与量化规则的 AI 技能，展示了垂直领域知识库的智能化价值。',
+          en: 'An AI skill integrating expert methodologies and quantitative rules, showcasing the value of vertical domain knowledge bases.'
         },
-        href: 'https://github.com/patterniha/SNI-Spoofing'
-      },
-      {
-        repo: 'sterlingcrispin/nothing-ever-happens',
-        stars: '776',
-        summary: {
-          zh: '一个自动参与预测市场的实验机器人，用戏谑方式表达对市场机制和叙事偏差的观察。',
-          en: 'An experimental prediction-market bot that uses satire to comment on market mechanics and narrative bias.'
-        },
-        href: 'https://github.com/sterlingcrispin/nothing-ever-happens'
-      },
-      {
-        repo: 'andrewjiang/palantir-for-family-trips',
-        stars: '496',
-        summary: {
-          zh: '一个“Palantir 风格”的家庭旅行规划仪表板，把复杂协作型出行组织可视化。',
-          en: 'A “Palantir-style” family trip planning dashboard that visualizes complex collaborative travel coordination.'
-        },
-        href: 'https://github.com/andrewjiang/palantir-for-family-trips'
+        href: 'https://github.com/wbh604/UZI-Skill'
       }
     ]
   }
 ];
 ---
 
-<Layout titleZh='开源热点周报 | 谢灵江' titleEn='Open Source Weekly | James Xie' descriptionZh='每周开源热点追踪，聚焦 AI Agent、开发工具、多模态与高潜力基础设施项目。' descriptionEn='A weekly open-source digest focused on AI agents, developer tools, multimodal advances, and promising infrastructure projects.' ogImage='/og-opensource.svg'>
-  <section class='bg-dark px-4 py-20 min-h-screen border-t border-emerald-400/10'>
-    <div class='max-w-6xl mx-auto'>
-      <h1 class='text-4xl font-bold text-center mb-4 text-white'>
-        <span class='lang-zh'>开源<span class='text-emerald-400'>热点周报</span></span>
-        <span class='lang-en hidden'>Open Source <span class='text-emerald-400'>Weekly</span></span>
+<Layout titleZh="开源热点周报 | 谢灵江" titleEn="Open Source Weekly | James Xie" descriptionZh="开源热点周报，汇总 GitHub 最具潜力的开源项目与 AI 趋势。" descriptionEn="Open Source Weekly, a digest of the most promising GitHub projects and AI trends." ogImage="/og-opensource.svg">
+  <section class="bg-dark px-4 py-20 min-h-screen border-t border-emerald-400/10">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-4xl font-bold text-center mb-4 text-white">
+        <span class="lang-zh">开源<span class="text-emerald-400">热点周报</span></span>
+        <span class="lang-en hidden">Open Source <span class="text-emerald-400">Weekly</span></span>
       </h1>
-      <p class='text-center text-gray-400 mb-12'>
-        <span class='lang-zh'>由 GitHub Scout Agent 自动追踪的最具潜力的开源基础设施项目</span>
-        <span class='lang-en hidden'>Promising open-source infrastructure projects tracked automatically by the GitHub Scout Agent</span>
+      <p class="text-center text-gray-400 mb-12">
+        <span class="lang-zh">由 GitHub Scout Agent 自动追踪的最具潜力的开源基础设施项目</span>
+        <span class="lang-en hidden">Promising open-source infrastructure projects tracked automatically by the GitHub Scout Agent</span>
       </p>
-      <p class='text-center text-gray-600 text-sm mb-4'>
-        <span class='lang-zh'>最后更新：2026年4月20日</span>
-        <span class='lang-en hidden'>Last updated: Apr 20, 2026</span>
+      <p class="text-center text-gray-600 text-sm mb-4">
+        <span class="lang-zh">最后更新：2026年4月20日</span>
+        <span class="lang-en hidden">Last updated: April 20, 2026</span>
       </p>
-      <div class='h-1 w-16 bg-emerald-400 mx-auto mb-16'></div>
+      <div class="h-1 w-16 bg-emerald-400 mx-auto mb-16"></div>
 
-      <div class='mb-16 p-8 bg-emerald-400/5 border border-emerald-400/30 rounded-lg'>
-        <h2 class='text-2xl font-bold text-emerald-400 mb-4 flex items-center'>
-          <span class='mr-3'>🧠</span>
-          <span class='lang-zh'>首要信号</span>
-          <span class='lang-en hidden'>Executive Summary</span>
+      <div class="mb-16 p-8 bg-emerald-400/5 border border-emerald-400/30 rounded-lg">
+        <h2 class="text-2xl font-bold text-emerald-400 mb-4 flex items-center">
+          <span class="mr-3">🧠</span>
+          <span class="lang-zh">首要信号</span>
+          <span class="lang-en hidden">Executive Summary</span>
         </h2>
-        <div class='text-gray-300 space-y-4 leading-relaxed'>
+        <div class="text-gray-300 space-y-4 leading-relaxed">
           <p>
-            <span class='lang-zh'>本周 GitHub 热门项目最强的共识，是<strong class='text-white'>AI 正在深度融入开发流程</strong>。从图表生成、成本治理、技能优化，到轻量化语音模型和自动化工作流，开发者不再只是“调用模型”，而是在系统性重写自己的生产方式。</span>
-            <span class='lang-en hidden'>The clearest GitHub signal this cycle is that <strong class='text-white'>AI is moving deeper into the development workflow</strong>. From diagram generation and cost governance to skill optimization, lightweight speech models, and workflow automation, developers are no longer just calling models—they are rewriting how they work.</span>
+            <span class="lang-zh">今日实时抓取的 Scout 简报显示，<strong class="text-white">“Agent 技能化”与“自动化基础设施”</strong>正成为核心热点。开发者正在将 AI 能力封装为可复用的技能，同时浏览器自动化、设计系统提取等工具化方向备受关注。</span>
+            <span class="lang-en hidden">Real-time signals from today's Scout briefing highlight <strong class="text-white">"Agent Skillization" and "Automation Infrastructure"</strong> as core hotspots. Developers are encapsulating AI capabilities into reusable skills, with strong focus on browser automation and design system extraction.</span>
           </p>
-          <div class='mt-6 p-5 bg-dark/80 border-l-4 border-emerald-400 shadow-inner'>
-            <h3 class='text-white font-bold mb-3'>
-              <span class='lang-zh'>💡 对独立开发者的建议：</span>
-              <span class='lang-en hidden'>💡 Advice for indie builders:</span>
+          <div class="mt-6 p-5 bg-dark/80 border-l-4 border-emerald-400 shadow-inner">
+            <h3 class="text-white font-bold mb-3">
+              <span class="lang-zh">💡 对独立开发者的建议：</span>
+              <span class="lang-en hidden">💡 Advice for indie builders:</span>
             </h3>
-            <ul class='list-none text-gray-400 space-y-3'>
+            <ul class="list-none text-gray-400 space-y-3">
               {recommendations.map((item, index) => (
                 <li>
-                  <span class='text-emerald-400 mr-2'>{index + 1}.</span>
+                  <span class="text-emerald-400 mr-2">{index + 1}.</span>
                   <strong>
-                    <span class='lang-zh'>{item.zh}</span>
-                    <span class='lang-en hidden'>{item.en}</span>
+                    <span class="lang-zh">{item.zh}</span>
+                    <span class="lang-en hidden">{item.en}</span>
                   </strong>
-                  <span class='lang-zh'>：{item.detailZh}</span>
-                  <span class='lang-en hidden'>: {item.detailEn}</span>
+                  <span class="lang-zh">：{item.detailZh}</span>
+                  <span class="lang-en hidden">: {item.detailEn}</span>
                 </li>
               ))}
             </ul>
@@ -264,27 +210,27 @@ const sections = [
       </div>
 
       {sections.map((section) => (
-        <div class='mb-16'>
-          <h2 class='text-2xl font-bold text-emerald-400 mb-8 flex items-center'>
-            <span class='mr-3'>{section.icon}</span>
-            <span class='lang-zh'>{section.title.zh}</span>
-            <span class='lang-en hidden'>{section.title.en}</span>
+        <div class="mb-16">
+          <h2 class="text-2xl font-bold text-emerald-400 mb-8 flex items-center">
+            <span class="mr-3">{section.icon}</span>
+            <span class="lang-zh">{section.title.zh}</span>
+            <span class="lang-en hidden">{section.title.en}</span>
           </h2>
-          <div class='space-y-6'>
+          <div class="space-y-6">
             {section.items.map((item) => (
-              <article class='group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50'>
-                <div class='flex justify-between items-start mb-3'>
-                  <h3 class='text-lg font-bold text-white group-hover:text-emerald-400 transition-colors'>
+              <article class="group p-6 border-l-2 border-emerald-400/30 hover:border-emerald-400 transition-colors hover:bg-dark/50">
+                <div class="flex justify-between items-start mb-3">
+                  <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
                     {item.repo}
                   </h3>
-                  <span class='text-sm text-gray-500 whitespace-nowrap ml-4'>⭐ {item.stars}</span>
+                  <span class="text-sm text-gray-500 whitespace-nowrap ml-4">⭐ {item.stars}</span>
                 </div>
-                <p class='text-gray-400 mb-3'>
-                  <span class='lang-zh'>{item.summary.zh}</span>
-                  <span class='lang-en hidden'>{item.summary.en}</span>
+                <p class="text-gray-400 mb-3">
+                  <span class="lang-zh">{item.summary.zh}</span>
+                  <span class="lang-en hidden">{item.summary.en}</span>
                 </p>
-                <div class='flex flex-wrap gap-4'>
-                  <a href={item.href} target='_blank' rel='noopener' class='text-emerald-400 text-sm hover:text-white transition-colors'>GitHub →</a>
+                <div class="flex flex-wrap gap-4">
+                  <a href={item.href} target="_blank" rel="noopener" class="text-emerald-400 text-sm hover:text-white transition-colors">GitHub →</a>
                 </div>
               </article>
             ))}
@@ -292,10 +238,10 @@ const sections = [
         </div>
       ))}
 
-      <div class='text-center mt-12'>
-        <a href='/' class='inline-block px-8 py-3 border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-dark transition-all font-semibold'>
-          <span class='lang-zh'>返回首页</span>
-          <span class='lang-en hidden'>Back to Home</span>
+      <div class="text-center mt-12">
+        <a href="/" class="inline-block px-8 py-3 border-2 border-emerald-400 text-emerald-400 hover:bg-emerald-400 hover:text-dark transition-all font-semibold">
+          <span class="lang-zh">返回首页</span>
+          <span class="lang-en hidden">Back to Home</span>
         </a>
       </div>
     </div>
