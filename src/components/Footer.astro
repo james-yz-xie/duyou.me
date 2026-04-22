@@ -1,4 +1,12 @@
 ---
+// 页面链接配置 - 所有链接都指向独立页面
+const pageLinks = {
+  timeline: '/timeline',
+  achievements: '/achievements',
+  feed: '/briefings',
+  'opensource-feed': '/opensource',
+  studio: '/studio'
+};
 ---
 
 <footer class="bg-dark border-t border-gold/10 px-4 py-12">
@@ -10,11 +18,11 @@
         <div>
           <h4 class="text-sm font-bold text-white mb-4 uppercase tracking-widest">导航</h4>
           <ul class="space-y-2 text-sm text-gray-400">
-            <li><a href="#timeline" class="hover:text-gold transition-colors">项目里程碑</a></li>
-            <li><a href="#achievements" class="hover:text-gold transition-colors">核心成果</a></li>
-            <li><a href="#feed" class="hover:text-gold transition-colors">AI 前沿情报</a></li>
-            <li><a href="#opensource-feed" class="hover:text-emerald-400 transition-colors">开源热点</a></li>
-            <li><a href="#studio" class="hover:text-gold transition-colors">工作台</a></li>
+            <li><a href={pageLinks.timeline} class="hover:text-gold transition-colors">项目里程碑</a></li>
+            <li><a href={pageLinks.achievements} class="hover:text-gold transition-colors">核心成果</a></li>
+            <li><a href={pageLinks.feed} class="hover:text-gold transition-colors">AI 前沿情报</a></li>
+            <li><a href={pageLinks['opensource-feed']} class="hover:text-emerald-400 transition-colors">开源热点</a></li>
+            <li><a href={pageLinks.studio} class="hover:text-gold transition-colors">工作台</a></li>
             <li><a href="/blog" class="hover:text-gold transition-colors">Solo 日志</a></li>
             <li><a href="mailto:xie.james@hotmail.com" class="hover:text-gold transition-colors">联系我</a></li>
           </ul>
@@ -75,11 +83,11 @@
         <div>
           <h4 class="text-sm font-bold text-white mb-4 uppercase tracking-widest">Navigation</h4>
           <ul class="space-y-2 text-sm text-gray-400">
-            <li><a href="#timeline" class="hover:text-gold transition-colors">Project Milestones</a></li>
-            <li><a href="#achievements" class="hover:text-gold transition-colors">Core Achievements</a></li>
-            <li><a href="#feed" class="hover:text-gold transition-colors">AI Frontiers</a></li>
-            <li><a href="#opensource-feed" class="hover:text-emerald-400 transition-colors">Open Source Hotspots</a></li>
-            <li><a href="#studio" class="hover:text-gold transition-colors">Workstation</a></li>
+            <li><a href={pageLinks.timeline} class="hover:text-gold transition-colors">Project Milestones</a></li>
+            <li><a href={pageLinks.achievements} class="hover:text-gold transition-colors">Core Achievements</a></li>
+            <li><a href={pageLinks.feed} class="hover:text-gold transition-colors">AI Frontiers</a></li>
+            <li><a href={pageLinks['opensource-feed']} class="hover:text-emerald-400 transition-colors">Open Source Hotspots</a></li>
+            <li><a href={pageLinks.studio} class="hover:text-gold transition-colors">Workstation</a></li>
             <li><a href="/blog" class="hover:text-gold transition-colors">Solo Log</a></li>
             <li><a href="mailto:xie.james@hotmail.com" class="hover:text-gold transition-colors">Contact Me</a></li>
           </ul>
