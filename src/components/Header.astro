@@ -6,17 +6,3 @@ const navLinks = [
   { name: '前沿情报', nameEn: 'Briefings', href: '/briefings' }
 ];
 ---
-
-<header class="fixed top-0 left-0 right-0 z-50 px-4 py-4 pointer-events-none">
-  <nav class="max-w-fit mx-auto bg-dark/60 backdrop-blur-md border border-white/10 rounded-full px-2 py-1 flex items-center gap-1 shadow-2xl pointer-events-auto">
-    {navLinks.map(link => (
-      <a 
-        href={link.href} 
-        class="px-4 py-1.5 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-all duration-300"
-      >
-        <span class="lang-zh">{link.name}</span>
-        <span class="lang-en hidden">{link.nameEn}</span>
-      </a>
-    ))}
-  </nav>
-</header>
