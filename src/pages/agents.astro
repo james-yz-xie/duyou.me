@@ -13,6 +13,11 @@ const internationalTools = [
     price: '$17-20/mo (Pro), $100-200/mo (Max)',
     swebench: '80.9%',
     category: 'cloud',
+    type: '编程 CLI',
+    isOpenSource: false,
+    isMultiModel: false,
+    reasoning: true, // 已经通过我们的 Proxy 解决
+    region: '国外',
     install: 'npm install -g @anthropic-ai/claude-code'
   },
   {
@@ -25,6 +30,11 @@ const internationalTools = [
     price: '$20/mo (Plus), $40/mo (Pro)',
     swebench: '-',
     category: 'ide',
+    type: 'IDE',
+    isOpenSource: false,
+    isMultiModel: false,
+    reasoning: false,
+    region: '国外',
     install: 'Download from cursor.com'
   },
   {
@@ -37,6 +47,11 @@ const internationalTools = [
     price: 'Free',
     swebench: '-',
     category: 'ide',
+    type: 'IDE',
+    isOpenSource: false,
+    isMultiModel: false,
+    reasoning: false,
+    region: '国外',
     install: 'Download from codeium.com'
   },
   {
@@ -49,6 +64,11 @@ const internationalTools = [
     price: '$20/mo (ChatGPT Plus)',
     swebench: '-',
     category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: false,
+    isMultiModel: false,
+    reasoning: false,
+    region: '国外',
     install: 'Download from openai.com/codex'
   },
   {
@@ -61,18 +81,28 @@ const internationalTools = [
     price: 'Free (60 req/min)',
     swebench: '-',
     category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '国外',
     install: 'npm install -g @google/gemini-cli'
   },
   {
     name: 'Aider',
     nameZh: 'Aider',
     description: '终端配对编程金标准，Git-native 工作流',
-    descriptionEn: 'Terminal pair programming gold standard, Git-native workflow',
+    descriptionEn: 'Terminal pair programming gold standard, Grid-native workflow',
     url: 'https://aider.chat',
     stars: '43K+',
     price: 'BYOK',
     swebench: '-',
     category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '国外',
     install: 'pip install aider-chat'
   },
   {
@@ -85,6 +115,11 @@ const internationalTools = [
     price: 'Free',
     swebench: '-',
     category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '国外',
     install: 'npm install -g @block/goose'
   },
   {
@@ -97,6 +132,11 @@ const internationalTools = [
     price: 'BYOK',
     swebench: '-',
     category: 'ide',
+    type: 'IDE',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '国外',
     install: 'VS Code extension'
   },
   {
@@ -109,6 +149,11 @@ const internationalTools = [
     price: 'Free',
     swebench: '-',
     category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '国外',
     install: 'npm install -g opencode'
   },
   {
@@ -121,6 +166,11 @@ const internationalTools = [
     price: 'Free',
     swebench: '-',
     category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '国外',
     install: 'npm i -g cruxcli'
   },
   {
@@ -133,6 +183,11 @@ const internationalTools = [
     price: 'Free',
     swebench: '-',
     category: 'automation',
+    type: '自动化',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '国外',
     install: 'go install github.com/jrswab/axe@latest'
   },
   {
@@ -145,6 +200,11 @@ const internationalTools = [
     price: 'Free',
     swebench: '-',
     category: 'engine',
+    type: '引擎',
+    isOpenSource: false,
+    isMultiModel: true,
+    reasoning: true,
+    region: '国外',
     install: 'npm install -g profclaw'
   }
 ];
@@ -159,6 +219,11 @@ const chineseTools = [
     stars: '563+',
     price: 'Free',
     category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: false,
+    isMultiModel: true,
+    reasoning: true,
+    region: '中国',
     install: 'npm install -g kimi-cli'
   },
   {
@@ -170,6 +235,11 @@ const chineseTools = [
     stars: '10K+',
     price: 'Free',
     category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: false,
+    isMultiModel: true,
+    reasoning: true,
+    region: '中国',
     install: 'npm install -g qwen-code'
   },
   {
@@ -181,6 +251,11 @@ const chineseTools = [
     stars: '2K+',
     price: 'Free',
     category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: false,
+    isMultiModel: true,
+    reasoning: true,
+    region: '中国',
     install: 'npm install -g codebuddy'
   },
   {
@@ -192,6 +267,11 @@ const chineseTools = [
     stars: '1K+',
     price: 'Free',
     category: 'agent',
+    type: 'AI 助手',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '中国',
     install: 'git clone https://github.com/countbot-ai/CountBot.git'
   },
   {
@@ -203,6 +283,11 @@ const chineseTools = [
     stars: '180+',
     price: 'Free',
     category: 'agent',
+    type: 'AI 助手',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '中国',
     install: 'npm install -g openmozi'
   },
   {
@@ -214,6 +299,11 @@ const chineseTools = [
     stars: '563+',
     price: 'Free',
     category: 'agent',
+    type: 'AI 助手',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '中国',
     install: 'go install github.com/smallnest/goclaw@latest'
   },
   {
@@ -225,9 +315,16 @@ const chineseTools = [
     stars: '120+',
     price: 'Free',
     category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '中国',
     install: 'npm install -g fuxi-cli'
   }
 ];
+
+const allTools = [...internationalTools, ...chineseTools];
 ---
 
 <Layout titleZh="AI Agent CLI 导航站" titleEn="AI Agent CLI Hub" descriptionZh="国内外主流 AI Agent CLI 工具导航站，快速访问、安装命令与横向对比" descriptionEn="Curated directory of AI Agent CLI tools with install commands and comparison" ogImage="/og-agents.svg">
@@ -267,6 +364,7 @@ const chineseTools = [
                       <span class="text-sm text-gray-500">★ {tool.stars}</span>
                     )}
                     <span class="text-xs px-2 py-1 bg-gray-800 text-gray-400 rounded">{tool.category}</span>
+                    {tool.reasoning && <span class="text-[10px] px-2 py-0.5 bg-gold/10 text-gold border border-gold/20 rounded">REASONING</span>}
                   </div>
                   <p class="text-gray-400 mb-2">{tool.description}</p>
                   <code class="text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded">{tool.install}</code>
@@ -300,6 +398,7 @@ const chineseTools = [
                       <span class="text-sm text-gray-500">★ {tool.stars}</span>
                     )}
                     <span class="text-xs px-2 py-1 bg-gray-800 text-gray-400 rounded">{tool.category}</span>
+                    {tool.reasoning && <span class="text-[10px] px-2 py-0.5 bg-gold/10 text-gold border border-gold/20 rounded">REASONING</span>}
                   </div>
                   <p class="text-gray-400 mb-2">{tool.description}</p>
                   <code class="text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded">{tool.install}</code>
@@ -320,316 +419,31 @@ const chineseTools = [
           <h2 class="text-2xl font-bold text-white text-center mb-8">核心对比</h2>
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
-<thead>
+              <thead>
                 <tr class="border-b border-gray-800">
                   <th class="py-3 px-4 text-gray-400 font-medium">工具</th>
                   <th class="py-3 px-4 text-gray-400 font-medium">类型</th>
-                  <th class="py-3 px-4 text-gray-400 font-medium">开源</th>
-                  <th class="py-3 px-4 text-gray-400 font-medium">多模型</th>
+                  <th class="py-3 px-4 text-gray-400 font-medium text-center">开源</th>
+                  <th class="py-3 px-4 text-gray-400 font-medium text-center">长思考支持</th>
                   <th class="py-3 px-4 text-gray-400 font-medium">价格</th>
                   <th class="py-3 px-4 text-gray-400 font-medium">地区</th>
                 </tr>
               </thead>
               <tbody>
-                <!-- 国外 -->
-<tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Claude Code</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-white">$17+/月</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Cursor</td>
-                  <td class="py-3 px-4 text-gray-400">IDE</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-white">$20-40/月</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Windsurf</td>
-                  <td class="py-3 px-4 text-gray-400">IDE</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Codex CLI</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-white">$20/月</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Gemini CLI</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Aider</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">BYOK</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Goose</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Cline</td>
-                  <td class="py-3 px-4 text-gray-400">IDE</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-white">BYOK</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">OpenCode</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">CruxCLI</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Axe</td>
-                  <td class="py-3 px-4 text-gray-400">自动化</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">ProfClaw</td>
-                  <td class="py-3 px-4 text-gray-400">引擎</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <!-- 中国 -->
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Kimi Code</td>
-                  <td class="py-3 px-4 text-gold">编程 CLI</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Qwen Code</td>
-                  <td class="py-3 px-4 text-gold">编程 CLI</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">CodeBuddy</td>
-                  <td class="py-3 px-4 text-gold">编程 CLI</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">CountBot</td>
-                  <td class="py-3 px-4 text-gold">AI 助手</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">OpenMozi</td>
-                  <td class="py-3 px-4 text-gold">AI 助手</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">GoClaw</td>
-                  <td class="py-3 px-4 text-gold">AI 助手</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">fuxi-cli</td>
-                  <td class="py-3 px-4 text-gold">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Cursor</td>
-                  <td class="py-3 px-4 text-gray-400">IDE</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-white">$20-40/月</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Windsurf</td>
-                  <td class="py-3 px-4 text-gray-400">IDE</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Codex CLI</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-white">$20/月</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Gemini CLI</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Aider</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">BYOK</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Goose</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Cline</td>
-                  <td class="py-3 px-4 text-gray-400">IDE</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-white">BYOK</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">OpenCode</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">CruxCLI</td>
-                  <td class="py-3 px-4 text-gray-400">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Axe</td>
-                  <td class="py-3 px-4 text-gray-400">自动化</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">ProfClaw</td>
-                  <td class="py-3 px-4 text-gray-400">引擎</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gray-400">国外</td>
-                </tr>
-                <!-- 中国 -->
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Kimi Code</td>
-                  <td class="py-3 px-4 text-gold">编程 CLI</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">Qwen Code</td>
-                  <td class="py-3 px-4 text-gold">编程 CLI</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">CodeBuddy</td>
-                  <td class="py-3 px-4 text-gold">编程 CLI</td>
-                  <td class="py-3 px-4 text-gray-400">❌</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">CountBot</td>
-                  <td class="py-3 px-4 text-gold">AI 助手</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">OpenMozi</td>
-                  <td class="py-3 px-4 text-gold">AI 助手</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">GoClaw</td>
-                  <td class="py-3 px-4 text-gold">AI 助手</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
-                <tr class="border-b border-gray-800">
-                  <td class="py-3 px-4 text-white font-medium">fuxi-cli</td>
-                  <td class="py-3 px-4 text-gold">编程 CLI</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-gold">✓</td>
-                  <td class="py-3 px-4 text-white">Free</td>
-                  <td class="py-3 px-4 text-gold">中国</td>
-                </tr>
+                {allTools.map((tool) => (
+                  <tr class="border-b border-gray-800 hover:bg-white/5 transition-colors">
+                    <td class="py-3 px-4 text-white font-medium">{tool.nameZh || tool.name}</td>
+                    <td class="py-3 px-4 text-gray-400 text-sm">{tool.type}</td>
+                    <td class="py-3 px-4 text-center">
+                      {tool.isOpenSource ? <span class="text-gold">✓</span> : <span class="text-gray-600">❌</span>}
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                      {tool.reasoning ? <span class="text-gold text-xs bg-gold/10 px-2 py-0.5 rounded">Supported</span> : <span class="text-gray-600">❌</span>}
+                    </td>
+                    <td class="py-3 px-4 text-white text-sm">{tool.price}</td>
+                    <td class="py-3 px-4 text-gray-400 text-sm">{tool.region}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -649,11 +463,11 @@ const chineseTools = [
             </ul>
           </div>
           <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
-            <h3 class="text-lg font-bold text-gold mb-3">💰 性价比高</h3>
+            <h3 class="text-lg font-bold text-gold mb-3">🧠 推理能力 (New)</h3>
             <ul class="text-gray-400 space-y-2 text-sm">
-              <li>• Kimi Code - 超长上下文免费</li>
-              <li>• Qwen Code - 阿里云免费额度</li>
-              <li>• CodeBuddy - 腾讯免费方案</li>
+              <li>• Claude Code - 配合 Proxy 支持 Qwen 3</li>
+              <li>• Gemini CLI - 极致 Context 思考</li>
+              <li>• fuxi-cli - 国产长推理优化</li>
             </ul>
           </div>
           <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
@@ -661,7 +475,7 @@ const chineseTools = [
             <ul class="text-gray-400 space-y-2 text-sm">
               <li>• Goose - 100+ MCP 服务器</li>
               <li>• OpenMozi - 国产生态集成</li>
-              <li>• fuxi-cli - 多模型路由</li>
+              <li>• Cline - VS Code 深度集成</li>
             </ul>
           </div>
         </div>

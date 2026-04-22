@@ -90,24 +90,32 @@ fi
 
 MODEL="${1:-$DEFAULT_MODEL}"
 
-# Check if proxy is running
+# Force restart proxy to ensure latest code is loaded
 if lsof -i :$PROXY_PORT -sTCP:LISTEN &>/dev/null; then
-    echo "✓ NIM proxy already running on port $PROXY_PORT"
-else
-    echo "Starting NIM proxy on port $PROXY_PORT ..."
-    NIM_DEFAULT_MODEL="$MODEL" python3 "$PROXY_SCRIPT" $PROXY_PORT &>/tmp/nim-proxy.log &
-    # Wait for proxy to be ready
-    for i in $(seq 1 10); do
-        if curl -s http://127.0.0.1:$PROXY_PORT/health &>/dev/null; then
-            echo "✓ NIM proxy started (PID: $(lsof -ti :$PROXY_PORT -sTCP:LISTEN))"
-            break
-        fi
-        sleep 0.5
-    done
-    if ! lsof -i :$PROXY_PORT -sTCP:LISTEN &>/dev/null; then
-        echo "✗ Failed to start proxy. Check /tmp/nim-proxy.log"
-        exit 1
+    PROXY_PID=$(lsof -ti :$PROXY_PORT -sTCP:LISTEN)
+    echo "↻ Restarting NIM proxy (killing old PID: $PROXY_PID) ..."
+    kill -9 $PROXY_PID &>/dev/null
+    sleep 0.5
+fi
+
+echo "Starting NIM proxy on port $PROXY_PORT for model: $MODEL ..."
+NIM_DEFAULT_MODEL="$MODEL" python3 "$PROXY_SCRIPT" $PROXY_PORT &>/tmp/nim-proxy.log &
+
+# Wait for proxy to be ready
+READY=false
+for i in $(seq 1 20); do
+    if curl -s http://127.0.0.1:$PROXY_PORT/health &>/dev/null; then
+        echo "✓ NIM proxy started (PID: $(lsof -ti :$PROXY_PORT -sTCP:LISTEN))"
+        READY=true
+        break
     fi
+    sleep 0.5
+done
+
+if [ "$READY" = false ]; then
+    echo "✗ Failed to start proxy. Check /tmp/nim-proxy.log"
+    cat /tmp/nim-proxy.log
+    exit 1
 fi
 
 echo "Model: $MODEL"

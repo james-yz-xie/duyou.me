@@ -193,120 +193,178 @@ def openai_to_anthropic(response_data: dict, request_model: str) -> dict:
 
 
 async def stream_openai_as_anthropic(body: dict, request_model: str):
-    """Stream OpenAI SSE events, converting to Anthropic SSE format."""
+    """Stream OpenAI SSE events, converting to Anthropic SSE format using thinking blocks."""
     headers = {
         "Authorization": f"Bearer {NIM_API_KEY}",
         "Content-Type": "application/json",
     }
 
     msg_id = f"msg_{os.getpid()}_{id(body)}"
+    
+    # Retry logic configuration
+    max_retries = 10
+    base_delay = 2.0 # seconds
+
+    # Track state for events
+    msg_started = False
+    block_index = 0
+    current_block_type = None
+    current_tool_calls = {}
+    has_tool_use = False
     input_tokens = 0
     output_tokens = 0
 
-    # Send message_start
-    msg_start = {
-        'type': 'message_start',
-        'message': {
-            'id': msg_id,
-            'type': 'message',
-            'role': 'assistant',
-            'model': request_model,
-            'content': [],
-            'stop_reason': None,
-            'stop_sequence': None,
-            'usage': {'input_tokens': 0, 'output_tokens': 0}
-        }
-    }
-    yield f"event: message_start\ndata: {json.dumps(msg_start)}\n\n"
-
-    # Track state
-    block_index = 0
-    current_block_type = "text"  # Start with a text block
-    current_tool_calls = {}
-    has_tool_use = False
-    text_block_started = False
-    text_block_has_content = False
-
-    # Send content_block_start for text
-    yield f"event: content_block_start\ndata: {json.dumps({'type': 'content_block_start', 'index': block_index, 'content_block': {'type': 'text', 'text': ''}})}\n\n"
-    text_block_started = True
-
-    try:
-        async with httpx.AsyncClient(timeout=180) as client:
-            async with client.stream("POST", f"{NIM_BASE_URL}/chat/completions", json=body, headers=headers) as resp:
-                if resp.status_code != 200:
-                    error_text = await resp.aread()
-                    logger.error(f"NIM API error {resp.status_code}: {error_text}")
-                    # Send error as text
-                    yield f"event: content_block_delta\ndata: {json.dumps({'type': 'content_block_delta', 'index': block_index, 'delta': {'type': 'text_delta', 'text': f'API Error: {error_text.decode()}'}})}\n\n"
-                else:
-                    async for line in resp.aiter_lines():
-                        if not line.startswith("data: "):
+    async def do_stream():
+        nonlocal msg_started, block_index, current_block_type, current_tool_calls, has_tool_use, input_tokens, output_tokens
+        
+        for attempt in range(max_retries):
+            try:
+                async with httpx.AsyncClient(timeout=600) as client:
+                    async with client.stream("POST", f"{NIM_BASE_URL}/chat/completions", json=body, headers=headers) as resp:
+                        if resp.status_code == 429:
+                            delay = base_delay * (2 ** attempt)
+                            logger.warning(f"Rate limited (429). Retrying in {delay}s... (Attempt {attempt+1}/{max_retries})")
+                            await asyncio.sleep(delay)
                             continue
-                        data = line[6:]
-                        if data.strip() == "[DONE]":
-                            break
-                        try:
-                            chunk = json.loads(data)
-                        except json.JSONDecodeError:
-                            continue
+                        
+                        if resp.status_code != 200:
+                            error_text = await resp.aread()
+                            logger.error(f"NIM API error {resp.status_code}: {error_text}")
+                            if not msg_started:
+                                # Send message_start if we haven't yet
+                                msg_start = {
+                                    'type': 'message_start',
+                                    'message': {
+                                        'id': msg_id,
+                                        'type': 'message',
+                                        'role': 'assistant',
+                                        'model': request_model,
+                                        'content': [],
+                                        'stop_reason': None,
+                                        'stop_sequence': None,
+                                        'usage': {'input_tokens': 0, 'output_tokens': 0}
+                                    }
+                                }
+                                yield f"event: message_start\ndata: {json.dumps(msg_start)}\n\n"
+                                msg_started = True
 
-                        # Track usage
-                        if chunk.get("usage"):
-                            input_tokens = chunk["usage"].get("prompt_tokens", 0)
-                            output_tokens = chunk["usage"].get("completion_tokens", 0)
+                            yield f"event: content_block_start\ndata: {json.dumps({'type': 'content_block_start', 'index': block_index, 'content_block': {'type': 'text', 'text': ''}})}\n\n"
+                            yield f"event: content_block_delta\ndata: {json.dumps({'type': 'content_block_delta', 'index': block_index, 'delta': {'type': 'text_delta', 'text': f'API Error: {resp.status_code} - {error_text.decode()}'}})}\n\n"
+                            yield f"event: content_block_stop\ndata: {json.dumps({'type': 'content_block_stop', 'index': block_index})}\n\n"
+                            return
 
-                        for choice in chunk.get("choices", []):
-                            delta = choice.get("delta", {})
+                        # Success! Send message_start if not sent
+                        if not msg_started:
+                            msg_start = {
+                                'type': 'message_start',
+                                'message': {
+                                    'id': msg_id,
+                                    'type': 'message',
+                                    'role': 'assistant',
+                                    'model': request_model,
+                                    'content': [],
+                                    'stop_reason': None,
+                                    'stop_sequence': None,
+                                    'usage': {'input_tokens': 0, 'output_tokens': 0}
+                                }
+                            }
+                            yield f"event: message_start\ndata: {json.dumps(msg_start)}\n\n"
+                            msg_started = True
 
-                            # Handle tool calls in stream
-                            tool_calls_delta = delta.get("tool_calls")
-                            if tool_calls_delta:
-                                for tc in tool_calls_delta:
-                                    tc_index = tc.get("index", 0)
-                                    if tc_index not in current_tool_calls:
-                                        has_tool_use = True
+                        async for line in resp.aiter_lines():
+                            if not line.startswith("data: "):
+                                continue
+                            data = line[6:]
+                            if data.strip() == "[DONE]":
+                                break
+                            try:
+                                chunk = json.loads(data)
+                            except json.JSONDecodeError:
+                                continue
 
-                                        # Close text block first
-                                        if text_block_started and current_block_type == "text":
-                                            # If text block has no content, emit empty text delta
-                                            if not text_block_has_content:
-                                                yield f"event: content_block_delta\ndata: {json.dumps({'type': 'content_block_delta', 'index': block_index, 'delta': {'type': 'text_delta', 'text': ''}})}\n\n"
+                            # Track usage
+                            if chunk.get("usage"):
+                                usage = chunk["usage"]
+                                input_tokens = usage.get("prompt_tokens", input_tokens)
+                                output_tokens = usage.get("completion_tokens", output_tokens)
+
+                            for choice in chunk.get("choices", []):
+                                delta = choice.get("delta", {})
+                                
+                                # 1. Handle Reasoning (Thinking)
+                                reasoning = delta.get("reasoning_content") or delta.get("reasoning")
+                                if reasoning:
+                                    if current_block_type != "thinking":
+                                        if current_block_type is not None:
                                             yield f"event: content_block_stop\ndata: {json.dumps({'type': 'content_block_stop', 'index': block_index})}\n\n"
-                                            text_block_started = False
+                                            block_index += 1
+                                        
+                                        current_block_type = "thinking"
+                                        yield f"event: content_block_start\ndata: {json.dumps({'type': 'content_block_start', 'index': block_index, 'content_block': {'type': 'thinking', 'thinking': ''}})}\n\n"
+                                    
+                                    yield f"event: content_block_delta\ndata: {json.dumps({'type': 'content_block_delta', 'index': block_index, 'delta': {'type': 'thinking_delta', 'thinking': reasoning}})}\n\n"
+                                    continue
 
-                                        block_index += 1
-                                        current_block_type = "tool_use"
+                                # 2. Handle Tool Calls
+                                tool_calls_delta = delta.get("tool_calls")
+                                if tool_calls_delta:
+                                    for tc in tool_calls_delta:
+                                        tc_index = tc.get("index", 0)
+                                        if tc_index not in current_tool_calls:
+                                            has_tool_use = True
+                                            if current_block_type in ["thinking", "text"]:
+                                                yield f"event: content_block_stop\ndata: {json.dumps({'type': 'content_block_stop', 'index': block_index})}\n\n"
+                                                block_index += 1
+                                            
+                                            current_block_type = "tool_use"
+                                            func = tc.get("function", {})
+                                            tc_id = tc.get("id", f"call_{tc_index}")
+                                            tc_name = func.get("name", "")
+                                            current_tool_calls[tc_index] = {"id": tc_id, "name": tc_name, "arguments": ""}
+                                            yield f"event: content_block_start\ndata: {json.dumps({'type': 'content_block_start', 'index': block_index, 'content_block': {'type': 'tool_use', 'id': tc_id, 'name': tc_name, 'input': {}}})}\n\n"
 
-                                        # Start tool_use block
-                                        func = tc.get("function", {})
-                                        tc_id = tc.get("id", f"call_{tc_index}")
-                                        tc_name = func.get("name", "")
-                                        current_tool_calls[tc_index] = {
-                                            "id": tc_id,
-                                            "name": tc_name,
-                                            "arguments": ""
-                                        }
-                                        yield f"event: content_block_start\ndata: {json.dumps({'type': 'content_block_start', 'index': block_index, 'content_block': {'type': 'tool_use', 'id': tc_id, 'name': tc_name, 'input': {}}})}\n\n"
+                                        if "function" in tc and tc["function"].get("arguments"):
+                                            current_tool_calls[tc_index]["arguments"] += tc["function"]["arguments"]
+                                            yield f"event: content_block_delta\ndata: {json.dumps({'type': 'content_block_delta', 'index': block_index, 'delta': {'type': 'input_json_delta', 'partial_json': tc['function']['arguments']}})}\n\n"
+                                    continue
 
-                                    # Append tool call arguments
-                                    if "function" in tc and tc["function"].get("arguments"):
-                                        current_tool_calls[tc_index]["arguments"] += tc["function"]["arguments"]
-                                        partial = tc["function"]["arguments"]
-                                        yield f"event: content_block_delta\ndata: {json.dumps({'type': 'content_block_delta', 'index': block_index, 'delta': {'type': 'input_json_delta', 'partial_json': partial}})}\n\n"
+                                # 3. Handle Normal Content
+                                text = delta.get("content")
+                                if text:
+                                    if current_block_type != "text":
+                                        if current_block_type in ["thinking", "tool_use"]:
+                                            yield f"event: content_block_stop\ndata: {json.dumps({'type': 'content_block_stop', 'index': block_index})}\n\n"
+                                            block_index += 1
+                                        
+                                        current_block_type = "text"
+                                        yield f"event: content_block_start\ndata: {json.dumps({'type': 'content_block_start', 'index': block_index, 'content_block': {'type': 'text', 'text': ''}})}\n\n"
+                                    
+                                    yield f"event: content_block_delta\ndata: {json.dumps({'type': 'content_block_delta', 'index': block_index, 'delta': {'type': 'text_delta', 'text': text}})}\n\n"
+                        
+                        return # Success exit from retry loop
 
-                            # Handle text content
-                            text = delta.get("content")
-                            if text:
-                                text_block_has_content = True
-                                yield f"event: content_block_delta\ndata: {json.dumps({'type': 'content_block_delta', 'index': block_index, 'delta': {'type': 'text_delta', 'text': text}})}\n\n"
+            except Exception as e:
+                logger.exception(f"Stream error attempt {attempt+1}: {e}")
+                if attempt == max_retries - 1:
+                    if not msg_started:
+                        # Send fallback start
+                        yield f"event: message_start\ndata: {json.dumps({'type': 'message_start', 'message': {'id': msg_id, 'type': 'message', 'role': 'assistant', 'model': request_model, 'content': [], 'usage': {'input_tokens': 0, 'output_tokens': 0}}})}\n\n"
+                    
+                    if current_block_type != "text":
+                        if current_block_type is not None:
+                            yield f"event: content_block_stop\ndata: {json.dumps({'type': 'content_block_stop', 'index': block_index})}\n\n"
+                            block_index += 1
+                        yield f"event: content_block_start\ndata: {json.dumps({'type': 'content_block_start', 'index': block_index, 'content_block': {'type': 'text', 'text': ''}})}\n\n"
+                    yield f"event: content_block_delta\ndata: {json.dumps({'type': 'content_block_delta', 'index': block_index, 'delta': {'type': 'text_delta', 'text': f'\nProxy error after {max_retries} attempts: {str(e)}'}})}\n\n"
+                else:
+                    await asyncio.sleep(base_delay * (2 ** attempt))
 
-    except Exception as e:
-        logger.error(f"Stream error: {e}")
-        yield f"event: content_block_delta\ndata: {json.dumps({'type': 'content_block_delta', 'index': block_index, 'delta': {'type': 'text_delta', 'text': f'Proxy error: {str(e)}'}})}\n\n"
+    async for event in do_stream():
+        yield event
 
     # Close last content block
-    yield f"event: content_block_stop\ndata: {json.dumps({'type': 'content_block_stop', 'index': block_index})}\n\n"
+    if current_block_type is not None:
+        yield f"event: content_block_stop\ndata: {json.dumps({'type': 'content_block_stop', 'index': block_index})}\n\n"
 
     # Send message_delta with stop
     stop_reason = "tool_use" if has_tool_use else "end_turn"
@@ -334,18 +392,34 @@ async def messages(request: Request):
             headers={"Cache-Control": "no-cache", "Connection": "keep-alive"},
         )
     else:
+        max_retries = 5
+        base_delay = 1.0
+        
         async with httpx.AsyncClient(timeout=180) as client:
-            resp = await client.post(f"{NIM_BASE_URL}/chat/completions", json=openai_body, headers=headers)
-            if resp.status_code != 200:
-                logger.error(f"NIM API error {resp.status_code}: {resp.text}")
-                return JSONResponse(
-                    {"type": "error", "error": {"type": "api_error", "message": f"NIM API returned {resp.status_code}: {resp.text}"}},
-                    status_code=resp.status_code
-                )
-            data = resp.json()
-            result = openai_to_anthropic(data, request_model)
-            logger.info(f"Response: stop_reason={result['stop_reason']}, content_blocks={len(result['content'])}")
-            return JSONResponse(result)
+            for attempt in range(max_retries):
+                resp = await client.post(f"{NIM_BASE_URL}/chat/completions", json=openai_body, headers=headers)
+                
+                if resp.status_code == 429:
+                    delay = base_delay * (2 ** attempt)
+                    logger.warning(f"Rate limited (429). Retrying in {delay}s... (Attempt {attempt+1}/{max_retries})")
+                    await asyncio.sleep(delay)
+                    continue
+                
+                if resp.status_code != 200:
+                    logger.error(f"NIM API error {resp.status_code}: {resp.text}")
+                    if attempt == max_retries - 1:
+                        return JSONResponse(
+                            {"type": "error", "error": {"type": "api_error", "message": f"NIM API returned {resp.status_code}: {resp.text}"}},
+                            status_code=resp.status_code
+                        )
+                    await asyncio.sleep(base_delay * (2 ** attempt))
+                    continue
+                
+                data = resp.json()
+                result = openai_to_anthropic(data, request_model)
+                logger.info(f"Response: stop_reason={result['stop_reason']}, content_blocks={len(result['content'])}")
+                return JSONResponse(result)
+
 
 
 @app.get("/v1/models")

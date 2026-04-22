@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Timeline from '../components/Timeline.astro';
 import CardGrid from '../components/CardGrid.astro';
@@ -10,8 +11,8 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout titleZh="James Xie | 独有·我" titleEn="James Xie | Duyou·Me" descriptionZh="James Xie 的个人网站，展示 AI 研究、企业 AI 技能递送方案与督友项目。" descriptionEn="James Xie's personal site featuring AI research, enterprise AI delivery solutions, and the DuYou project." ogImage="/og-home.svg">
-  <nav><ul><li><a href="/">Home</a></li><li><a href="/agents">Agents</a></li></ul></nav>
-Hero
+  <Header />
+  <Hero />
   <Timeline />
   <CardGrid />
   <WeeklyFeed />
