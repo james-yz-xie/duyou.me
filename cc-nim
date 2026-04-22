@@ -1,0 +1,125 @@
+#!/bin/bash
+# ccn: One command to launch Claude Code with NVIDIA NIM
+# Usage: ccn [model] | ccn list
+#   ccn                              # default: nvidia/llama-3.1-nemotron-ultra-253b-v1
+#   ccn z-ai/glm5                    # use GLM5
+#   ccn moonshotai/kimi-k2.5         # use Kimi K2.5
+#   ccn list                         # list all available NVIDIA NIM models
+
+PROXY_PORT=8742
+PROXY_SCRIPT="/Users/james/git/duyou.me/nim-proxy.py"
+DEFAULT_MODEL="nvidia/llama-3.1-nemotron-ultra-253b-v1"
+
+# List models command
+if [ "$1" = "list" ]; then
+    if [ -z "$NVIDIA_NIM_API_KEY" ]; then
+        echo "✗ NVIDIA_NIM_API_KEY not set. Run: source ~/.zshrc"
+        exit 1
+    fi
+    echo "Fetching available NVIDIA NIM models ..."
+    curl -s https://integrate.api.nvidia.com/v1/models \
+      -H "Authorization: Bearer $NVIDIA_NIM_API_KEY" \
+      | python3 -c "
+import json, sys
+
+DEFAULT = '$DEFAULT_MODEL'
+
+# Tier 1: Best tool calling support (official NVIDIA docs)
+TIER1 = [
+    'nvidia/llama-3.1-nemotron-ultra-253b-v1',
+    'qwen/qwen3-coder-480b-a35b-instruct',
+    'z-ai/glm5',
+    'z-ai/glm-5.1',
+    'z-ai/glm4.7',
+]
+
+# Tier 2: Good tool calling support
+TIER2 = [
+    'nvidia/llama-3.3-nemotron-super-49b-v1.5',
+    'mistralai/mistral-large-3-675b-instruct-2512',
+    'mistralai/devstral-2-123b-instruct-2512',
+    'moonshotai/kimi-k2.5',
+    'moonshotai/kimi-k2-thinking',
+    'qwen/qwen3.5-397b-a17b',
+    'minimaxai/minimax-m2.7',
+    'minimaxai/minimax-m2.5',
+    'deepseek-ai/deepseek-v3.2',
+    'meta/llama-4-maverick-17b-128e-instruct',
+    'openai/gpt-oss-120b',
+]
+
+# Tier 3: General purpose
+TIER3 = [
+    'meta/llama-3.1-405b-instruct',
+    'meta/llama-3.3-70b-instruct',
+    'mistralai/mistral-small-4-119b-2603',
+    'qwen/qwen3-next-80b-a3b-thinking',
+    'google/gemma-4-31b-it',
+]
+
+data = json.load(sys.stdin)
+available = set(m['id'] for m in data.get('data', []))
+
+def show_tier(name, models):
+    shown = [m for m in models if m in available]
+    if not shown:
+        return
+    print(f'\n  {name}')
+    print(f'  {\"─\" * 60}')
+    for m in shown:
+        tag = ' ← default' if m == DEFAULT else ''
+        print(f'    ccn {m}{tag}')
+
+show_tier('Tier 1 · Best Tool Calling', TIER1)
+show_tier('Tier 2 · Good Tool Calling', TIER2)
+show_tier('Tier 3 · General Purpose', TIER3)
+
+# Show other chat models
+tiered = set(TIER1 + TIER2 + TIER3)
+others = sorted([m for m in available if m not in tiered and 'embed' not in m and 'retriev' not in m and 'safety' not in m and 'guard' not in m and 'reward' not in m and 'parse' not in m and 'calibrat' not in m and 'translate' not in m and 'gliner' not in m and 'cosmos' not in m and 'deplot' not in m and 'neva' not in m and 'nvclip' not in m and 'fuyu' not in m and 'kosmos' not in m])
+if others:
+    print(f'\n  Other Models')
+    print(f'  {\"─\" * 60}')
+    for m in others:
+        print(f'    ccn {m}')
+
+print()
+"
+    exit 0
+fi
+
+MODEL="${1:-$DEFAULT_MODEL}"
+
+# Check if proxy is running
+if lsof -i :$PROXY_PORT -sTCP:LISTEN &>/dev/null; then
+    echo "✓ NIM proxy already running on port $PROXY_PORT"
+else
+    echo "Starting NIM proxy on port $PROXY_PORT ..."
+    NIM_DEFAULT_MODEL="$MODEL" python3 "$PROXY_SCRIPT" $PROXY_PORT &>/tmp/nim-proxy.log &
+    # Wait for proxy to be ready
+    for i in $(seq 1 10); do
+        if curl -s http://127.0.0.1:$PROXY_PORT/health &>/dev/null; then
+            echo "✓ NIM proxy started (PID: $(lsof -ti :$PROXY_PORT -sTCP:LISTEN))"
+            break
+        fi
+        sleep 0.5
+    done
+    if ! lsof -i :$PROXY_PORT -sTCP:LISTEN &>/dev/null; then
+        echo "✗ Failed to start proxy. Check /tmp/nim-proxy.log"
+        exit 1
+    fi
+fi
+
+echo "Model: $MODEL"
+echo "Launching Claude Code ..."
+echo ""
+
+ANTHROPIC_BASE_URL="http://127.0.0.1:$PROXY_PORT" \
+ANTHROPIC_API_KEY="not-used" \
+ANTHROPIC_MODEL="$MODEL" \
+ANTHROPIC_CUSTOM_MODEL_OPTION="$MODEL" \
+ANTHROPIC_DEFAULT_HAIKU_MODEL="$MODEL" \
+ANTHROPIC_DEFAULT_SONNET_MODEL="$MODEL" \
+ANTHROPIC_DEFAULT_OPUS_MODEL="$MODEL" \
+CLAUDE_CODE_SUBAGENT_MODEL="$MODEL" \
+claude
