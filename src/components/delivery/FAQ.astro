@@ -2,27 +2,27 @@
 const faqs = [
   {
     questionZh: "你们支持哪些“旧系统”？一定要有 API 吗？",
-    questionEn: "Which 'legacy systems' do you support? Is an API required?",
+    questionEn: "Which legacy systems do you support? Is an API required?",
     answerZh: "完全不需要 API。我们的核心优势就是处理“无接口”系统。支持包括：10 年前的内网 OA/ERP、专业行业平台（如 1688、货运系统）、桌面客户端（如金蝶、用友、CAD）、以及各类医疗/物流专用终端。",
-    answerEn: "No API is required at all. Our core strength is handling 'interface-less' systems. Supported systems include: 10-year-old internal OA/ERP systems, specialized industry platforms (e.g., 1688, freight systems), desktop clients (e.g., Kingdee, Yonyou, CAD), and various medical/logistics terminals."
+    answerEn: "No API needed at all. Our core strength lies in handling interface-less systems: decade-old internal OA/ERP, specialized platforms (e.g., 1688, freight systems), desktop clients (e.g., Kingdee, Yonyou, CAD), and dedicated medical/logistics terminals."
   },
   {
     questionZh: "项目实施费为什么要几万块？投入产出比如何？",
-    questionEn: "Why does the project implementation fee cost tens of thousands? What is the ROI?",
+    questionEn: "Why does implementation cost tens of thousands? What's the ROI?",
     answerZh: "相比招聘一名初级文员（年薪约 6-8 万），我们的适配器是一次性投入、长期受益。更重要的是项目运行过程中 **Token 消耗几乎为零**。相比按量计费的 SaaS 系统，这种“买断+少量维护”模式更符合传统企业的成本预期。",
-    answerEn: "Compared to hiring a junior clerk (annual salary ~60-80k CNY), our adapter is a one-time investment with long-term benefits. More importantly, **Token consumption is almost zero** during project operation. Compared to pay-as-you-go SaaS systems, this 'buyout + minimal maintenance' model aligns better with the cost expectations of traditional enterprises."
+    answerEn: "Compared to hiring a junior clerk (~60–80k CNY/year), our adapter is a one-time investment with lasting returns. More importantly, **token consumption is near zero** during operation. Unlike pay-as-you-go SaaS, this buyout + minimal maintenance model fits traditional enterprises far better."
   },
   {
     questionZh: "万一 AI 操作失误搞乱了数据怎么办？有安全保障吗？",
-    questionEn: "What if the AI makes a mistake and messes up the data? Is there a security guarantee?",
+    questionEn: "What if the AI makes a mistake and corrupts data? Are there safeguards?",
     answerZh: "我们提供的是“确定性能力”而非“聊天机器人”。系统通过验证套件确保输出标准（如 JSON/Excel）。安全方面：无需交出账号密码（复用现有登录态），所有数据处理均在您的内网服务器（私有算力）完成。且我们建议先从“只读”适配器开始灰度测试。",
-    answerEn: "We provide 'deterministic capabilities' rather than just a 'chatbot'. The system ensures standard output (e.g., JSON/Excel) through validation suites. Regarding security: no need to share account passwords (it reuses existing login sessions), and all data processing is completed on your internal servers (private computing). We also recommend starting grayscale testing with 'read-only' adapters."
+    answerEn: "We deliver deterministic capabilities, not a chatbot. Validation suites ensure standard output (e.g., JSON/Excel). Security: no password sharing (reuses existing login sessions), all processing runs on your internal servers (private compute). We recommend starting with read-only adapters for staged rollout."
   },
   {
     questionZh: "如果我们的系统 UI 改版了，适配器会失效吗？",
-    questionEn: "If our system UI is redesigned, will the adapter fail?",
+    questionEn: "If our system UI gets redesigned, will the adapter break?",
     answerZh: "我们会提供年度维护服务（约项目总额 15-20%）。得益于我们的底层框架，当 UI 发生重大变更时，只需运行 `refine` 命令即可快速修复适配器，确保业务几乎无中断。",
-    answerEn: "We provide annual maintenance services (approx. 15-20% of the total project amount). Thanks to our underlying framework, when significant UI changes occur, you only need to run the `refine` command to quickly fix the adapter, ensuring minimal business disruption."
+    answerEn: "We offer annual maintenance (~15–20% of project value). Thanks to our underlying framework, when a major UI change occurs, simply run the `refine` command to patch the adapter with minimal business disruption."
   }
 ];
 ---
@@ -59,7 +59,7 @@ const faqs = [
     <div class="mt-16 p-8 rounded-2xl bg-gold/5 border border-gold/10 text-center">
       <p class="text-gray-300 italic">
         <span class="lang-zh">“我们不卖‘虚幻的 AI’，我们卖的是一套<b>不需要额外雇人也能跑通的自动化流程</b>。”</span>
-        <span class="lang-en hidden">"We don't sell 'illusory AI'; we sell a set of <b>automated processes that can run without hiring extra staff</b>."</span>
+        <span class="lang-en hidden">"We don't sell illusory AI — we deliver <b>automated processes that run without hiring extra hands</b>."</span>
       </p>
     </div>
   </div>

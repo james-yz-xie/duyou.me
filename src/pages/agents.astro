@@ -108,10 +108,10 @@ const internationalTools = [
   {
     name: 'Goose',
     nameZh: 'Goose',
-    description: 'Block/Square 开源 Agent，桌面+CLI 双模式，本地运行',
-    descriptionEn: 'Block/Square open-source agent, desktop+CLI modes',
-    url: 'https://github.com/block/goose',
-    stars: '42K+',
+    description: 'Block/Square 开源 Agent，桌面+CLI 双模式，70+ MCP 扩展',
+    descriptionEn: 'Open-source AI agent by Block/Square, desktop+CLI modes, 70+ MCP extensions',
+    url: 'https://goose-docs.ai/',
+    stars: '38K+',
     price: 'Free',
     swebench: '-',
     category: 'cli',
@@ -120,7 +120,7 @@ const internationalTools = [
     isMultiModel: true,
     reasoning: true,
     region: '国外',
-    install: 'npm install -g @block/goose'
+    install: 'curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download_cli.sh | bash'
   },
   {
     name: 'Cline',
@@ -367,7 +367,11 @@ const allTools = [...internationalTools, ...chineseTools];
                     {tool.reasoning && <span class="text-[10px] px-2 py-0.5 bg-gold/10 text-gold border border-gold/20 rounded">REASONING</span>}
                   </div>
                   <p class="text-gray-400 mb-2">{tool.description}</p>
-                  <code class="text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded">{tool.install}</code>
+                  <div class="copy-cmd inline-flex items-center gap-2 text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded cursor-pointer hover:bg-gray-700 transition-colors" data-cmd={tool.install}>
+                    <code>{tool.install}</code>
+                    <svg class="copy-icon w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    <svg class="check-icon w-3.5 h-3.5 text-emerald-400 shrink-0 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  </div>
                 </div>
                 <div class="text-right md:w-40">
                   <p class="text-sm text-gray-500 mb-1">价格</p>
@@ -401,7 +405,11 @@ const allTools = [...internationalTools, ...chineseTools];
                     {tool.reasoning && <span class="text-[10px] px-2 py-0.5 bg-gold/10 text-gold border border-gold/20 rounded">REASONING</span>}
                   </div>
                   <p class="text-gray-400 mb-2">{tool.description}</p>
-                  <code class="text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded">{tool.install}</code>
+                  <div class="copy-cmd inline-flex items-center gap-2 text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded cursor-pointer hover:bg-gray-700 transition-colors" data-cmd={tool.install}>
+                    <code>{tool.install}</code>
+                    <svg class="copy-icon w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    <svg class="check-icon w-3.5 h-3.5 text-emerald-400 shrink-0 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  </div>
                 </div>
                 <div class="text-right md:w-40">
                   <p class="text-sm text-gray-500 mb-1">价格</p>
@@ -498,6 +506,25 @@ const allTools = [...internationalTools, ...chineseTools];
 
         document.querySelectorAll('.tool-section').forEach(s => s.classList.add('hidden'));
         document.getElementById(tab).classList.remove('hidden');
+      });
+    });
+
+    // Copy install command
+    document.querySelectorAll('.copy-cmd').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const cmd = el.dataset.cmd;
+        navigator.clipboard.writeText(cmd).then(() => {
+          const copyIcon = el.querySelector('.copy-icon');
+          const checkIcon = el.querySelector('.check-icon');
+          copyIcon.classList.add('hidden');
+          checkIcon.classList.remove('hidden');
+          setTimeout(() => {
+            copyIcon.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+          }, 1500);
+        });
       });
     });
   </script>
