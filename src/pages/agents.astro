@@ -245,7 +245,7 @@ const chineseTools = [
     nameZh: '墨子 Mozi',
     description: '轻量级国产 AI 助手框架，支持 QQ/飞书/钉钉/企微',
     descriptionEn: 'Lightweight Chinese AI assistant framework, supports QQ/Feishu/DingTalk/WeChat',
-    url: 'https://github.com/oujingzhou/openmozi',
+    url: 'https://github.com/King-Chau/mozi',
     stars: '179+',
     price: 'Free',
     category: 'agent',
@@ -270,7 +270,7 @@ const chineseTools = [
     isMultiModel: true,
     reasoning: true,
     region: '中国',
-    install: 'go install github.com/smallnest/goclaw@latest'
+    install: 'git clone https://github.com/smallnest/goclaw.git && cd goclaw && go build'
   },
   {
     name: 'Trae CLI',
@@ -278,7 +278,7 @@ const chineseTools = [
     description: '字节跳动开源 AI Agent CLI，多模型兼容，任务轨迹追踪',
     descriptionEn: 'ByteDance open-source AI Agent CLI, multi-model, task trajectory tracking',
     url: 'https://github.com/bytedance/trae-agent',
-    stars: '30K+',
+    stars: '11K+',
     price: 'Free',
     category: 'cli',
     type: '编程 CLI',
@@ -286,7 +286,7 @@ const chineseTools = [
     isMultiModel: true,
     reasoning: true,
     region: '中国',
-    install: 'sh -c "$(curl -L https://trae.cn/trae-cli/install.sh)"'
+    install: 'git clone https://github.com/bytedance/trae-agent.git && cd trae-agent && uv sync'
   },
   {
     name: 'fuxi-cli',
@@ -450,7 +450,7 @@ const allTools = [...internationalTools, ...chineseTools];
           <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
             <h3 class="text-lg font-bold text-gold mb-3">🎯 免费开源</h3>
             <ul class="text-gray-400 space-y-2 text-sm">
-              <li>• OpenCode - 国际开源首选</li>
+              <li>• Crush - 国际开源首选</li>
               <li>• CountBot - 国产开源框架</li>
               <li>• Aider - 配对编程金标准</li>
             </ul>
