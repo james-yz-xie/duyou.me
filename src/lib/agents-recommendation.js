@@ -1,4 +1,6 @@
-// agents-recommendation.js
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
 
 // 用户需求类型定义
 const userNeeds = {

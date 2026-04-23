@@ -5,4 +5,50 @@ const navLinks = [
   { name: '开源热点', nameEn: 'Open Source', href: '/opensource' },
   { name: '前沿情报', nameEn: 'Briefings', href: '/briefings' }
 ];
+
+const currentPath = Astro.url.pathname;
 ---
+
+<nav id="floating-nav" class="fixed top-3 left-1/2 -translate-x-1/2 z-40">
+  <div class="dynamic-island flex items-center gap-0.5 px-1.5 py-1 bg-black rounded-full shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_2px_16px_rgba(0,0,0,0.6)]">
+    {navLinks.map(link => {
+      const isActive = currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href));
+      return (
+        <a
+          href={link.href}
+          class:list={[
+            'nav-link relative px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300',
+            isActive
+              ? 'text-white'
+              : 'text-white/50 hover:text-white/80'
+          ]}
+        >
+          {isActive && (
+            <span class="absolute inset-0 bg-white/15 rounded-full"></span>
+          )}
+          <span class="relative lang-zh">{link.name}</span>
+          <span class="relative lang-en hidden">{link.nameEn}</span>
+        </a>
+      );
+    })}
+  </div>
+</nav>
+
+<style>
+  .dynamic-island {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dynamic-island:hover {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.12), 0 4px 24px rgba(0,0,0,0.7);
+  }
+
+  .nav-link:active {
+    transform: scale(0.96);
+  }
+
+  /* Active indicator subtle glow */
+  .nav-link > span:first-child {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+</style>
