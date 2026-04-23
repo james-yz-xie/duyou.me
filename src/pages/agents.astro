@@ -7,16 +7,16 @@ const internationalTools = [
     name: 'Claude Code',
     nameZh: 'Claude Code',
     description: 'Anthropic 官方 AI 编程助手，1M context，支持 MCP',
-    descriptionEn: 'Anthropic official AI coding assistant, 1M context, supports MCP system',
-    url: 'https://claude.com/claude-code',
-    stars: '147K+',
+    descriptionEn: 'Anthropic official AI coding assistant, 1M context, supports MCP',
+    url: 'https://docs.anthropic.com/en/docs/claude-code',
+    stars: '117K+',
     price: '$17-20/mo (Pro), $100-200/mo (Max)',
     swebench: '80.9%',
     category: 'cloud',
     type: '编程 CLI',
     isOpenSource: false,
     isMultiModel: false,
-    reasoning: true, // 已经通过我们的 Proxy 解决
+    reasoning: true,
     region: '国外',
     install: 'npm install -g @anthropic-ai/claude-code'
   },
@@ -26,7 +26,7 @@ const internationalTools = [
     description: 'AI 优先的代码编辑器，UX 最优，Cloud Sandbox 执行',
     descriptionEn: 'AI-first code editor with best UX and cloud sandbox execution',
     url: 'https://cursor.com',
-    stars: '43K+',
+    stars: '33K+',
     price: '$20/mo (Plus), $40/mo (Pro)',
     swebench: '-',
     category: 'ide',
@@ -43,7 +43,7 @@ const internationalTools = [
     description: 'Codeium 出品的 AI 编辑器，Flow Agent 模式',
     descriptionEn: 'Codeium AI editor with Flow Agent mode',
     url: 'https://codeium.com/windsurf',
-    stars: '21K+',
+    stars: '-',
     price: 'Free',
     swebench: '-',
     category: 'ide',
@@ -52,32 +52,32 @@ const internationalTools = [
     isMultiModel: false,
     reasoning: false,
     region: '国外',
-    install: 'Download from codeium.com'
+    install: 'Download from codeium.com/windsurf'
   },
   {
     name: 'Codex CLI',
     nameZh: 'Codex CLI',
-    description: 'OpenAI 官方 CLI，Cloud sandbox 执行，自主操作',
-    descriptionEn: 'OpenAI official CLI with cloud sandbox execution',
-    url: 'https://openai.com/codex',
-    stars: '100K+',
+    description: 'OpenAI 官方开源 CLI，本地沙箱执行，自主操作',
+    descriptionEn: 'OpenAI official open-source CLI with local sandbox execution',
+    url: 'https://github.com/openai/codex',
+    stars: '77K+',
     price: '$20/mo (ChatGPT Plus)',
     swebench: '-',
     category: 'cli',
     type: '编程 CLI',
-    isOpenSource: false,
+    isOpenSource: true,
     isMultiModel: false,
     reasoning: false,
     region: '国外',
-    install: 'Download from openai.com/codex'
+    install: 'npm install -g @openai/codex'
   },
   {
     name: 'Gemini CLI',
     nameZh: 'Gemini CLI',
-    description: 'Google 官方 AI 代理，100K+ stars，MCP 支持，1M token',
-    descriptionEn: 'Google official AI agent with MCP support, 1M token',
-    url: 'https://geminicli.com',
-    stars: '100K+',
+    description: 'Google 官方开源 AI 代理，MCP 支持，1M token',
+    descriptionEn: 'Google official open-source AI agent with MCP support, 1M token',
+    url: 'https://github.com/google-gemini/gemini-cli',
+    stars: '102K+',
     price: 'Free (60 req/min)',
     swebench: '-',
     category: 'cli',
@@ -94,7 +94,7 @@ const internationalTools = [
     description: '终端配对编程金标准，Git-native 工作流',
     descriptionEn: 'Terminal pair programming gold standard, Grid-native workflow',
     url: 'https://aider.chat',
-    stars: '43K+',
+    stars: '44K+',
     price: 'BYOK',
     swebench: '-',
     category: 'cli',
@@ -215,23 +215,7 @@ const chineseTools = [
     nameZh: 'Kimi Code CLI',
     description: 'Moonshot AI 终端 AI 编码代理，256K 上下文，支持 MCP',
     descriptionEn: 'Moonshot AI terminal AI coding agent, 256K context, MCP support',
-    url: 'https://kimi-k25.com',
-    stars: '563+',
-    price: 'Free',
-    category: 'cli',
-    type: '编程 CLI',
-    isOpenSource: false,
-    isMultiModel: true,
-    reasoning: true,
-    region: '中国',
-    install: 'npm install -g kimi-cli'
-  },
-  {
-    name: 'Qwen Code',
-    nameZh: '通义千问 Coding',
-    description: '阿里 AI 编程 CLI，256K 超长上下文，中文理解顶级',
-    descriptionEn: 'Alibaba AI coding CLI, 256K context, best Chinese understanding',
-    url: 'https://qwen.alibaba.com',
+    url: 'https://www.kimi.com/code',
     stars: '10K+',
     price: 'Free',
     category: 'cli',
@@ -240,11 +224,27 @@ const chineseTools = [
     isMultiModel: true,
     reasoning: true,
     region: '中国',
-    install: 'npm install -g qwen-code'
+    install: 'curl -LsSf https://code.kimi.com/install.sh | bash'
+  },
+  {
+    name: 'Qwen Code',
+    nameZh: '通义千问 Code',
+    description: '阿里 Qwen Code 编程 CLI，Qwen3-Coder 模型，256K 上下文',
+    descriptionEn: 'Alibaba Qwen Code CLI, Qwen3-Coder model, 256K context',
+    url: 'https://qwenlm.github.io/qwen-code-docs/',
+    stars: '10K+',
+    price: 'Free',
+    category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '中国',
+    install: 'npm install -g @qwen-code/qwen-code@latest'
   },
   {
     name: 'CodeBuddy',
-    nameZh: '腾讯 CodeBuddy',
+    nameZh: '腾讯 CodeBuddy Code',
     description: '腾讯 AI 编程 CLI，DeepSeek 模型，流程自动化',
     descriptionEn: 'Tencent AI coding CLI, DeepSeek model, workflow automation',
     url: 'https://codebuddy.cn',
@@ -256,7 +256,7 @@ const chineseTools = [
     isMultiModel: true,
     reasoning: true,
     region: '中国',
-    install: 'npm install -g codebuddy'
+    install: 'npm install -g @tencent-ai/codebuddy-code'
   },
   {
     name: 'CountBot',
@@ -276,11 +276,11 @@ const chineseTools = [
   },
   {
     name: 'OpenMozi',
-    nameZh: 'OpenMozi',
+    nameZh: '墨子 Mozi',
     description: '轻量级国产 AI 助手框架，支持 QQ/飞书/钉钉/企微',
     descriptionEn: 'Lightweight Chinese AI assistant framework, supports QQ/Feishu/DingTalk/WeChat',
-    url: 'https://github.com/King-Chau/mozi',
-    stars: '180+',
+    url: 'https://github.com/oujingzhou/openmozi',
+    stars: '166+',
     price: 'Free',
     category: 'agent',
     type: 'AI 助手',
@@ -288,7 +288,7 @@ const chineseTools = [
     isMultiModel: true,
     reasoning: true,
     region: '中国',
-    install: 'npm install -g openmozi'
+    install: 'npm install -g mozi-bot'
   },
   {
     name: 'GoClaw',
@@ -305,6 +305,22 @@ const chineseTools = [
     reasoning: true,
     region: '中国',
     install: 'go install github.com/smallnest/goclaw@latest'
+  },
+  {
+    name: 'Trae CLI',
+    nameZh: '字节 Trae CLI',
+    description: '字节跳动开源 AI Agent CLI，多模型兼容，任务轨迹追踪',
+    descriptionEn: 'ByteDance open-source AI Agent CLI, multi-model, task trajectory tracking',
+    url: 'https://github.com/bytedance/trae-agent',
+    stars: '30K+',
+    price: 'Free',
+    category: 'cli',
+    type: '编程 CLI',
+    isOpenSource: true,
+    isMultiModel: true,
+    reasoning: true,
+    region: '中国',
+    install: 'sh -c "$(curl -L https://trae.cn/trae-cli/install.sh)"'
   },
   {
     name: 'fuxi-cli',
@@ -339,14 +355,14 @@ const allTools = [...internationalTools, ...chineseTools];
       </div>
 
       <!-- 标签切换 -->
-      <div class="flex justify-center gap-4 mb-12 flex-wrap">
-        <button class="tab-btn px-6 py-2 bg-gold text-dark font-semibold rounded-full" data-tab="international">
+      <div class="flex justify-center gap-2 sm:gap-4 mb-12 flex-wrap">
+        <button class="tab-btn px-4 sm:px-6 py-2 text-sm sm:text-base bg-gold text-dark font-semibold rounded-full" data-tab="international">
           国外工具
         </button>
-        <button class="tab-btn px-6 py-2 border-2 border-gray-600 text-gray-400 hover:border-gold hover:text-gold font-semibold rounded-full" data-tab="chinese">
+        <button class="tab-btn px-4 sm:px-6 py-2 text-sm sm:text-base border-2 border-gray-600 text-gray-400 hover:border-gold hover:text-gold font-semibold rounded-full" data-tab="chinese">
           中国工具
         </button>
-        <button class="tab-btn px-6 py-2 border-2 border-gray-600 text-gray-400 hover:border-gold hover:text-gold font-semibold rounded-full" data-tab="comparison">
+        <button class="tab-btn px-4 sm:px-6 py-2 text-sm sm:text-base border-2 border-gray-600 text-gray-400 hover:border-gold hover:text-gold font-semibold rounded-full" data-tab="comparison">
           对比表格
         </button>
       </div>
@@ -355,32 +371,35 @@ const allTools = [...internationalTools, ...chineseTools];
       <div id="international" class="tool-section">
         <div class="grid gap-4">
           {internationalTools.map((tool) => (
-            <a href={tool.url} target="_blank" rel="noopener noreferrer" class="block bg-gray-900 border border-gray-800 hover:border-gold rounded-lg p-6 transition-all group">
-              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div class="flex-1">
-                  <div class="flex items-center gap-3 mb-2">
-                    <h3 class="text-xl font-bold text-white group-hover:text-gold">{tool.name}</h3>
+            <a href={tool.url} target="_blank" rel="noopener noreferrer" class="block bg-gray-900 border border-gray-800 hover:border-gold rounded-lg p-4 sm:p-6 transition-all group">
+              <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-6">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-gold">{tool.name}</h3>
                     {tool.stars !== '-' && (
-                      <span class="text-sm text-gray-500">★ {tool.stars}</span>
+                      <span class="text-xs sm:text-sm text-gray-500">★ {tool.stars}</span>
                     )}
                     <span class="text-xs px-2 py-1 bg-gray-800 text-gray-400 rounded">{tool.category}</span>
                     {tool.reasoning && <span class="text-[10px] px-2 py-0.5 bg-gold/10 text-gold border border-gold/20 rounded">REASONING</span>}
                   </div>
-                  <p class="text-gray-400 mb-2">{tool.description}</p>
-                  <div class="copy-cmd inline-flex items-center gap-2 text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded cursor-pointer hover:bg-gray-700 transition-colors" data-cmd={tool.install}>
-                    <code>{tool.install}</code>
+                  <p class="text-gray-400 text-sm sm:text-base mb-2">{tool.description}</p>
+                  <div class="copy-cmd inline-flex items-center gap-2 text-xs sm:text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded cursor-pointer hover:bg-gray-700 transition-colors max-w-full overflow-x-auto" data-cmd={tool.install}>
+                    <code class="whitespace-nowrap">{tool.install}</code>
                     <svg class="copy-icon w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                     <svg class="check-icon w-3.5 h-3.5 text-emerald-400 shrink-0 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                   </div>
                 </div>
-                <div class="text-right md:w-40">
-                  <p class="text-sm text-gray-500 mb-1">价格</p>
-                  <p class="text-white font-medium">{tool.price}</p>
+                <div class="flex sm:flex-col items-center sm:items-end gap-3 sm:gap-1 sm:w-40 shrink-0 text-sm">
+                  <div>
+                    <span class="text-gray-500 sm:hidden">价格 </span>
+                    <span class="text-white font-medium">{tool.price}</span>
+                  </div>
                   {tool.swebench !== '-' && (
-                    <>
-                      <p class="text-sm text-gray-500 mb-1 mt-2">SWE-bench</p>
-                      <p class="text-gold font-medium">{tool.swebench}</p>
-                    </>
+                    <div>
+                      <span class="text-gray-500 sm:hidden">SWE-bench </span>
+                      <p class="text-gray-500 text-xs hidden sm:block">SWE-bench</p>
+                      <span class="text-gold font-medium">{tool.swebench}</span>
+                    </div>
                   )}
                 </div>
               </div>
@@ -393,27 +412,27 @@ const allTools = [...internationalTools, ...chineseTools];
       <div id="chinese" class="tool-section hidden">
         <div class="grid gap-4">
           {chineseTools.map((tool) => (
-            <a href={tool.url} target="_blank" rel="noopener noreferrer" class="block bg-gray-900 border border-gray-800 hover:border-gold rounded-lg p-6 transition-all group">
-              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div class="flex-1">
-                  <div class="flex items-center gap-3 mb-2">
-                    <h3 class="text-xl font-bold text-white group-hover:text-gold">{tool.nameZh}</h3>
+            <a href={tool.url} target="_blank" rel="noopener noreferrer" class="block bg-gray-900 border border-gray-800 hover:border-gold rounded-lg p-4 sm:p-6 transition-all group">
+              <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-6">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+                    <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-gold">{tool.nameZh}</h3>
                     {tool.stars !== '-' && (
-                      <span class="text-sm text-gray-500">★ {tool.stars}</span>
+                      <span class="text-xs sm:text-sm text-gray-500">★ {tool.stars}</span>
                     )}
                     <span class="text-xs px-2 py-1 bg-gray-800 text-gray-400 rounded">{tool.category}</span>
                     {tool.reasoning && <span class="text-[10px] px-2 py-0.5 bg-gold/10 text-gold border border-gold/20 rounded">REASONING</span>}
                   </div>
-                  <p class="text-gray-400 mb-2">{tool.description}</p>
-                  <div class="copy-cmd inline-flex items-center gap-2 text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded cursor-pointer hover:bg-gray-700 transition-colors" data-cmd={tool.install}>
-                    <code>{tool.install}</code>
+                  <p class="text-gray-400 text-sm sm:text-base mb-2">{tool.description}</p>
+                  <div class="copy-cmd inline-flex items-center gap-2 text-xs sm:text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded cursor-pointer hover:bg-gray-700 transition-colors max-w-full overflow-x-auto" data-cmd={tool.install}>
+                    <code class="whitespace-nowrap">{tool.install}</code>
                     <svg class="copy-icon w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                     <svg class="check-icon w-3.5 h-3.5 text-emerald-400 shrink-0 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                   </div>
                 </div>
-                <div class="text-right md:w-40">
-                  <p class="text-sm text-gray-500 mb-1">价格</p>
-                  <p class="text-white font-medium">{tool.price}</p>
+                <div class="flex items-center gap-3 sm:w-40 shrink-0 text-sm">
+                  <span class="text-gray-500 sm:hidden">价格 </span>
+                  <span class="text-white font-medium">{tool.price}</span>
                 </div>
               </div>
             </a>
@@ -425,8 +444,8 @@ const allTools = [...internationalTools, ...chineseTools];
       <div id="comparison" class="tool-section hidden">
         <div class="mt-16">
           <h2 class="text-2xl font-bold text-white text-center mb-8">核心对比</h2>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+          <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+            <table class="w-full text-left border-collapse min-w-[600px]">
               <thead>
                 <tr class="border-b border-gray-800">
                   <th class="py-3 px-4 text-gray-400 font-medium">工具</th>
