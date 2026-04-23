@@ -1,0 +1,37 @@
+model_list:
+  - model_name: "nvidia/llama-3.1-nemotron-ultra-253b-v1"
+    litellm_params:
+      model: "openai/nvidia/llama-3.1-nemotron-ultra-253b-v1"
+      api_base: "https://integrate.api.nvidia.com/v1"
+      api_key: "os.environ/NVIDIA_NIM_API_KEY"
+  
+  - model_name: "z-ai/glm5"
+    litellm_params:
+      model: "openai/z-ai/glm5"
+      api_base: "https://integrate.api.nvidia.com/v1"
+      api_key: "os.environ/NVIDIA_NIM_API_KEY"
+
+  - model_name: "z-ai/glm-5.1"
+    litellm_params:
+      model: "openai/z-ai/glm-5.1"
+      api_base: "https://integrate.api.nvidia.com/v1"
+      api_key: "os.environ/NVIDIA_NIM_API_KEY"
+
+  # 定义一个虚拟的推荐模型组，支持自动 Fallback
+  - model_name: "agent-best"
+    litellm_params:
+      model: "openai/nvidia/llama-3.1-nemotron-ultra-253b-v1" # 主用
+  - model_name: "agent-best"
+    litellm_params:
+      model: "openai/z-ai/glm5" # 备用
+
+litellm_settings:
+  drop_params: True
+  set_verbose: False
+  # 自动重试 2 次
+  num_retries: 2
+  # 开启工具调用修正（LiteLLM 内置了一些修正逻辑）
+  enable_tool_calling_fix: True
+
+router_settings:
+  routing_strategy: "latency-based-routing" # 或者 simple-shuffle

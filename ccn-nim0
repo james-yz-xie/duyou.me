@@ -1,16 +1,17 @@
 #!/bin/bash
-# ccn: One command to launch Claude Code with NVIDIA NIM (Agent Gateway Edition)
-# Usage: ccn [model] | ccn list
+# ccn0: Git-commit version of the direct NIM proxy launcher
+# Usage: ccn0 [model] | ccn0 list
 
 set -euo pipefail
 
-PROXY_PORT=8742
-PROXY_SCRIPT="/Users/james/git/duyou.me/nim-proxy.py"
-PROXY_CONFIG="/Users/james/git/duyou.me/litellm-config.yaml"
-PROXY_REQUIREMENTS="/Users/james/git/duyou.me/requirements-nim-gateway.txt"
-PROXY_VENV="/Users/james/git/duyou.me/.venv-nim-gateway"
+PROXY_PORT=8743
+PROXY_SCRIPT="/Users/james/git/duyou.me/nim-proxy0.py"
+PROXY_REQUIREMENTS="/Users/james/git/duyou.me/requirements-nim-proxy0.txt"
+PRIMARY_VENV="/Users/james/git/duyou.me/.venv-nim-proxy0"
+FALLBACK_VENV="/Users/james/git/duyou.me/.venv-nim-gateway"
+PROXY_VENV=""
 export UV_CACHE_DIR="${TMPDIR:-/tmp}/duyou-uv-cache"
-DEFAULT_MODEL="z-ai/glm5"
+DEFAULT_MODEL="nvidia/llama-3.1-nemotron-ultra-253b-v1"
 
 pick_python() {
     local candidate
@@ -23,11 +24,22 @@ pick_python() {
     return 1
 }
 
-bootstrap_gateway_env() {
+bootstrap_proxy_env() {
     local pybin="$1"
+    if [ -x "$PRIMARY_VENV/bin/python" ] && "$PRIMARY_VENV/bin/python" -c "import fastapi, uvicorn, httpx" >/dev/null 2>&1; then
+        PROXY_VENV="$PRIMARY_VENV"
+        return 0
+    fi
+
+    if [ -x "$FALLBACK_VENV/bin/python" ] && "$FALLBACK_VENV/bin/python" -c "import fastapi, uvicorn, httpx" >/dev/null 2>&1; then
+        PROXY_VENV="$FALLBACK_VENV"
+        return 0
+    fi
+
+    PROXY_VENV="$PRIMARY_VENV"
 
     if [ ! -x "$PROXY_VENV/bin/python" ]; then
-        echo "Creating gateway virtualenv at $PROXY_VENV ..."
+        echo "Creating proxy0 virtualenv at $PROXY_VENV ..."
         if command -v uv >/dev/null 2>&1; then
             uv venv "$PROXY_VENV" --python "$pybin"
         else
@@ -35,8 +47,8 @@ bootstrap_gateway_env() {
         fi
     fi
 
-    if ! "$PROXY_VENV/bin/python" -c "import fastapi, uvicorn, litellm" >/dev/null 2>&1; then
-        echo "Installing gateway dependencies ..."
+    if ! "$PROXY_VENV/bin/python" -c "import fastapi, uvicorn, httpx" >/dev/null 2>&1; then
+        echo "Installing proxy0 dependencies ..."
         if command -v uv >/dev/null 2>&1; then
             uv pip install --python "$PROXY_VENV/bin/python" -r "$PROXY_REQUIREMENTS"
         else
@@ -51,9 +63,8 @@ if [ -z "${PYTHON_BIN:-}" ]; then
     exit 1
 fi
 
-# List models command
 if [ "${1:-}" = "list" ]; then
-    if [ -z "$NVIDIA_NIM_API_KEY" ]; then
+    if [ -z "${NVIDIA_NIM_API_KEY:-}" ]; then
         echo "✗ NVIDIA_NIM_API_KEY not set. Run: source ~/.zshrc"
         exit 1
     fi
@@ -62,55 +73,47 @@ if [ "${1:-}" = "list" ]; then
       -H "Authorization: Bearer $NVIDIA_NIM_API_KEY" \
       | python3 -c "
 import json, sys
-
 DEFAULT = '$DEFAULT_MODEL'
-
 TIER1 = ['nvidia/llama-3.1-nemotron-ultra-253b-v1', 'qwen/qwen3-coder-480b-a35b-instruct', 'z-ai/glm5', 'z-ai/glm-5.1', 'z-ai/glm4.7']
 TIER2 = ['nvidia/llama-3.3-nemotron-super-49b-v1.5', 'mistralai/mistral-large-3-675b-instruct-2512', 'mistralai/devstral-2-123b-instruct-2512', 'moonshotai/kimi-k2.5', 'moonshotai/kimi-k2-thinking', 'qwen/qwen3.5-397b-a17b', 'minimaxai/minimax-m2.7', 'minimaxai/minimax-m2.5', 'deepseek-ai/deepseek-v3.2', 'meta/llama-4-maverick-17b-128e-instruct', 'openai/gpt-oss-120b']
 TIER3 = ['meta/llama-3.1-405b-instruct', 'meta/llama-3.3-70b-instruct', 'mistralai/mistral-small-4-119b-2603', 'qwen/qwen3-next-80b-a3b-thinking', 'google/gemma-4-31b-it']
-
 data = json.load(sys.stdin)
 available = set(m['id'] for m in data.get('data', []))
-
 def show_tier(name, models):
     shown = [m for m in models if m in available]
-    if not shown: return
-    print(f'\n  {name}\n  {\"─\" * 60}')
+    if not shown:
+        return
+    print(f'\\n  {name}')
+    print(f'  {\"─\" * 60}')
     for m in shown:
         tag = ' ← default' if m == DEFAULT else ''
-        print(f'    ccn {m}{tag}')
-
+        print(f'    ccn0 {m}{tag}')
 show_tier('Tier 1 · Best Tool Calling', TIER1)
 show_tier('Tier 2 · Good Tool Calling', TIER2)
 show_tier('Tier 3 · General Purpose', TIER3)
+print()
 "
     exit 0
 fi
 
 MODEL="${1:-$DEFAULT_MODEL}"
 
-bootstrap_gateway_env "$PYTHON_BIN"
+bootstrap_proxy_env "$PYTHON_BIN"
 
-# Force restart proxy
 if lsof -i :$PROXY_PORT -sTCP:LISTEN &>/dev/null; then
     PROXY_PID=$(lsof -ti :$PROXY_PORT -sTCP:LISTEN)
-    echo "↻ Restarting NIM Agent Gateway (killing old PID: $PROXY_PID) ..."
-    kill -9 $PROXY_PID &>/dev/null
+    echo "↻ Restarting NIM proxy0 (killing old PID: $PROXY_PID) ..."
+    kill -9 "$PROXY_PID" &>/dev/null
     sleep 0.5
 fi
 
-echo "Starting NIM Agent Gateway on port $PROXY_PORT for model: $MODEL ..."
-export LITELLM_CONFIG="$PROXY_CONFIG"
-export NIM_DEFAULT_MODEL="$MODEL"
-export PROXY_PORT="$PROXY_PORT"
+echo "Starting NIM proxy0 on port $PROXY_PORT for model: $MODEL ..."
+NIM_DEFAULT_MODEL="$MODEL" "$PROXY_VENV/bin/python" "$PROXY_SCRIPT" "$PROXY_PORT" &>/tmp/nim-proxy0.log &
 
-"$PROXY_VENV/bin/python" "$PROXY_SCRIPT" &>/tmp/nim-proxy.log &
-
-# Wait for proxy to be ready
 READY=false
 for i in $(seq 1 20); do
-    if curl -s http://127.0.0.1:$PROXY_PORT/ping &>/dev/null; then
-        echo "✓ Agent Gateway started (PID: $(lsof -ti :$PROXY_PORT -sTCP:LISTEN))"
+    if curl -s http://127.0.0.1:$PROXY_PORT/health &>/dev/null; then
+        echo "✓ NIM proxy0 started (PID: $(lsof -ti :$PROXY_PORT -sTCP:LISTEN))"
         READY=true
         break
     fi
@@ -118,8 +121,8 @@ for i in $(seq 1 20); do
 done
 
 if [ "$READY" = false ]; then
-    echo "✗ Failed to start Gateway. Check /tmp/nim-proxy.log"
-    cat /tmp/nim-proxy.log
+    echo "✗ Failed to start proxy0. Check /tmp/nim-proxy0.log"
+    cat /tmp/nim-proxy0.log
     exit 1
 fi
 

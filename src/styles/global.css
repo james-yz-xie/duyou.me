@@ -8,8 +8,70 @@
   }
 
   body {
-    @apply bg-dark text-white;
+    @apply bg-dark text-white antialiased;
   }
+}
+
+/* Custom Markdown Content Styles */
+.prose-markdown {
+  @apply text-gray-300 text-[1.1rem] leading-[1.8];
+}
+
+.prose-markdown p {
+  @apply mb-8;
+}
+
+.prose-markdown h1, 
+.prose-markdown h2, 
+.prose-markdown h3 {
+  @apply text-white font-bold mt-12 mb-6 tracking-tight;
+}
+
+.prose-markdown h1 { @apply text-4xl; }
+.prose-markdown h2 { @apply text-2xl border-b border-white/10 pb-2; }
+.prose-markdown h3 { @apply text-xl; }
+
+.prose-markdown ul {
+  @apply list-disc pl-8 mb-8 space-y-3;
+}
+
+.prose-markdown ol {
+  @apply list-decimal pl-8 mb-8 space-y-3;
+}
+
+.prose-markdown li {
+  @apply pl-2;
+}
+
+.prose-markdown blockquote {
+  @apply border-l-4 border-gold bg-white/5 py-4 px-8 italic mb-8 rounded-r-lg;
+}
+
+.prose-markdown code:not(pre code) {
+  @apply text-gold bg-white/5 px-1.5 py-0.5 rounded font-mono text-sm;
+}
+
+.prose-markdown pre {
+  @apply bg-[#0d1117] p-6 rounded-xl border border-white/10 mb-8 overflow-x-auto;
+}
+
+.prose-markdown img {
+  @apply rounded-xl border border-white/10 mx-auto my-12 shadow-2xl;
+}
+
+.prose-markdown a {
+  @apply text-gold underline underline-offset-4 hover:text-white transition-colors;
+}
+
+/* Mermaid Container */
+.mermaid {
+  @apply bg-white/5 p-6 rounded-xl border border-white/10 mb-8 flex justify-center overflow-hidden min-h-[100px];
+  color: white;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
 }
 
 @layer components {

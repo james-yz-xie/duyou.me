@@ -33,6 +33,22 @@ git add -A && git commit -m "message"
 
 ## 内容更新
 
+### 发布 Solo 日志 (博客)
+
+博客位置：`src/content/blog/`
+配置文件：`src/content/config.ts`
+
+**内容来源**：用户口述或即兴感悟
+
+**规范**：
+- **文件名**：使用 kebab-case (如 `my-new-post.md`)
+- **Frontmatter**：必须包含 `title` (zh/en), `description` (zh/en), `date`, `category`, `tags`, `draft`, `author`。
+- **语言**：正文默认使用中文，Metadata 需提供中英双语。
+
+**用户交互口令**：`发布博客`
+
+---
+
 ### 更新 AI 前沿情报
 
 内容来源：
