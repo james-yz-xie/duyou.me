@@ -1,16 +1,34 @@
 #!/bin/bash
 # ccn: One command to launch Claude Code with NVIDIA NIM (Agent Gateway Edition)
-# Usage: ccn [model] | ccn list
+# Usage: ccn [model] [prompt] | ccn list
 
 set -euo pipefail
 
+# Determine script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 PROXY_PORT=8742
-PROXY_SCRIPT="/Users/james/git/duyou.me/nim-proxy.py"
-PROXY_CONFIG="/Users/james/git/duyou.me/litellm-config.yaml"
-PROXY_REQUIREMENTS="/Users/james/git/duyou.me/requirements-nim-gateway.txt"
-PROXY_VENV="/Users/james/git/duyou.me/.venv-nim-gateway"
+PROXY_SCRIPT="$SCRIPT_DIR/nim-proxy.py"
+PROXY_CONFIG="$SCRIPT_DIR/litellm-config.yaml"
+PROXY_REQUIREMENTS="$SCRIPT_DIR/requirements-nim-gateway.txt"
+PROXY_VENV="$SCRIPT_DIR/.venv-nim-gateway"
+CCN_LOG="/tmp/ccn-session.log"
+CCN_DETAILED_LOG="/tmp/ccn-detailed-$(date +%Y%m%d-%H%M%S).log"
 export UV_CACHE_DIR="${TMPDIR:-/tmp}/duyou-uv-cache"
-DEFAULT_MODEL="z-ai/glm5"
+DEFAULT_MODEL="agent-best"
+
+# Logging function
+log() {
+    local msg="[$(date '+%Y-%m-%d %H:%M:%S')] $*"
+    echo "$msg" | tee -a "$CCN_LOG" | tee -a "$CCN_DETAILED_LOG"
+}
+
+log_error() {
+    local msg="[$(date '+%Y-%m-%d %H:%M:%S')] ERROR: $*"
+    echo "$msg" >&2
+    echo "$msg" >> "$CCN_LOG"
+    echo "$msg" >> "$CCN_DETAILED_LOG"
+}
 
 pick_python() {
     local candidate
@@ -47,13 +65,14 @@ bootstrap_gateway_env() {
 
 PYTHON_BIN="$(pick_python || true)"
 if [ -z "${PYTHON_BIN:-}" ]; then
-    echo "✗ No supported Python found. Install python3.12 or python3.11."
+    log_error "No supported Python found. Install python3.12 or python3.11."
     exit 1
 fi
+log "Python: $PYTHON_BIN"
 
 # List models command
 if [ "${1:-}" = "list" ]; then
-    if [ -z "$NVIDIA_NIM_API_KEY" ]; then
+    if [ -z "${NVIDIA_NIM_API_KEY:-}" ]; then
         echo "✗ NVIDIA_NIM_API_KEY not set. Run: source ~/.zshrc"
         exit 1
     fi
@@ -87,52 +106,126 @@ show_tier('Tier 3 · General Purpose', TIER3)
     exit 0
 fi
 
-MODEL="${1:-$DEFAULT_MODEL}"
-
-bootstrap_gateway_env "$PYTHON_BIN"
-
-# Force restart proxy
-if lsof -i :$PROXY_PORT -sTCP:LISTEN &>/dev/null; then
-    PROXY_PID=$(lsof -ti :$PROXY_PORT -sTCP:LISTEN)
-    echo "↻ Restarting NIM Agent Gateway (killing old PID: $PROXY_PID) ..."
-    kill -9 $PROXY_PID &>/dev/null
-    sleep 0.5
+# Smart argument parsing: ccn [model] [prompt]
+MODEL="$DEFAULT_MODEL"
+PROMPT=""
+if [ $# -gt 0 ]; then
+    # If first arg contains / or is a known model alias, treat it as model name
+    if [[ "$1" == *"/"* ]] || [[ "$1" == "agent-best" ]] || [[ "$1" == "agent-fallback" ]]; then
+        MODEL="$1"
+        shift
+        PROMPT="$*"
+    else
+        # First arg is not a model, so all args are the prompt
+        PROMPT="$*"
+    fi
 fi
 
-echo "Starting NIM Agent Gateway on port $PROXY_PORT for model: $MODEL ..."
+log "Model: $MODEL"
+log "Prompt: ${PROMPT:-<interactive>}"
+
+bootstrap_gateway_env "$PYTHON_BIN"
+log "Gateway environment ready"
+
+# Force restart proxy if config changed or not running
+if lsof -i :$PROXY_PORT -sTCP:LISTEN &>/dev/null; then
+    PROXY_PID=$(lsof -ti :$PROXY_PORT -sTCP:LISTEN)
+    # Check if it's the right script
+    if ! ps -p "$PROXY_PID" -o args= | grep -q "$PROXY_SCRIPT"; then
+        log "Restarting NIM Agent Gateway (killing incompatible PID: $PROXY_PID) ..."
+        kill -9 "$PROXY_PID" &>/dev/null
+        sleep 0.5
+    fi
+else
+    log "Starting NIM Agent Gateway on port $PROXY_PORT for model: $MODEL ..."
+fi
+
 export LITELLM_CONFIG="$PROXY_CONFIG"
 export NIM_DEFAULT_MODEL="$MODEL"
 export PROXY_PORT="$PROXY_PORT"
 
-"$PROXY_VENV/bin/python" "$PROXY_SCRIPT" &>/tmp/nim-proxy.log &
-
-# Wait for proxy to be ready
-READY=false
-for i in $(seq 1 20); do
-    if curl -s http://127.0.0.1:$PROXY_PORT/ping &>/dev/null; then
-        echo "✓ Agent Gateway started (PID: $(lsof -ti :$PROXY_PORT -sTCP:LISTEN))"
-        READY=true
-        break
+# Ensure proxy is running
+if ! curl -s http://127.0.0.1:$PROXY_PORT/ping &>/dev/null; then
+    log "Starting proxy process..."
+    "$PROXY_VENV/bin/python" "$PROXY_SCRIPT" &>/tmp/nim-proxy.log &
+    PROXY_START=$(date +%s)
+    # Wait for proxy to be ready
+    PROXY_READY=false
+    for i in $(seq 1 30); do
+        if curl -s http://127.0.0.1:$PROXY_PORT/ping &>/dev/null; then
+            PROXY_READY=true
+            PROXY_ELAPSED=$(( $(date +%s) - PROXY_START ))
+            log "Proxy ready in ${PROXY_ELAPSED}s"
+            break
+        fi
+        sleep 0.5
+    done
+    if [ "$PROXY_READY" = false ]; then
+        log_error "Failed to start proxy. Check /tmp/nim-proxy.log"
+        tail -20 /tmp/nim-proxy.log >> "$CCN_DETAILED_LOG" 2>/dev/null
+        exit 1
     fi
-    sleep 0.5
-done
-
-if [ "$READY" = false ]; then
-    echo "✗ Failed to start Gateway. Check /tmp/nim-proxy.log"
-    cat /tmp/nim-proxy.log
-    exit 1
+else
+    log "Proxy already running on port $PROXY_PORT"
 fi
 
-echo "Model: $MODEL"
-echo "Launching Claude Code ..."
+log "Agent Gateway ready (Model: $MODEL)"
+
+# Log session info header
+log "========================================="
+log "CCN Session Started"
+log "  Model:  $MODEL"
+log "  Prompt: ${PROMPT:-<interactive>}"
+log "  PID:    $$"
+log "  TTY:    $([ -t 0 ] && echo 'yes' || echo 'no (non-interactive)')"
+log "========================================="
+
+if [ -n "$PROMPT" ]; then
+    log "Launching Claude Code with prompt..."
+else
+    log "Launching Claude Code interactive mode..."
+fi
 echo ""
 
-ANTHROPIC_BASE_URL="http://127.0.0.1:$PROXY_PORT" \
-ANTHROPIC_API_KEY="not-used" \
-ANTHROPIC_MODEL="$MODEL" \
-ANTHROPIC_CUSTOM_MODEL_OPTION="$MODEL" \
-ANTHROPIC_DEFAULT_HAIKU_MODEL="$MODEL" \
-ANTHROPIC_DEFAULT_SONNET_MODEL="$MODEL" \
-ANTHROPIC_DEFAULT_OPUS_MODEL="$MODEL" \
-CLAUDE_CODE_SUBAGENT_MODEL="$MODEL" \
-claude
+# Set up cleanup handler
+cleanup() {
+    EXIT_CODE=$?
+    log "========================================="
+    log "Claude Code session ended (exit code: $EXIT_CODE)"
+    log "Session log:   $CCN_LOG"
+    log "Detailed log:  $CCN_DETAILED_LOG"
+    log "Proxy log:     /tmp/nim-proxy.log"
+    log "========================================="
+    
+    # Record git status if any changes were made
+    GIT_STATUS=$(git status --short 2>/dev/null | grep -v "^??" | head -20)
+    if [ -n "$GIT_STATUS" ]; then
+        log "Git changes detected:"
+        echo "$GIT_STATUS" >> "$CCN_DETAILED_LOG"
+    fi
+}
+trap cleanup EXIT
+
+# Launch Claude Code with prompt if provided
+log "Executing: claude ${PROMPT:+'[prompt provided]'}"
+if [ -n "${PROMPT:-}" ]; then
+    ANTHROPIC_BASE_URL="http://127.0.0.1:$PROXY_PORT" \
+    ANTHROPIC_API_KEY="not-used" \
+    ANTHROPIC_MODEL="$MODEL" \
+    ANTHROPIC_CUSTOM_MODEL_OPTION="$MODEL" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="$MODEL" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="$MODEL" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="$MODEL" \
+    CLAUDE_CODE_SUBAGENT_MODEL="$MODEL" \
+    claude "$PROMPT"
+else
+    ANTHROPIC_BASE_URL="http://127.0.0.1:$PROXY_PORT" \
+    ANTHROPIC_API_KEY="not-used" \
+    ANTHROPIC_MODEL="$MODEL" \
+    ANTHROPIC_CUSTOM_MODEL_OPTION="$MODEL" \
+    ANTHROPIC_DEFAULT_HAIKU_MODEL="$MODEL" \
+    ANTHROPIC_DEFAULT_SONNET_MODEL="$MODEL" \
+    ANTHROPIC_DEFAULT_OPUS_MODEL="$MODEL" \
+    CLAUDE_CODE_SUBAGENT_MODEL="$MODEL" \
+    claude
+fi

@@ -17,21 +17,50 @@ model_list:
       api_base: "https://integrate.api.nvidia.com/v1"
       api_key: "os.environ/NVIDIA_NIM_API_KEY"
 
-  # 定义一个虚拟的推荐模型组，支持自动 Fallback
+  - model_name: "qwen/qwen3-coder-480b-a35b-instruct"
+    litellm_params:
+      model: "openai/qwen/qwen3-coder-480b-a35b-instruct"
+      api_base: "https://integrate.api.nvidia.com/v1"
+      api_key: "os.environ/NVIDIA_NIM_API_KEY"
+
+  # 🚀 Agent Best 组合：自动切换高等级模型
   - model_name: "agent-best"
     litellm_params:
-      model: "openai/nvidia/llama-3.1-nemotron-ultra-253b-v1" # 主用
+      model: "openai/nvidia/llama-3.1-nemotron-ultra-253b-v1"
+      api_base: "https://integrate.api.nvidia.com/v1"
+      api_key: "os.environ/NVIDIA_NIM_API_KEY"
   - model_name: "agent-best"
     litellm_params:
-      model: "openai/z-ai/glm5" # 备用
+      model: "openai/qwen/qwen3-coder-480b-a35b-instruct"
+      api_base: "https://integrate.api.nvidia.com/v1"
+      api_key: "os.environ/NVIDIA_NIM_API_KEY"
+  - model_name: "agent-best"
+    litellm_params:
+      model: "openai/z-ai/glm5"
+      api_base: "https://integrate.api.nvidia.com/v1"
+      api_key: "os.environ/NVIDIA_NIM_API_KEY"
+  - model_name: "agent-best"
+    litellm_params:
+      model: "openai/z-ai/glm-5.1"
+      api_base: "https://integrate.api.nvidia.com/v1"
+      api_key: "os.environ/NVIDIA_NIM_API_KEY"
+
+  # 🛡️ Fallback 备用：如果上面的都挂了，切换到更轻量的 Llama 3.3
+  - model_name: "agent-fallback"
+    litellm_params:
+      model: "openai/meta/llama-3.3-70b-instruct"
+      api_base: "https://integrate.api.nvidia.com/v1"
+      api_key: "os.environ/NVIDIA_NIM_API_KEY"
 
 litellm_settings:
   drop_params: True
   set_verbose: False
-  # 自动重试 2 次
-  num_retries: 2
-  # 开启工具调用修正（LiteLLM 内置了一些修正逻辑）
+  num_retries: 3 
   enable_tool_calling_fix: True
 
 router_settings:
-  routing_strategy: "latency-based-routing" # 或者 simple-shuffle
+  routing_strategy: "latency-based-routing"
+  # 探测间隔，发现故障后自动剔除并尝试其他节点
+  base_model_fallback_proxy_errors: ["rate_limit_error", "context_window_exceeded_error", "api_error", "timeout_error", "authentication_error", "not_found_error"]
+  # 修复 Fallback 配置格式
+  fallbacks: [{"agent-best": ["agent-fallback"]}]

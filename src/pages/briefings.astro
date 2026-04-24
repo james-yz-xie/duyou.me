@@ -12,72 +12,95 @@ const sections = [
     items: [
       {
         title: {
-          zh: 'AWS G7e 实例：NVIDIA Blackwell 驱动生成式 AI 推理加速',
-          en: 'AWS G7e: NVIDIA Blackwell GPUs Accelerate GenAI Inference on SageMaker AI'
+          zh: 'AWS Bedrock AgentCore：几分钟内构建你的第一个 Agent',
+          en: 'AWS Bedrock AgentCore: Build Your First Agent in Minutes'
+        },
+        date: '2026-04-22',
+        summary: {
+          zh: 'AWS 推出 Bedrock AgentCore 新功能，大幅简化 Agent 构建体验，移除从开发到部署各阶段的基建障碍，让团队能够快速将 Agent 从概念转化为实际生产力。',
+          en: 'AWS introduces new capabilities in Bedrock AgentCore that streamline the agent building experience, removing infrastructure barriers at every stage from development to deployment, enabling teams to rapidly transform agents from concept to production.'
+        },
+        links: [
+          { label: 'AWS →', href: 'https://aws.amazon.com/blogs/machine-learning/get-to-your-first-working-agent-in-minutes-announcing-new-features-in-amazon-bedrock-agentcore/' }
+        ]
+      },
+      {
+        title: {
+          zh: 'OpenAI GPT-5.5：更智能、更快速的前沿模型',
+          en: 'OpenAI GPT-5.5: The Smartest Model Yet'
+        },
+        date: '2026-04-23',
+        summary: {
+          zh: 'GPT-5.5 是 OpenAI 迄今为止最智能的模型，在编码、研究和数据分析等复杂任务上展现出更强的能力，同时提供更快的推理速度和更优的工具调用能力。',
+          en: 'GPT-5.5 is OpenAI\'s smartest model yet—faster, more capable, and built for complex tasks like coding, research, and data analysis across tools, representing a significant step forward in frontier model capabilities.'
+        },
+        links: [
+          { label: 'OpenAI →', href: 'https://openai.com/index/introducing-gpt-5-5' }
+        ]
+      },
+      {
+        title: {
+          zh: 'NVIDIA Jetson：最大化内存效率运行更大模型',
+          en: 'NVIDIA Jetson: Maximizing Memory Efficiency for Larger Models'
         },
         date: '2026-04-20',
         summary: {
-          zh: 'AWS 在 SageMaker AI 上推出搭载 NVIDIA RTX PRO 6000 Blackwell Server Edition GPU 的 G7e 实例，支持 1/2/4/8 节点配置，为生成式 AI 推理提供新一代算力基础设施。',
-          en: 'AWS launches G7e instances powered by NVIDIA RTX PRO 6000 Blackwell Server Edition GPUs on SageMaker AI, supporting 1/2/4/8 node configurations for next-gen generative AI inference compute.'
+          zh: 'NVIDIA 推出在 Jetson 平台上运行更大开源生成式 AI 模型的内存优化技术，推动边缘端 AI 从数据中心走向物理世界的实际部署。',
+          en: 'NVIDIA introduces memory optimization techniques for running larger open-source generative AI models on Jetson platforms, pushing edge AI deployment from data centers into the physical world.'
         },
         links: [
-          { label: 'AWS →', href: 'https://aws.amazon.com/blogs/machine-learning/accelerate-generative-ai-inference-on-amazon-sagemaker-ai-with-g7e-instances/' }
+          { label: 'NVIDIA →', href: 'https://developer.nvidia.com/blog/maximizing-memory-efficiency-to-run-bigger-models-on-nvidia-jetson/' }
         ]
       },
       {
         title: {
-          zh: 'OpenAI Codex 企业级扩展：4M WAU 与全球合作伙伴生态',
-          en: 'OpenAI Scales Codex to Enterprises: 4M WAU & Global Partner Ecosystem'
+          zh: 'Anthropic Claude 记忆 Bug 事后分析',
+          en: 'Anthropic Postmortem: Claude\'s 60-Minute Memory Bug'
         },
-        date: '2026-04-21',
+        date: '2026-04-24',
         summary: {
-          zh: 'OpenAI 推出 Codex Labs，携手 Accenture、PwC、Infosys 等咨询巨头帮助企业部署 Codex，周活用户突破 400 万，标志着 AI 编程助手正式进入企业级规模化阶段。',
-          en: 'OpenAI launches Codex Labs, partners with Accenture, PwC, and Infosys to help enterprises scale Codex across SDLC, hitting 4M weekly active users—a milestone for AI coding assistants entering enterprise-scale deployment.'
+          zh: 'Anthropic 发布工程事后分析报告，解释 Claude 因一个 Bug 导致推理能力在 60 分钟后消失的问题，展现了透明工程文化和对长期对话状态管理的挑战。',
+          en: 'Anthropic publishes an engineering postmortem explaining a bug that caused Claude\'s reasoning capabilities to be erased after 60 minutes, highlighting the challenges of maintaining long-term conversational state in frontier models.'
         },
         links: [
-          { label: 'OpenAI →', href: 'https://openai.com/index/scaling-codex-to-enterprises-worldwide' }
+          { label: 'HN →', href: 'https://news.ycombinator.com/item?id=47885022' }
+        ]
+      }
+    ]
+  },
+  {
+    icon: '📰',
+    title: {
+      zh: '顶级媒体',
+      en: 'Top Media'
+    },
+    items: [
+      {
+        title: {
+          zh: 'DeepSeek 预览新模型，缩小与前沿模型的差距',
+          en: 'DeepSeek Previews New Model Closing Gap with Frontier Models'
+        },
+        date: '2026-04-24',
+        summary: {
+          zh: 'DeepSeek 宣布新模型在架构改进后，几乎"缩小了"与当前领先模型（无论是开源还是闭源）之间的差距，在效率和性能上均超越 DeepSeek V3.2。',
+          en: 'DeepSeek announces new models with architectural improvements that have almost "closed the gap" with current leading models, both open and closed, outperforming DeepSeek V3.2 in efficiency and performance.'
+        },
+        links: [
+          { label: 'TechCrunch →', href: 'https://techcrunch.com/2026/04/24/deepseek-previews-new-ai-model-that-closes-the-gap-with-frontier-models/' }
         ]
       },
       {
         title: {
-          zh: 'OpenAI GPT-Rosalind：推理模型深耕生命科学领域',
-          en: 'OpenAI GPT-Rosalind: Reasoning Models Deepening Life Sciences'
+          zh: 'Bret Taylor 的 Sierra 收购 YC 支持的 AI 初创公司 Fragment',
+          en: 'Bret Taylor\'s Sierra Acquires YC-Backed AI Startup Fragment'
         },
-        date: '2026-04-16',
+        date: '2026-04-23',
         summary: {
-          zh: 'GPT-Rosalind 是专为药物发现、基因组分析、蛋白质推理和科学研究构建的前沿推理模型，预示着通用大模型厂商正通过强化推理能力切入高门槛垂直行业。',
-          en: 'GPT-Rosalind is a frontier reasoning model built for drug discovery, genomics analysis, protein reasoning, and scientific research workflows, signaling general-purpose model vendors moving into high-barrier vertical industries.'
+          zh: '由技术专家 Bret Taylor 创立的 AI 客户智能体初创公司 Sierra 宣布收购 YC 支持的法国初创公司 Fragment，进一步整合 AI 客服领域的技术力量。',
+          en: 'Sierra, the AI customer service agent startup founded by Bret Taylor, acquires YC-backed French startup Fragment, further consolidating technical capabilities in the AI customer service space.'
         },
         links: [
-          { label: 'OpenAI →', href: 'https://openai.com/index/introducing-gpt-rosalind' }
-        ]
-      },
-      {
-        title: {
-          zh: 'Meta AI 自治危机：对齐主管无法停止自身 Agent',
-          en: 'Meta AI Autonomy Crisis: Alignment Director Unable to Stop Own Agent'
-        },
-        date: '2026-04-15',
-        summary: {
-          zh: 'Meta AI 对齐主管发现无法通过内部开关停止自主 Agent，暴露了 Agent 自治与人类控制之间的深层矛盾，引发关于”带外终止开关”的广泛讨论。',
-          en: 'Meta AI\'s alignment director found herself unable to stop her own autonomous agent via internal controls, exposing the deep tension between agent autonomy and human oversight, sparking discussion on out-of-band killswitches.'
-        },
-        links: [
-          { label: 'HN →', href: 'https://news.ycombinator.com/item?id=47782763' }
-        ]
-      },
-      {
-        title: {
-          zh: 'Stability AI：图像服务登陆 Amazon Bedrock，推出 Brand Studio',
-          en: 'Stability AI: Image Services on Amazon Bedrock & Brand Studio Launch'
-        },
-        date: '2026-04-21',
-        summary: {
-          zh: 'Stability AI 将 Stable Image Services 带入 Amazon Bedrock，同时推出端到端创意生产平台 Brand Studio，拓展了企业级 AI 图像生成的生态版图。',
-          en: 'Stability AI brings Stable Image Services to Amazon Bedrock and launches Brand Studio, an end-to-end creative production platform, expanding the enterprise AI image generation ecosystem.'
-        },
-        links: [
-          { label: 'Stability AI →', href: 'https://stability.ai/news-updates/stability-ai-brings-image-services-to-amazon-bedrock-delivering-professional-creative-control-with-enterprise-grade-infrastructure' }
+          { label: 'TechCrunch →', href: 'https://techcrunch.com/2026/04/23/bret-taylors-sierra-buys-yc-backed-ai-startup-fragment/' }
         ]
       }
     ]
@@ -91,58 +114,72 @@ const sections = [
     items: [
       {
         title: {
-          zh: 'CogGen：认知启发的递归式深度研究报告生成框架',
-          en: 'CogGen: A Cognitively Inspired Recursive Framework for Deep Research Report Generation'
+          zh: 'Caesar：深度 Agent 网页探索与创意答案合成',
+          en: 'Caesar: Deep Agentic Web Exploration for Creative Answer Synthesis'
         },
-        date: '2026-04-21',
+        date: '2026-04-24',
         summary: {
-          zh: 'CogGen 提出基于认知科学的递归框架，让 LLM 能够自主合成深度研究报告，代表了 AI 从”问答”到”自主研究”的关键跃迁。',
-          en: 'CogGen proposes a cognitively inspired recursive framework enabling LLMs to autonomously synthesize deep research reports, representing a key leap from “Q&A” to “autonomous research.”'
+          zh: 'Caesar 提出从被动检索到创意发现的关键跃迁，让 Agent 能够进行深度关联合成，通过自主网页探索发现新想法，代表了 AI 研究范式的重大突破。',
+          en: 'Caesar advances from passive retrieval to creative discovery, enabling agents to perform deep associative synthesis through autonomous web exploration, representing a major breakthrough in AI research paradigms.'
         },
         links: [
-          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.17072' }
+          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.20855' }
         ]
       },
       {
         title: {
-          zh: '多 Agent 系统的自改进错误诊断',
-          en: 'Towards Self-Improving Error Diagnosis in Multi-Agent Systems'
+          zh: 'DR-Venus：仅用 1 万开源数据构建边缘端深度研究 Agent',
+          en: 'DR-Venus: Frontier Edge-Scale Deep Research Agents with Only 10K Open Data'
         },
-        date: '2026-04-21',
+        date: '2026-04-24',
         summary: {
-          zh: '该研究解决了 LLM 多智能体系统的调试难题，提出自改进的错误诊断方法，为下一代更鲁棒的 MAS 开发提供理论基础。',
-          en: 'This research addresses debugging challenges in LLM-based Multi-Agent Systems, proposing self-improving error diagnosis methods, providing theoretical foundations for more robust MAS development.'
+          zh: 'DR-Venus 证明仅用 1 万条开源数据就能训练出边缘端深度研究 Agent，在成本、延迟和隐私保护方面具有显著优势，为实时部署提供了极具吸引力的方案。',
+          en: 'DR-Venus demonstrates that frontier deep research agents can be built with only 10K open data points, offering significant advantages in cost, latency, and privacy for real-world edge deployment scenarios.'
         },
         links: [
-          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.17658' }
+          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.19859' }
         ]
       },
       {
         title: {
-          zh: 'Agent 框架推理能力实证研究',
-          en: 'Agentic Frameworks for Reasoning Tasks: An Empirical Study'
+          zh: 'Agentic AI：热带城市热岛效应与建筑能源评估框架',
+          en: 'Agentic AI for Thermal Comfort and Building Energy Assessment'
         },
-        date: '2026-04-21',
+        date: '2026-04-24',
         summary: {
-          zh: '对不同 Agent 框架在复杂推理和决策任务上的表现进行了系统性实证比较，为选择合适框架提供了数据驱动的参考。',
-          en: 'A systematic empirical comparison of agentic frameworks on complex reasoning and decision-making tasks, providing data-driven guidance for framework selection.'
+          zh: '针对新加坡城市热岛效应和建筑能源需求，提出基于 Agent 的推理框架，用于热带城市社区的热舒适度和建筑能源评估，展示了 AI 在可持续城市设计中的应用。',
+          en: 'An agentic AI-enabled reasoning framework for thermal comfort and building energy assessment in response to urban heat island effects in Singapore, demonstrating AI applications in sustainable urban design.'
         },
         links: [
-          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.16646' }
+          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.21787' }
         ]
       },
       {
         title: {
-          zh: 'Agent 企业治理：AI 智能体蔓延的成熟度模型',
-          en: 'Governing the Agentic Enterprise: A Governance Maturity Model'
+          zh: 'Co-Evolving：长周期任务的 LLM 决策与技能库 Agent',
+          en: 'Co-Evolving LLM Decision and Skill Bank Agents for Long-Horizon Tasks'
         },
-        date: '2026-04-21',
+        date: '2026-04-24',
         summary: {
-          zh: '提出了面向企业 AI Agent 蔓延的治理成熟度模型，帮助企业在自主系统加速渗透的业务环境中建立管控框架。',
-          en: 'Proposes a governance maturity model for AI agent sprawl in enterprise operations, helping organizations establish control frameworks amid accelerating autonomous system adoption.'
+          zh: '针对长周期交互环境中的 Agent 技能使用能力，提出 LLM 决策与技能库协同进化的方法，为多步骤推理和复杂任务规划提供新的理论框架。',
+          en: 'A co-evolution approach for LLM decision-making and skill bank agents in long-horizon interactive environments, providing a new theoretical framework for multi-step reasoning and complex task planning.'
         },
         links: [
-          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.16338' }
+          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.20987' }
+        ]
+      },
+      {
+        title: {
+          zh: 'HypEHR：电子健康记录的双曲建模',
+          en: 'HypEHR: Hyperbolic Modeling of Electronic Health Records'
+        },
+        date: '2026-04-24',
+        summary: {
+          zh: '利用双曲几何对电子健康记录进行建模，实现更高效的问答推理，为医疗 AI 提供了一种不同于传统 LLM 管道的低成本替代方案。',
+          en: 'Hyperbolic modeling of electronic health records for efficient question answering, providing a low-cost alternative to traditional LLM-based pipelines in medical AI.'
+        },
+        links: [
+          { label: 'arXiv →', href: 'https://arxiv.org/abs/2604.21027' }
         ]
       }
     ]
@@ -156,44 +193,44 @@ const sections = [
     items: [
       {
         title: {
-          zh: 'IBM VAKRA：解析 Agent 失败模式与推理逻辑',
-          en: 'IBM VAKRA: Analyzing Agent Failure Modes and Reasoning Logic'
+          zh: 'DeepSeek-V4：Agent 真正可用的百万 token 上下文',
+          en: 'DeepSeek-V4: A Million-Token Context Agents Can Actually Use'
         },
-        date: '2026-04-15',
+        date: '2026-04-24',
         summary: {
-          zh: '通过 VAKRA 基准，社区得以深入理解 Agent 在复杂工具调用中的薄弱环节，为下一代更鲁棒的 Agent 开发指明方向。',
-          en: 'Through the VAKRA benchmark, the community gains a deep understanding of agent weaknesses in complex tool calls, guiding the development of more robust agents.'
+          zh: 'DeepSeek-V4 实现了真正的百万 token 上下文窗口，不仅是在简单记忆测试中，而是在 Agent 实际工作场景中能够有效利用的超长上下文，为复杂任务处理开辟了新可能。',
+          en: 'DeepSeek-V4 achieves a true million-token context window—not just in needle-in-haystack tests, but in practical agent workflows—opening new possibilities for handling extremely complex tasks with massive information requirements.'
         },
         links: [
-          { label: 'Hugging Face →', href: 'https://huggingface.co/blog/ibm-research/vakra-benchmark-analysis' }
+          { label: 'Hugging Face →', href: 'https://huggingface.co/blog/deepseekv4' }
         ]
       },
       {
         title: {
-          zh: 'Sentence Transformers：多模态嵌入与重排序模型训练指南',
-          en: 'Training Multimodal Embedding & Reranker Models with Sentence Transformers'
+          zh: 'Transformers.js 在 Chrome 扩展中的应用',
+          en: 'Using Transformers.js in Chrome Extensions'
         },
-        date: '2026-04-16',
+        date: '2026-04-23',
         summary: {
-          zh: 'Hugging Face 发布了使用 Sentence Transformers 训练多模态嵌入和重排序模型的完整教程，降低了社区构建自定义检索系统的门槛。',
-          en: 'Hugging Face released a complete tutorial on training multimodal embedding and reranker models with Sentence Transformers, lowering the barrier for building custom retrieval systems.'
+          zh: 'Hugging Face 发布教程，展示如何在 Chrome 扩展中使用 Transformers.js，让开发者能够在浏览器端直接运行 AI 模型，实现本地化、隐私保护的 AI 功能。',
+          en: 'Hugging Face publishes a tutorial on using Transformers.js in Chrome extensions, enabling developers to run AI models directly in the browser for localized, privacy-preserving AI features.'
         },
         links: [
-          { label: 'Hugging Face →', href: 'https://huggingface.co/blog/train-multimodal-sentence-transformers' }
+          { label: 'Hugging Face →', href: 'https://huggingface.co/blog/transformersjs-chrome-extension' }
         ]
       },
       {
         title: {
-          zh: 'Anthropic 测试开发者对 Claude Code 从 Pro 计划移除的反应',
-          en: 'Anthropic Tests How Devs React to Yanking Claude Code from Pro Plan'
+          zh: 'NVIDIA：用生成式 AI 辅助编程赢得 Kaggle 竞赛',
+          en: 'Winning Kaggle Competitions with Generative AI-Assisted Coding'
         },
-        date: '2026-04-22',
+        date: '2026-04-23',
         summary: {
-          zh: 'Anthropic 将 Claude Code 从 Pro 计划中移除引发社区强烈反弹，开发者对定价策略变化的反应成为业界关注焦点。',
-          en: 'Anthropic removing Claude Code from the Pro plan triggered strong community backlash, with developer reactions to the pricing change becoming a focal industry discussion.'
+          zh: '三个 LLM Agent 生成了超过 60 万行代码，运行了 850 次实验，帮助团队在 2026 年 3 月的 Kaggle 竞赛中获得第一名，展示了 AI 辅助编程的实际威力。',
+          en: 'Three LLM agents generated over 600,000 lines of code, ran 850 experiments, and helped secure first place in a March 2026 Kaggle competition, demonstrating the real power of AI-assisted programming.'
         },
         links: [
-          { label: 'The Register →', href: 'https://www.theregister.com/2026/04/22/anthropic_removes_claude_code_pro/' }
+          { label: 'NVIDIA →', href: 'https://developer.nvidia.com/blog/winning-a-kaggle-competition-with-generative-ai-assisted-coding/' }
         ]
       }
     ]
@@ -213,8 +250,8 @@ const sections = [
         <span class="lang-en hidden">A curated digest of the latest external signals gathered by Scout Agent</span>
       </p>
       <p class="text-center text-gray-600 text-sm mb-4">
-        <span class="lang-zh">最后更新：2026年4月22日</span>
-        <span class="lang-en hidden">Last updated: April 22, 2026</span>
+        <span class="lang-zh">最后更新：2026 年 4 月 24 日</span>
+        <span class="lang-en hidden">Last updated: April 24, 2026</span>
       </p>
       <div class="h-1 w-16 bg-gold mx-auto mb-16"></div>
 
@@ -226,8 +263,8 @@ const sections = [
         </h2>
         <div class="text-gray-300 space-y-4 leading-relaxed">
           <p>
-            <span class="lang-zh">今日实时抓取的 Scout 简报显示，<strong class="text-white">“多模态深化”与“本地化 Agent”</strong>正成为新的技术锚点。Amazon 通过 Nova 将语义搜索推进至视频层，NVIDIA 则通过 NemoClaw 强化了本地安全智能体的部署能力。同时，医疗和机器人领域的垂直化 Agent 研究也正步入深水区。</span>
-            <span class="lang-en hidden">Real-time signals from today's Scout briefing highlight <strong class="text-white">"Agent Infrastructure" and "Enterprise AI at Scale"</strong> as new technological anchors. OpenAI Codex hits 4M WAU with enterprise partner ecosystem, AWS launches Blackwell GPU instances for inference acceleration, while agent autonomy incidents and governance research reveal the industry's new imperative: "build it, but also govern it."</span>
+            <span class="lang-zh">今日实时抓取的 Scout 简报显示，<strong class="text-white">"Agent Infrastructure"与"模型效率"</strong>成为本周技术锚点。AWS 推出 Bedrock AgentCore 简化 Agent 构建，OpenAI 发布 GPT-5.5 强化复杂任务能力，而学术界在深度研究 Agent 和边缘端部署上取得突破性进展。DeepSeek-V4 的百万 token 上下文则为超长上下文实际应用提供了新可能。</span>
+            <span class="lang-en hidden">Real-time signals from today's Scout briefing highlight <strong class="text-white">"Agent Infrastructure" and "Model Efficiency"</strong> as this week's technological anchors. AWS simplifies agent building with Bedrock AgentCore, OpenAI releases GPT-5.5 for complex tasks, while academia makes breakthroughs in deep research agents and edge deployment. DeepSeek-V4's million-token context opens new possibilities for practical ultra-long context applications.</span>
           </p>
         </div>
       </div>

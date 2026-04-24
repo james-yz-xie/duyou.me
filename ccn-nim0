@@ -4,11 +4,14 @@
 
 set -euo pipefail
 
+# Determine script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 PROXY_PORT=8743
-PROXY_SCRIPT="/Users/james/git/duyou.me/nim-proxy0.py"
-PROXY_REQUIREMENTS="/Users/james/git/duyou.me/requirements-nim-proxy0.txt"
-PRIMARY_VENV="/Users/james/git/duyou.me/.venv-nim-proxy0"
-FALLBACK_VENV="/Users/james/git/duyou.me/.venv-nim-gateway"
+PROXY_SCRIPT="$SCRIPT_DIR/nim-proxy0.py"
+PROXY_REQUIREMENTS="$SCRIPT_DIR/requirements-nim-proxy0.txt"
+PRIMARY_VENV="$SCRIPT_DIR/.venv-nim-proxy0"
+FALLBACK_VENV="$SCRIPT_DIR/.venv-nim-gateway"
 PROXY_VENV=""
 export UV_CACHE_DIR="${TMPDIR:-/tmp}/duyou-uv-cache"
 DEFAULT_MODEL="nvidia/llama-3.1-nemotron-ultra-253b-v1"
