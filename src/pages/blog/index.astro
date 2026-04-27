@@ -51,7 +51,7 @@ const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.get
                   <span class="px-3 py-1 text-xs bg-white/5 text-gray-400 rounded-full">{tag}</span>
                 ))}
               </div>
-              <a href={`/blog/${post.slug}/`} class="inline-block text-gold hover:text-white transition-colors text-sm font-semibold">
+              <a href={`/blog/${post.slug}`} class="inline-block text-gold hover:text-white transition-colors text-sm font-semibold">
                 <span class="lang-zh">阅读全文 →</span>
                 <span class="lang-en hidden">Read more →</span>
               </a>
