@@ -15,7 +15,7 @@ interface Props {
   ogImageAltEn?: string;
 }
 
-const { 
+const {
   title,
   titleZh = '督友 - AI独立开发者',
   titleEn = 'DuYou - AI Indie Developer',
@@ -27,7 +27,6 @@ const {
   ogImageAltEn
 } = Astro.props;
 
-// If title is provided, use it for both for backward compatibility
 const finalTitleZh = title || titleZh;
 const finalTitleEn = titleEn || (title ? title.replace('James Xie | 独有·我', 'James Xie | Duyou·Me') : titleEn);
 const finalDescriptionZh = description || descriptionZh;
@@ -46,6 +45,7 @@ const finalShareImageHeight = '630';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffd700" />
     <meta name="description" data-zh={finalDescriptionZh} data-en={finalDescriptionEn} content={finalDescriptionZh} />
     <link rel="canonical" href={finalUrl} />
     <meta property="og:type" content="website" />
@@ -69,6 +69,7 @@ const finalShareImageHeight = '630';
     <title data-zh={finalTitleZh} data-en={finalTitleEn}>{finalTitleZh}</title>
     <link rel="icon" type="image/png" href="/duyoufavicon.png" />
     <link rel="apple-touch-icon" href="/duyoufavicon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e1a62d18dcc347cfad025de5bfe2e2bc"}'></script>
   </head>
   <body class="bg-dark text-white pt-14">
@@ -80,12 +81,10 @@ const finalShareImageHeight = '630';
       // 核心语言切换逻辑
       function updateLanguage() {
         const lang = document.documentElement.lang;
-        
-        // 1. 更新内容显示
+
         document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('hidden', lang !== 'zh'));
         document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang !== 'en'));
-        
-        // 2. 更新页面标题
+
         const titleEl = document.querySelector('title');
         if (titleEl) {
           const zh = titleEl.getAttribute('data-zh');
@@ -95,7 +94,6 @@ const finalShareImageHeight = '630';
           }
         }
 
-        // 3. 更新 meta description
         const descriptionEl = document.querySelector('meta[name="description"]');
         if (descriptionEl) {
           const zh = descriptionEl.getAttribute('data-zh');
@@ -105,7 +103,6 @@ const finalShareImageHeight = '630';
           }
         }
 
-        // 4. 更新 og / twitter 标题与描述
         const metaPairs = [
           'meta[property="og:title"]',
           'meta[property="og:description"]',
@@ -125,12 +122,22 @@ const finalShareImageHeight = '630';
           }
         });
       }
-      
-      // 初始化执行一次
+
       updateLanguage();
-      
-      // 监听全局语言变更事件
       document.addEventListener('languageChanged', updateLanguage);
+
+      // Service Worker 注册
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered:', registration.scope);
+            })
+            .catch((error) => {
+              console.log('SW registration failed:', error);
+            });
+        });
+      }
     </script>
   </body>
 </html>

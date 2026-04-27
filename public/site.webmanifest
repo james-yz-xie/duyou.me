@@ -3,24 +3,48 @@
   "short_name": "督友",
   "description": "一人公司展示墙 - eBay支付和AI专家，现为AI独立开发者，专注于督友项目",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#ffd700",
+  "categories": ["developer", "portfolio", "productivity"],
   "icons": [
     {
-      "src": "/favicon-16x16.png",
-      "sizes": "16x16",
-      "type": "image/png"
+      "src": "/duyoufavicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png"
+      "src": "/duyoufavicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "AI Agent 导航",
+      "short_name": "AI Agent",
+      "description": "查看AI Agent工具导航",
+      "url": "/agents",
+      "icons": [{ "src": "/duyoufavicon.png", "sizes": "192x192" }]
     },
     {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
-      "type": "image/png"
+      "name": "开源热点",
+      "short_name": "开源",
+      "description": "查看开源热点资讯",
+      "url": "/opensource",
+      "icons": [{ "src": "/duyoufavicon.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Solo 日志",
+      "short_name": "博客",
+      "description": "查看博客文章",
+      "url": "/blog",
+      "icons": [{ "src": "/duyoufavicon.png", "sizes": "192x192" }]
     }
   ]
 }
