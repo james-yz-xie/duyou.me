@@ -335,7 +335,7 @@ const allTools = [...internationalTools, ...chineseTools];
 
       <!-- 国外工具 -->
       <div id="international" class="tool-section">
-        <div class="grid gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {internationalTools.map((tool) => (
             <a href={tool.url} target="_blank" rel="noopener noreferrer" class="block bg-gray-900 border border-gray-800 hover:border-gold rounded-lg p-4 sm:p-6 transition-all group">
               <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-6">
@@ -376,7 +376,7 @@ const allTools = [...internationalTools, ...chineseTools];
 
       <!-- 中国工具 -->
       <div id="chinese" class="tool-section hidden">
-        <div class="grid gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {chineseTools.map((tool) => (
             <a href={tool.url} target="_blank" rel="noopener noreferrer" class="block bg-gray-900 border border-gray-800 hover:border-gold rounded-lg p-4 sm:p-6 transition-all group">
               <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-6">
@@ -411,7 +411,7 @@ const allTools = [...internationalTools, ...chineseTools];
         <div class="mt-16">
           <h2 class="text-2xl font-bold text-white text-center mb-8">核心对比</h2>
           <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-            <table class="w-full text-left border-collapse min-w-[600px]">
+            <table class="w-full text-left border-collapse min-w-[600px] text-sm sm:text-base">
               <thead>
                 <tr class="border-b border-gray-800">
                   <th class="py-3 px-4 text-gray-400 font-medium">工具</th>
@@ -446,13 +446,14 @@ const allTools = [...internationalTools, ...chineseTools];
       <!-- 快速选择建议 -->
       <div class="mt-20">
         <h2 class="text-2xl font-bold text-white text-center mb-8">快速选择</h2>
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
             <h3 class="text-lg font-bold text-gold mb-3">🎯 免费开源</h3>
             <ul class="text-gray-400 space-y-2 text-sm">
               <li>• Crush - 国际开源首选</li>
               <li>• CountBot - 国产开源框架</li>
               <li>• Aider - 配对编程金标准</li>
+              <li>• Goose - Linux 基金会支持</li>
             </ul>
           </div>
           <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
@@ -461,6 +462,7 @@ const allTools = [...internationalTools, ...chineseTools];
               <li>• Claude Code - 配合 Proxy 支持 Qwen 3</li>
               <li>• Gemini CLI - 极致 Context 思考</li>
               <li>• fuxi-cli - 国产长推理优化</li>
+              <li>• Axe - Unix 风格推理 Agent</li>
             </ul>
           </div>
           <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
@@ -469,6 +471,52 @@ const allTools = [...internationalTools, ...chineseTools];
               <li>• Goose - 100+ MCP 服务器</li>
               <li>• OpenMozi - 国产生态集成</li>
               <li>• Cline - VS Code 深度集成</li>
+              <li>• Trae CLI - 字节跳动生态</li>
+            </ul>
+          </div>
+          <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-gold mb-3">💻 开发环境</h3>
+            <ul class="text-gray-400 space-y-2 text-sm">
+              <li>• Cursor - AI 优先代码编辑器</li>
+              <li>• Windsurf - Codeium 出品</li>
+              <li>• CodeBuddy - 腾讯云代码助手</li>
+              <li>• Qwen Code - 阿里通义千问</li>
+            </ul>
+          </div>
+          <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-gold mb-3">🌍 地区选择</h3>
+            <ul class="text-gray-400 space-y-2 text-sm">
+              <li>• 国外用户 - Claude Code / Gemini</li>
+              <li>• 国内用户 - Kimi Code / Qwen Code</li>
+              <li>• 混合使用 - fuxi-cli / Trae CLI</li>
+              <li>• 企业环境 - CodeBuddy / Claude Code</li>
+            </ul>
+          </div>
+          <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-gold mb-3">📱 多平台支持</h3>
+            <ul class="text-gray-400 space-y-2 text-sm">
+              <li>• CountBot - 微信/飞书/钉钉/QQ</li>
+              <li>• OpenMozi - QQ/飞书/钉钉/企微</li>
+              <li>• GoClaw - 国产生通讯平台</li>
+              <li>• Goose - 桌面+CLI 双模式</li>
+            </ul>
+          </div>
+          <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-gold mb-3">💰 预算考虑</h3>
+            <ul class="text-gray-400 space-y-2 text-sm">
+              <li>• 免费方案 - Crush / Aider / Goose</li>
+              <li>• 低成本 - Kimi Code / Qwen Code</li>
+              <li>• 专业版 - Claude Code Pro</li>
+              <li>• 企业级 - Gemini Max / Claude Max</li>
+            </ul>
+          </div>
+          <div class="bg-gray-900 border border-gray-800 rounded-lg p-6">
+            <h3 class="text-lg font-bold text-gold mb-3">🚀 新手推荐</h3>
+            <ul class="text-gray-400 space-y-2 text-sm">
+              <li>• 国际 - Cursor (易用性第一)</li>
+              <li>• 国内 - Kimi Code (中文友好)</li>
+              <li>• 开发者 - Aider (Git 集成)</li>
+              <li>• 全功能 - Claude Code (综合最强)</li>
             </ul>
           </div>
         </div>
