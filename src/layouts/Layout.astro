@@ -132,6 +132,18 @@ const finalShareImageHeight = '630';
           navigator.serviceWorker.register('/sw.js')
             .then((registration) => {
               console.log('SW registered:', registration.scope);
+              
+              // 检查是否有更新的 Service Worker
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    // 有新的 Service Worker 已安装，刷新页面以激活
+                    console.log('New SW available, reloading...');
+                    window.location.reload();
+                  }
+                });
+              });
             })
             .catch((error) => {
               console.log('SW registration failed:', error);
