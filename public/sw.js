@@ -28,6 +28,7 @@ self.addEventListener('install', (event) => {
       return cache.addAll(PRECACHE_ASSETS);
     })
   );
+  // 强制跳过等待，立即激活新版本
   self.skipWaiting();
 });
 

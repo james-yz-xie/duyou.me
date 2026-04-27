@@ -133,14 +133,24 @@ const finalShareImageHeight = '630';
             .then((registration) => {
               console.log('SW registered:', registration.scope);
               
-              // 检查是否有更新的 Service Worker
+              // 监听更新事件
               registration.addEventListener('updatefound', () => {
                 const newWorker = registration.installing;
+                console.log('New SW installing...');
+                
                 newWorker.addEventListener('statechange', () => {
+                  console.log('New SW state:', newWorker.state);
+                  
                   if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                    // 有新的 Service Worker 已安装，刷新页面以激活
-                    console.log('New SW available, reloading...');
-                    window.location.reload();
+                    // 有新版本已安装，提示用户刷新
+                    console.log('New SW available!');
+                    if (confirm('发现新版本，是否立即刷新？')) {
+                      window.location.reload();
+                    }
+                  }
+                  
+                  if (newWorker.state === 'activated') {
+                    console.log('New SW activated!');
                   }
                 });
               });
