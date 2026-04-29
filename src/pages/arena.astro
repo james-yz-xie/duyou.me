@@ -1,0 +1,762 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout titleZh="AI 擂台赛 - 多轮对话对比" titleEn="AI Arena - Chat Compare" descriptionZh="选择两个AI模型，多轮对话对比回答" descriptionEn="Pick two AI models, compare answers in multi-turn conversation" ogImage="/og-home.svg">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <div class="min-h-screen bg-dark text-white flex flex-col">
+    <!-- Top Bar -->
+    <div class="border-b border-gray-800 bg-gray-950/80 backdrop-blur shrink-0">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🤖</span>
+            <h1 class="text-xl md:text-2xl font-bold">AI <span class="text-gold">擂台赛</span></h1>
+          </div>
+
+          <div class="flex items-center gap-3 flex-wrap">
+            <!-- LM Studio Status -->
+            <div id="lm-status" class="text-xs text-gray-500">检查中...</div>
+
+            <!-- Model A Selector -->
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">A</span>
+              <select id="model-a" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white focus:border-gold focus:outline-none transition-colors max-w-[200px]">
+                <option value="">选择模型...</option>
+              </select>
+            </div>
+
+            <span class="text-gold font-bold text-sm">VS</span>
+
+            <!-- Model B Selector -->
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-xs font-bold">B</span>
+              <select id="model-b" class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-white focus:border-gold focus:outline-none transition-colors max-w-[200px]">
+                <option value="">选择模型...</option>
+              </select>
+            </div>
+
+            <!-- Settings Toggle -->
+            <button id="settings-toggle" class="p-2 text-gray-400 hover:text-gold transition-colors rounded-lg hover:bg-gray-800" title="设置">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </button>
+
+            <!-- New Chat -->
+            <button id="new-chat-btn" class="p-2 text-gray-400 hover:text-gold transition-colors rounded-lg hover:bg-gray-800" title="新对话">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Select -->
+        <div class="flex flex-wrap gap-2 mt-2 items-center">
+          <span id="quick-select"></span>
+          <span class="text-gray-600 text-xs mx-1">|</span>
+          <button onclick="fillQuestion('用 Python 写一个快速排序，并解释时间复杂度')" class="px-2 py-1 bg-gray-800/50 border border-gray-700 rounded text-[11px] text-gray-500 hover:text-gold hover:border-gold transition-colors">排序算法</button>
+          <button onclick="fillQuestion('解释量子计算的基本原理，和经典计算有什么区别？')" class="px-2 py-1 bg-gray-800/50 border border-gray-700 rounded text-[11px] text-gray-500 hover:text-gold hover:border-gold transition-colors">量子计算</button>
+          <button onclick="fillQuestion('写一首关于秋天的七言绝句')" class="px-2 py-1 bg-gray-800/50 border border-gray-700 rounded text-[11px] text-gray-500 hover:text-gold hover:border-gold transition-colors">写诗</button>
+          <button onclick="fillQuestion('What are the trade-offs between microservices and monolithic architecture?')" class="px-2 py-1 bg-gray-800/50 border border-gray-700 rounded text-[11px] text-gray-500 hover:text-gold hover:border-gold transition-colors">架构对比</button>
+          <button onclick="fillQuestion('如果地球上所有冰融化，海平面会上升多少？对人类有什么影响？')" class="px-2 py-1 bg-gray-800/50 border border-gray-700 rounded text-[11px] text-gray-500 hover:text-gold hover:border-gold transition-colors">科学问题</button>
+        </div>
+
+        <!-- Settings Panel (hidden by default) -->
+        <div id="settings-panel" class="hidden mt-4 p-4 bg-gray-900 rounded-xl border border-gray-800 space-y-3">
+          <div class="flex items-center gap-4 flex-wrap">
+            <label class="flex items-center gap-2 text-sm text-gray-400">
+              <span>温度</span>
+              <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7" class="w-24 accent-gold">
+              <span id="temp-value" class="text-gold font-mono">0.7</span>
+            </label>
+            <label class="flex items-center gap-2 text-sm text-gray-400">
+              <span>Max Tokens</span>
+              <input type="number" id="max-tokens" value="4096" min="256" max="32768" step="256" class="w-24 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-white text-sm focus:border-gold focus:outline-none">
+            </label>
+          </div>
+          <div>
+            <label class="text-sm text-gray-400 block mb-1">系统提示词</label>
+            <textarea id="system-prompt" placeholder="可选，为两个模型设置系统提示词..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-600 focus:border-gold focus:outline-none resize-none" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Bar -->
+    <div class="border-b border-gray-800 bg-gray-950/80 backdrop-blur shrink-0">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="flex items-end gap-3">
+          <!-- Image upload -->
+          <input type="file" id="image-input" accept="image/*" class="hidden">
+          <button id="img-btn" class="p-3 text-gray-400 hover:text-gold transition-colors rounded-xl hover:bg-gray-800 shrink-0" title="添加图片">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </button>
+          <!-- Image preview -->
+          <div id="img-preview" class="hidden shrink-0 relative">
+            <img id="img-preview-src" class="h-12 w-12 object-cover rounded-lg border border-gray-700" alt="">
+            <button id="img-remove" class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white rounded-full text-xs flex items-center justify-center hover:bg-red-400">×</button>
+          </div>
+          <textarea
+            id="user-input"
+            placeholder="输入消息，两个模型将同时回答... (Enter 发送，Shift+Enter 换行)"
+            class="flex-1 bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-gold focus:outline-none transition-colors resize-none"
+            rows="1"
+          ></textarea>
+          <button
+            id="send-btn"
+            class="px-5 py-3 bg-gold text-dark font-bold rounded-xl hover:bg-yellow-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+          >
+            发送
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="flex-1 overflow-hidden">
+      <div class="h-full grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-800">
+        <!-- Panel A -->
+        <div class="flex flex-col h-full min-h-0">
+          <div class="px-4 py-2 border-b border-gray-800 bg-gray-950/30 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">A</span>
+              <span id="panel-a-name" class="text-sm font-medium text-gray-400">模型 A</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="panel-a-metrics" class="text-xs text-gray-600"></span>
+              <button id="vote-a" class="hidden px-2 py-0.5 text-xs border border-blue-500/30 text-blue-400 rounded hover:bg-blue-500/10 transition-colors" onclick="vote('A')">👍 A 更好</button>
+            </div>
+          </div>
+          <div id="chat-a" class="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
+            <div class="flex items-center justify-center h-full text-gray-600 text-sm">
+              <span>选择模型并开始对话</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel B -->
+        <div class="flex flex-col h-full min-h-0">
+          <div class="px-4 py-2 border-b border-gray-800 bg-gray-950/30 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-2">
+              <span class="w-5 h-5 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-xs font-bold">B</span>
+              <span id="panel-b-name" class="text-sm font-medium text-gray-400">模型 B</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="panel-b-metrics" class="text-xs text-gray-600"></span>
+              <button id="vote-b" class="hidden px-2 py-0.5 text-xs border border-red-500/30 text-red-400 rounded hover:bg-red-500/10 transition-colors" onclick="vote('B')">👍 B 更好</button>
+            </div>
+          </div>
+          <div id="chat-b" class="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
+            <div class="flex items-center justify-center h-full text-gray-600 text-sm">
+              <span>选择模型并开始对话</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Score Bar -->
+      <div id="score-bar" class="hidden shrink-0 border-t border-gray-800 bg-gray-950/60 px-4 py-2">
+        <div class="max-w-7xl mx-auto flex items-center justify-center gap-4 text-sm">
+          <span class="text-blue-400 font-medium">A: <span id="score-a">0</span></span>
+          <span class="text-gray-600">平局: <span id="score-draw">0</span></span>
+          <span class="text-red-400 font-medium">B: <span id="score-b">0</span></span>
+          <button onclick="vote('draw')" class="ml-2 px-2 py-0.5 text-xs border border-gray-700 text-gray-400 rounded hover:border-gold hover:text-gold transition-colors">🤝 平局</button>
+        </div>
+      </div>
+    </div>
+
+  <style>
+    /* Chat bubble styles */
+    .msg-user {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .msg-user .bubble {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 16px 16px 4px 16px;
+      max-width: 85%;
+    }
+    .msg-assistant {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .msg-assistant .bubble {
+      background: rgba(31, 41, 55, 0.8);
+      border: 1px solid rgba(55, 65, 81, 0.5);
+      border-radius: 16px 16px 16px 4px;
+      max-width: 85%;
+    }
+    .bubble {
+      padding: 10px 14px;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+    .bubble p { margin: 0.5em 0; }
+    .bubble p:first-child { margin-top: 0; }
+    .bubble p:last-child { margin-bottom: 0; }
+    .bubble h1, .bubble h2, .bubble h3 { font-weight: 700; margin: 0.8em 0 0.4em; }
+    .bubble h1 { font-size: 1.25em; }
+    .bubble h2 { font-size: 1.1em; }
+    .bubble h3 { font-size: 1em; }
+    .bubble ul, .bubble ol { padding-left: 1.5em; margin: 0.5em 0; }
+    .bubble li { margin: 0.2em 0; }
+    .bubble blockquote { border-left: 3px solid #D4AF37; padding-left: 0.8em; margin: 0.5em 0; color: #9ca3af; }
+    .bubble table { border-collapse: collapse; margin: 0.5em 0; width: 100%; }
+    .bubble th, .bubble td { border: 1px solid #374151; padding: 4px 8px; text-align: left; }
+    .bubble th { background: rgba(0,0,0,0.3); }
+    .bubble a { color: #D4AF37; text-decoration: underline; }
+    .bubble hr { border-color: #374151; margin: 0.8em 0; }
+    .bubble code {
+      background: rgba(0,0,0,0.3);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .bubble pre {
+      background: rgba(0,0,0,0.3);
+      padding: 10px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 8px 0;
+    }
+    .bubble pre code {
+      background: none;
+      padding: 0;
+      font-size: 0.8rem;
+    }
+    .typing-cursor::after {
+      content: '▊';
+      animation: blink 1s step-end infinite;
+      color: #D4AF37;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    /* Auto-resize textarea */
+    #user-input {
+      min-height: 48px;
+      max-height: 120px;
+    }
+  </style>
+
+  <script is:inline>
+    const API_BASE = (window.location.port === '4321' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:3456/api' : '/api';
+    let models = [];
+    let isRunning = false;
+
+    // State
+    const state = {
+      modelA: '',
+      modelB: '',
+      messagesA: [],
+      messagesB: [],
+      systemPrompt: '',
+      temperature: 0.7,
+      maxTokens: 4096,
+      pendingImage: null,
+      scoreA: 0,
+      scoreB: 0,
+      scoreDraw: 0,
+      roundCount: 0,
+    };
+
+    // --- Model Loading ---
+    async function loadModels() {
+      const statusEl = document.getElementById('lm-status');
+      try {
+        const res = await fetch(`${API_BASE}/models`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        models = data.data || [];
+
+        statusEl.innerHTML = `<span class="text-emerald-400">● LM Studio (${models.length} 模型)</span>`;
+        populateSelectors();
+        populateQuickSelect();
+      } catch (err) {
+        statusEl.innerHTML = `<span class="text-amber-400">● LM Studio 未连接</span> <span class="text-gray-600 text-xs">${err.message || ''}</span>`;
+        console.error('Arena loadModels error:', err);
+      }
+    }
+
+    function populateSelectors() {
+      const selA = document.getElementById('model-a');
+      const selB = document.getElementById('model-b');
+      if (!selA || !selB) return;
+
+      models.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.id;
+        opt.textContent = m.id.split('/').pop();
+        selA.appendChild(opt.cloneNode(true));
+        selB.appendChild(opt.cloneNode(true));
+      });
+
+      if (models.length >= 2) {
+        selA.value = models[0].id;
+        selB.value = models[1].id;
+        state.modelA = models[0].id;
+        state.modelB = models[1].id;
+        updatePanelNames();
+      }
+
+      selA.addEventListener('change', () => { state.modelA = selA.value; updatePanelNames(); highlightActivePair(); });
+      selB.addEventListener('change', () => { state.modelB = selB.value; updatePanelNames(); highlightActivePair(); });
+    }
+
+    function populateQuickSelect() {
+      const container = document.getElementById('quick-select');
+      if (!container || models.length < 2) return;
+
+      const pairs = [];
+      for (let i = 0; i < Math.min(models.length, 4) && i + 1 < models.length; i += 2) {
+        pairs.push([models[i], models[i + 1]]);
+      }
+
+      container.innerHTML = pairs.map(([a, b]) => `
+        <button onclick="selectPair('${a.id}', '${b.id}')" data-pair="${a.id}|${b.id}"
+          class="quick-pair-btn px-2.5 py-1 bg-gray-800 border border-gray-700 rounded-lg text-xs text-gray-400 hover:border-gold hover:text-gold transition-colors">
+          ${a.id.split('/').pop()} vs ${b.id.split('/').pop()}
+        </button>
+      `).join('');
+
+      // Highlight default pair
+      highlightActivePair();
+    }
+
+    function selectPair(idA, idB) {
+      document.getElementById('model-a').value = idA;
+      document.getElementById('model-b').value = idB;
+      state.modelA = idA;
+      state.modelB = idB;
+      updatePanelNames();
+      highlightActivePair();
+    }
+
+    function highlightActivePair() {
+      document.querySelectorAll('.quick-pair-btn').forEach(btn => {
+        const pair = btn.dataset.pair;
+        if (pair === `${state.modelA}|${state.modelB}`) {
+          btn.classList.add('border-gold', 'text-gold', 'bg-gold/10');
+          btn.classList.remove('border-gray-700', 'text-gray-400', 'bg-gray-800');
+        } else {
+          btn.classList.remove('border-gold', 'text-gold', 'bg-gold/10');
+          btn.classList.add('border-gray-700', 'text-gray-400', 'bg-gray-800');
+        }
+      });
+    }
+
+    function fillQuestion(text) {
+      const input = document.getElementById('user-input');
+      if (input) {
+        input.value = text;
+        input.focus();
+        autoResizeInput();
+      }
+    }
+
+    function updatePanelNames() {
+      const nameA = document.getElementById('panel-a-name');
+      const nameB = document.getElementById('panel-b-name');
+      if (nameA) nameA.textContent = state.modelA ? state.modelA.split('/').pop() : '模型 A';
+      if (nameB) nameB.textContent = state.modelB ? state.modelB.split('/').pop() : '模型 B';
+    }
+
+    // --- Image Upload ---
+    const imgBtn = document.getElementById('img-btn');
+    const imgInput = document.getElementById('image-input');
+    const imgPreview = document.getElementById('img-preview');
+    const imgPreviewSrc = document.getElementById('img-preview-src');
+    const imgRemove = document.getElementById('img-remove');
+    const userInput = document.getElementById('user-input');
+
+    if (imgBtn && imgInput) {
+      imgBtn.addEventListener('click', () => imgInput.click());
+      imgInput.addEventListener('change', () => {
+        const file = imgInput.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const dataUrl = e.target.result;
+          const match = dataUrl.match(/^data:(image\/[^;]+);base64,(.+)$/);
+          if (match) {
+            state.pendingImage = { base64: match[2], mimeType: match[1], dataUrl };
+            imgPreviewSrc.src = dataUrl;
+            imgPreview.classList.remove('hidden');
+          }
+        };
+        reader.readAsDataURL(file);
+        imgInput.value = '';
+      });
+    }
+
+    if (imgRemove) {
+      imgRemove.addEventListener('click', () => {
+        state.pendingImage = null;
+        imgPreview.classList.add('hidden');
+        imgPreviewSrc.src = '';
+      });
+    }
+
+    // --- Paste image from clipboard ---
+    if (userInput) {
+      userInput.addEventListener('paste', (e) => {
+        const items = e.clipboardData?.items;
+        if (!items) return;
+        for (const item of items) {
+          if (item.type.startsWith('image/')) {
+            e.preventDefault();
+            const file = item.getAsFile();
+            if (!file) continue;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              const dataUrl = ev.target.result;
+              const match = dataUrl.match(/^data:(image\/[^;]+);base64,(.+)$/);
+              if (match) {
+                state.pendingImage = { base64: match[2], mimeType: match[1], dataUrl };
+                imgPreviewSrc.src = dataUrl;
+                imgPreview.classList.remove('hidden');
+              }
+            };
+            reader.readAsDataURL(file);
+            break;
+          }
+        }
+      });
+    }
+
+    // --- Settings ---
+    const settingsToggle = document.getElementById('settings-toggle');
+    const settingsPanel = document.getElementById('settings-panel');
+    if (settingsToggle) {
+      settingsToggle.addEventListener('click', () => {
+        settingsPanel.classList.toggle('hidden');
+      });
+    }
+
+    const tempSlider = document.getElementById('temperature');
+    const tempValue = document.getElementById('temp-value');
+    if (tempSlider) {
+      tempSlider.addEventListener('input', () => {
+        state.temperature = parseFloat(tempSlider.value);
+        tempValue.textContent = tempSlider.value;
+      });
+    }
+
+    const maxTokensInput = document.getElementById('max-tokens');
+    if (maxTokensInput) {
+      maxTokensInput.addEventListener('change', () => {
+        state.maxTokens = parseInt(maxTokensInput.value) || 4096;
+      });
+    }
+
+    // --- Chat Rendering ---
+    function getChatPanel(panel) {
+      return document.getElementById(panel === 'A' ? 'chat-a' : 'chat-b');
+    }
+
+    function clearChats() {
+      state.messagesA = [];
+      state.messagesB = [];
+      ['chat-a', 'chat-b'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = '<div class="flex items-center justify-center h-full text-gray-600 text-sm"><span>选择模型并开始对话</span></div>';
+      });
+    }
+
+    function addUserMessage(text, imageUrl) {
+      ['A', 'B'].forEach(panel => {
+        const chat = getChatPanel(panel);
+        // Remove placeholder if present
+        const placeholder = chat.querySelector('.flex.items-center.justify-center');
+        if (placeholder) placeholder.remove();
+
+        const div = document.createElement('div');
+        div.className = 'msg-user';
+        let bubbleContent = '';
+        if (imageUrl) {
+          bubbleContent += `<img src="${imageUrl}" class="max-h-40 rounded-lg mb-2" alt="uploaded">`;
+        }
+        bubbleContent += escapeHtml(text);
+        div.innerHTML = `<div class="bubble">${bubbleContent}</div>`;
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+      });
+    }
+
+    function createAssistantBubble(panel) {
+      const chat = getChatPanel(panel);
+      // Remove placeholder if present
+      const placeholder = chat.querySelector('.flex.items-center.justify-center');
+      if (placeholder) placeholder.remove();
+
+      const div = document.createElement('div');
+      div.className = 'msg-assistant';
+      div.innerHTML = `<div class="bubble"><span class="typing-cursor"></span></div>`;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+      return div.querySelector('.bubble');
+    }
+
+    function updateAssistantBubble(bubble, content, isFinal) {
+      bubble.innerHTML = formatContent(content);
+      if (!isFinal) {
+        const cursor = document.createElement('span');
+        cursor.className = 'typing-cursor';
+        bubble.appendChild(cursor);
+      }
+      // Auto-scroll
+      const chat = bubble.closest('[id^="chat-"]');
+      if (chat) chat.scrollTop = chat.scrollHeight;
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\n/g, '<br>');
+    }
+
+    function formatContent(text) {
+      if (typeof marked !== 'undefined' && marked.parse) {
+        try {
+          return marked.parse(text);
+        } catch {
+          // fallback
+        }
+      }
+      // Fallback: simple regex formatting
+      let html = escapeHtml(text);
+      html = html.replace(/```(\w*)<br>(.*?)```/gs, '<pre><code>$2</code></pre>');
+      html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+      html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+      return html;
+    }
+
+    // --- Send Message ---
+    async function sendMessage() {
+      if (isRunning) return;
+
+      const input = document.getElementById('user-input');
+      const text = input.value.trim();
+      if (!text && !state.pendingImage) return;
+      if (!state.modelA || !state.modelB) {
+        alert('请先选择两个模型');
+        return;
+      }
+      if (state.modelA === state.modelB) {
+        alert('请选择两个不同的模型');
+        return;
+      }
+
+      isRunning = true;
+      input.value = '';
+      autoResizeInput();
+
+      const sendBtn = document.getElementById('send-btn');
+      sendBtn.disabled = true;
+      sendBtn.textContent = '回答中...';
+
+      // Build user message content
+      const hasImage = !!state.pendingImage;
+      const imageUrl = hasImage ? state.pendingImage.dataUrl : null;
+      let userContent;
+      if (hasImage) {
+        userContent = [];
+        userContent.push({ type: 'image_url', image_url: { url: state.pendingImage.dataUrl } });
+        if (text) userContent.push({ type: 'text', text });
+      } else {
+        userContent = text;
+      }
+
+      // Add user message to UI
+      addUserMessage(text || '(图片)', imageUrl);
+
+      // Build messages arrays
+      state.messagesA.push({ role: 'user', content: userContent });
+      state.messagesB.push({ role: 'user', content: userContent });
+
+      // Clear pending image
+      state.pendingImage = null;
+      imgPreview.classList.add('hidden');
+      imgPreviewSrc.src = '';
+
+      // Create assistant bubbles
+      const bubbleA = createAssistantBubble('A');
+      const bubbleB = createAssistantBubble('B');
+      const metricsA = document.getElementById('panel-a-metrics');
+      const metricsB = document.getElementById('panel-b-metrics');
+      if (metricsA) metricsA.textContent = '⏳';
+      if (metricsB) metricsB.textContent = '⏳';
+
+      // Hide vote buttons during generation
+      document.getElementById('vote-a')?.classList.add('hidden');
+      document.getElementById('vote-b')?.classList.add('hidden');
+
+      // Use /api/compare endpoint for both models in one request
+      const systemMsg = state.systemPrompt ? [{ role: 'system', content: state.systemPrompt }] : [];
+      const msgA = [...systemMsg, ...state.messagesA];
+      const msgB = [...systemMsg, ...state.messagesB];
+
+      const startTime = performance.now();
+      const firstToken = { A: 0, B: 0 };
+      const tokenCounts = { A: 0, B: 0 };
+      let contentA = '';
+      let contentB = '';
+
+      try {
+        const res = await fetch(`${API_BASE}/compare`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            modelA: state.modelA,
+            modelB: state.modelB,
+            messagesA: msgA,
+            messagesB: msgB,
+            temperature: state.temperature,
+            maxTokens: state.maxTokens,
+          }),
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed.startsWith('data: ')) continue;
+            const jsonStr = trimmed.slice(6);
+            if (jsonStr === '[DONE]') continue;
+
+            try {
+              const data = JSON.parse(jsonStr);
+              const model = data.model; // 'A' or 'B'
+
+              if (data.type === 'chunk' && data.content) {
+                if (!firstToken[model]) firstToken[model] = performance.now();
+                tokenCounts[model]++;
+                if (model === 'A') {
+                  contentA += data.content;
+                  updateAssistantBubble(bubbleA, contentA, false);
+                } else {
+                  contentB += data.content;
+                  updateAssistantBubble(bubbleB, contentB, false);
+                }
+              } else if (data.type === 'complete') {
+                const bubble = model === 'A' ? bubbleA : bubbleB;
+                const metricsEl = model === 'A' ? metricsA : metricsB;
+                const content = model === 'A' ? contentA : contentB;
+                updateAssistantBubble(bubble, content, true);
+
+                const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
+                const ttft = firstToken[model] ? ((firstToken[model] - startTime) / 1000).toFixed(2) : '-';
+                const chars = content.length;
+                const tokens = tokenCounts[model];
+                if (metricsEl) metricsEl.textContent = `${elapsed}s | 首字${ttft}s | ${chars}字 | ${tokens}tokens`;
+              } else if (data.type === 'error') {
+                if (model === 'A') {
+                  contentA += `\n\nError: ${data.error}`;
+                  updateAssistantBubble(bubbleA, contentA, true);
+                  if (metricsA) metricsA.textContent = '❌';
+                } else {
+                  contentB += `\n\nError: ${data.error}`;
+                  updateAssistantBubble(bubbleB, contentB, true);
+                  if (metricsB) metricsB.textContent = '❌';
+                }
+              }
+            } catch {}
+          }
+        }
+      } catch (err) {
+        updateAssistantBubble(bubbleA, `Error: ${err.message}`, true);
+        updateAssistantBubble(bubbleB, `Error: ${err.message}`, true);
+        if (metricsA) metricsA.textContent = '❌';
+        if (metricsB) metricsB.textContent = '❌';
+      }
+
+      // Save assistant responses to history
+      if (contentA) state.messagesA.push({ role: 'assistant', content: contentA });
+      if (contentB) state.messagesB.push({ role: 'assistant', content: contentB });
+
+      // Show vote buttons
+      state.roundCount++;
+      document.getElementById('vote-a')?.classList.remove('hidden');
+      document.getElementById('vote-b')?.classList.remove('hidden');
+      document.getElementById('score-bar')?.classList.remove('hidden');
+
+      isRunning = false;
+      sendBtn.disabled = false;
+      sendBtn.textContent = '发送';
+    }
+
+    // --- Voting ---
+    function vote(winner) {
+      if (winner === 'A') state.scoreA++;
+      else if (winner === 'B') state.scoreB++;
+      else state.scoreDraw++;
+
+      document.getElementById('score-a').textContent = state.scoreA;
+      document.getElementById('score-b').textContent = state.scoreB;
+      document.getElementById('score-draw').textContent = state.scoreDraw;
+      document.getElementById('score-bar')?.classList.remove('hidden');
+
+      // Hide vote buttons until next round
+      document.getElementById('vote-a')?.classList.add('hidden');
+      document.getElementById('vote-b')?.classList.add('hidden');
+    }
+
+    // --- Input Handling ---
+    const sendBtn = document.getElementById('send-btn');
+
+    function autoResizeInput() {
+      if (!userInput) return;
+      userInput.style.height = 'auto';
+      userInput.style.height = Math.min(userInput.scrollHeight, 120) + 'px';
+    }
+
+    if (userInput) {
+      userInput.addEventListener('input', autoResizeInput);
+      userInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendMessage();
+        }
+      });
+    }
+
+    if (sendBtn) {
+      sendBtn.addEventListener('click', sendMessage);
+    }
+
+    // --- New Chat ---
+    const newChatBtn = document.getElementById('new-chat-btn');
+    if (newChatBtn) {
+      newChatBtn.addEventListener('click', () => {
+        if (isRunning) return;
+        clearChats();
+        state.systemPrompt = document.getElementById('system-prompt')?.value || '';
+        state.scoreA = 0;
+        state.scoreB = 0;
+        state.scoreDraw = 0;
+        state.roundCount = 0;
+        document.getElementById('score-a').textContent = '0';
+        document.getElementById('score-b').textContent = '0';
+        document.getElementById('score-draw').textContent = '0';
+        document.getElementById('score-bar')?.classList.add('hidden');
+      });
+    }
+
+    // --- Init ---
+    loadModels();
+  </script>
+</Layout>

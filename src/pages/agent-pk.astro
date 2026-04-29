@@ -1,0 +1,392 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout titleZh="AI 擂台赛" titleEn="AI Arena" descriptionZh="选择两个 AI 模型，输入同一个问题，实时对比回答" descriptionEn="Pick two AI models, ask the same question, compare answers side by side" ogImage="/og-home.svg">
+  <div class="min-h-screen bg-dark text-white">
+    <!-- Header -->
+    <div class="border-b border-gray-800 bg-gray-950/50 backdrop-blur">
+      <div class="max-w-7xl mx-auto px-4 py-6">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-3xl">🥊</span>
+          <h1 class="text-3xl md:text-4xl font-bold">AI <span class="text-gold">擂台赛</span></h1>
+        </div>
+        <p class="text-gray-400 text-sm md:text-base">选择两个 AI 模型，输入同一个问题，实时对比回答</p>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Setup Check -->
+      <div id="setup-check" class="mb-8">
+        <!-- Filled by JS -->
+      </div>
+
+      <!-- Model Selection -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Model A -->
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold">A</span>
+            <h2 class="text-lg font-semibold">模型 A</h2>
+          </div>
+          <select id="model-a" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors">
+            <option value="">选择模型...</option>
+          </select>
+        </div>
+
+        <!-- Model B -->
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-8 h-8 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-sm font-bold">B</span>
+            <h2 class="text-lg font-semibold">模型 B</h2>
+          </div>
+          <select id="model-b" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors">
+            <option value="">选择模型...</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Quick Select -->
+      <div class="mb-8">
+        <h3 class="text-sm text-gray-500 mb-3 uppercase tracking-wider">快速选择</h3>
+        <div id="quick-select" class="flex flex-wrap gap-2">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="mb-8">
+        <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+          <textarea
+            id="prompt"
+            placeholder="输入一个问题，两个模型将同时回答..."
+            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-4 text-white placeholder-gray-500 focus:border-gold focus:outline-none transition-colors resize-none"
+            rows="4"
+          ></textarea>
+          <div class="flex items-center justify-between mt-4">
+            <div class="flex items-center gap-4">
+              <label class="flex items-center gap-2 text-sm text-gray-400">
+                <span>温度</span>
+                <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7" class="w-24 accent-gold">
+                <span id="temp-value" class="text-gold">0.7</span>
+              </label>
+            </div>
+            <button
+              id="start-btn"
+              class="px-8 py-3 bg-gold text-dark font-bold rounded-lg hover:bg-yellow-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              开始擂台赛 🥊
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div id="results" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
+        <!-- Model A Result -->
+        <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+          <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-gray-950/50">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">A</span>
+              <span id="model-a-name" class="text-sm font-medium text-gray-300">-</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="model-a-status" class="text-xs text-gray-500">等待中</span>
+              <span id="model-a-tokens" class="text-xs text-gray-600">0 tokens</span>
+            </div>
+          </div>
+          <div id="model-a-content" class="p-6 prose prose-invert max-w-none" style="max-height: 60vh; overflow-y: auto;">
+            <span class="text-gray-600 italic">等待回答...</span>
+          </div>
+        </div>
+
+        <!-- Model B Result -->
+        <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+          <div class="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-gray-950/50">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-xs font-bold">B</span>
+              <span id="model-b-name" class="text-sm font-medium text-gray-300">-</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="model-b-status" class="text-xs text-gray-500">等待中</span>
+              <span id="model-b-tokens" class="text-xs text-gray-600">0 tokens</span>
+            </div>
+          </div>
+          <div id="model-b-content" class="p-6 prose prose-invert max-w-none" style="max-height: 60vh; overflow-y: auto;">
+            <span class="text-gray-600 italic">等待回答...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VS Badge (centered between results) -->
+      <div id="vs-badge" class="hidden flex justify-center -mt-4 mb-4 z-10">
+        <span class="bg-gold text-dark font-bold px-4 py-1 rounded-full text-sm shadow-lg">VS</span>
+      </div>
+
+      <!-- Error -->
+      <div id="error-msg" class="hidden bg-red-500/10 border border-red-500/20 rounded-xl p-4 mb-8">
+        <p class="text-red-400 text-sm" id="error-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    const API_BASE = '/api';
+    let models = [];
+    let isRunning = false;
+
+    // Load models
+    async function loadModels() {
+      const check = document.getElementById('setup-check');
+      try {
+        const res = await fetch(`${API_BASE}/models`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        models = data.data || [];
+
+        check.innerHTML = `
+          <div class="flex items-center gap-2 text-emerald-400 text-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            已连接 LM Studio (${models.length} 个模型可用)
+          </div>
+        `;
+        populateSelectors();
+        populateQuickSelect();
+      } catch (err) {
+        check.innerHTML = `
+          <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4">
+            <div class="flex items-center gap-2 text-amber-400 mb-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01"/></svg>
+              <span class="font-semibold">LM Studio 未连接</span>
+            </div>
+            <p class="text-amber-300/70 text-sm mb-3">无法连接到 LM Studio API。请确保：</p>
+            <ol class="text-amber-300/70 text-sm list-decimal list-inside space-y-1">
+              <li>安装 <a href="https://lmstudio.ai" target="_blank" class="text-gold hover:underline">LM Studio</a></li>
+              <li>启动本地服务器（右上角 🟢 按钮）</li>
+              <li>确认运行在 <code class="bg-gray-800 px-1.5 py-0.5 rounded">localhost:1234</code></li>
+            </ol>
+            <a href="https://lmstudio.ai" target="_blank" class="inline-block mt-3 px-4 py-2 bg-gold text-dark text-sm font-semibold rounded-lg hover:bg-yellow-400 transition-colors">
+              下载 LM Studio →
+            </a>
+          </div>
+        `;
+      }
+    }
+
+    function populateSelectors() {
+      const selA = document.getElementById('model-a');
+      const selB = document.getElementById('model-b');
+      if (!selA || !selB) return;
+
+      models.forEach((m, i) => {
+        const opt = document.createElement('option');
+        opt.value = m.id;
+        opt.textContent = m.id;
+        selA.appendChild(opt.cloneNode(true));
+        selB.appendChild(opt.cloneNode(true));
+      });
+
+      // Auto-select first two
+      if (models.length >= 2) {
+        selA.value = models[0].id;
+        selB.value = models[1].id;
+      }
+    }
+
+    function populateQuickSelect() {
+      const container = document.getElementById('quick-select');
+      if (!container || models.length < 2) return;
+
+      // Show first 4 models as quick select pairs
+      const pairs = [];
+      for (let i = 0; i < Math.min(models.length, 4) && i + 1 < models.length; i += 2) {
+        pairs.push([models[i], models[i + 1]]);
+      }
+
+      container.innerHTML = pairs.map(([a, b]) => `
+        <button onclick="selectPair('${a.id}', '${b.id}')"
+          class="px-3 py-1.5 bg-gray-800 border border-gray-700 rounded-lg text-xs text-gray-300 hover:border-gold hover:text-gold transition-colors">
+          ${a.id.split('/').pop()} vs ${b.id.split('/').pop()}
+        </button>
+      `).join('');
+    }
+
+    function selectPair(idA, idB) {
+      document.getElementById('model-a').value = idA;
+      document.getElementById('model-b').value = idB;
+    }
+
+    // Temperature slider
+    const tempSlider = document.getElementById('temperature');
+    const tempValue = document.getElementById('temp-value');
+    if (tempSlider) {
+      tempSlider.addEventListener('input', () => {
+        tempValue.textContent = tempSlider.value;
+      });
+    }
+
+    // Start arena
+    const startBtn = document.getElementById('start-btn');
+    if (startBtn) {
+      startBtn.addEventListener('click', startArena);
+    }
+
+    // Enter to submit
+    const promptInput = document.getElementById('prompt');
+    if (promptInput) {
+      promptInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          startArena();
+        }
+      });
+    }
+
+    async function startArena() {
+      if (isRunning) return;
+
+      const modelA = document.getElementById('model-a').value;
+      const modelB = document.getElementById('model-b').value;
+      const prompt = document.getElementById('prompt').value.trim();
+      const temperature = parseFloat(document.getElementById('temperature').value);
+
+      if (!modelA || !modelB) {
+        showError('请选择两个模型');
+        return;
+      }
+      if (!prompt) {
+        showError('请输入一个问题');
+        return;
+      }
+      if (modelA === modelB) {
+        showError('请选择两个不同的模型');
+        return;
+      }
+
+      isRunning = true;
+      startBtn.disabled = true;
+      startBtn.textContent = '🥊 擂台进行中...';
+      document.getElementById('error-msg').classList.add('hidden');
+
+      // Show results
+      document.getElementById('results').classList.remove('hidden');
+      document.getElementById('vs-badge').classList.remove('hidden');
+      document.getElementById('model-a-name').textContent = modelA.split('/').pop();
+      document.getElementById('model-b-name').textContent = modelB.split('/').pop();
+      document.getElementById('model-a-content').innerHTML = '<span class="text-gray-600 italic">等待回答...</span>';
+      document.getElementById('model-b-content').innerHTML = '<span class="text-gray-600 italic">等待回答...</span>';
+      document.getElementById('model-a-status').textContent = '⏳ 等待中';
+      document.getElementById('model-a-status').className = 'text-xs text-gray-500';
+      document.getElementById('model-b-status').textContent = '⏳ 等待中';
+      document.getElementById('model-b-status').className = 'text-xs text-gray-500';
+      document.getElementById('model-a-tokens').textContent = '0 tokens';
+      document.getElementById('model-b-tokens').textContent = '0 tokens';
+
+      try {
+        const res = await fetch(`${API_BASE}/compare`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            modelA,
+            modelB,
+            prompt,
+            temperature,
+          }),
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+        let contentA = '';
+        let contentB = '';
+        let tokensA = 0;
+        let tokensB = 0;
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed.startsWith('data: ')) continue;
+            const jsonStr = trimmed.slice(6);
+            if (jsonStr === '[DONE]') continue;
+
+            try {
+              const data = JSON.parse(jsonStr);
+              handleSSE(data);
+            } catch {}
+          }
+        }
+
+        function handleSSE(data) {
+          if (data.type === 'chunk') {
+            if (data.model === 'A') {
+              contentA += data.content;
+              tokensA++;
+            } else {
+              contentB += data.content;
+              tokensB++;
+            }
+            updateContent(data.model, data.model === 'A' ? contentA : contentB, data.model === 'A' ? tokensA : tokensB);
+          } else if (data.type === 'complete') {
+            if (data.model === 'A') {
+              document.getElementById('model-a-status').textContent = data.status === 'ok' ? '✅ 完成' : '❌ 错误';
+              document.getElementById('model-a-status').className = `text-xs ${data.status === 'ok' ? 'text-emerald-400' : 'text-red-400'}`;
+            } else {
+              document.getElementById('model-b-status').textContent = data.status === 'ok' ? '✅ 完成' : '❌ 错误';
+              document.getElementById('model-b-status').className = `text-xs ${data.status === 'ok' ? 'text-emerald-400' : 'text-red-400'}`;
+            }
+          } else if (data.type === 'error') {
+            showError(`${data.model} 错误: ${data.error}`);
+          }
+        }
+
+        function updateContent(model, content, tokens) {
+          const el = document.getElementById(`model-${model.toLowerCase()}-content`);
+          if (el) {
+            el.innerHTML = formatContent(content);
+            el.scrollTop = el.scrollHeight;
+          }
+          const tokensEl = document.getElementById(`model-${model.toLowerCase()}-tokens`);
+          if (tokensEl) tokensEl.textContent = `${tokens} tokens`;
+        }
+
+        function formatContent(text) {
+          // Simple markdown-like formatting
+          return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.+?)\*/g, '<em>$1</em>')
+            .replace(/`(.+?)`/g, '<code class="bg-gray-800 px-1.5 py-0.5 rounded text-sm">$1</code>')
+            .replace(/\n/g, '<br>');
+        }
+
+      } catch (err) {
+        showError(`请求失败: ${err.message}`);
+      } finally {
+        isRunning = false;
+        startBtn.disabled = false;
+        startBtn.textContent = '开始擂台赛 🥊';
+      }
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('error-msg');
+      const text = document.getElementById('error-text');
+      if (el) el.classList.remove('hidden');
+      if (text) text.textContent = msg;
+    }
+
+    // Init
+    loadModels();
+  </script>
+</Layout>

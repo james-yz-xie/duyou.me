@@ -184,6 +184,7 @@ const chineseTools = [
     url: 'https://github.com/MoonshotAI/kimi-cli',
     stars: '8K+',
     price: 'Free',
+    swebench: '-',
     category: 'cli',
     type: '编程 CLI',
     isOpenSource: true,
@@ -200,6 +201,7 @@ const chineseTools = [
     url: 'https://qwenlm.github.io/qwen-code-docs/',
     stars: '24K+',
     price: 'Free',
+    swebench: '-',
     category: 'cli',
     type: '编程 CLI',
     isOpenSource: true,
@@ -216,6 +218,7 @@ const chineseTools = [
     url: 'https://codebuddy.cn',
     stars: '-',
     price: 'Free',
+    swebench: '-',
     category: 'cli',
     type: '编程 CLI',
     isOpenSource: false,
@@ -232,6 +235,7 @@ const chineseTools = [
     url: 'https://github.com/countbot-ai/CountBot',
     stars: '500+',
     price: 'Free',
+    swebench: '-',
     category: 'agent',
     type: 'AI 助手',
     isOpenSource: true,
@@ -248,6 +252,7 @@ const chineseTools = [
     url: 'https://github.com/King-Chau/mozi',
     stars: '179+',
     price: 'Free',
+    swebench: '-',
     category: 'agent',
     type: 'AI 助手',
     isOpenSource: true,
@@ -264,6 +269,7 @@ const chineseTools = [
     url: 'https://github.com/smallnest/goclaw',
     stars: '563+',
     price: 'Free',
+    swebench: '-',
     category: 'agent',
     type: 'AI 助手',
     isOpenSource: true,
@@ -280,6 +286,7 @@ const chineseTools = [
     url: 'https://github.com/bytedance/trae-agent',
     stars: '11K+',
     price: 'Free',
+    swebench: '-',
     category: 'cli',
     type: '编程 CLI',
     isOpenSource: true,
@@ -296,6 +303,7 @@ const chineseTools = [
     url: 'https://github.com/MJ-CJM/fuxi-cli',
     stars: '120+',
     price: 'Free',
+    swebench: '-',
     category: 'cli',
     type: '编程 CLI',
     isOpenSource: true,
@@ -318,6 +326,13 @@ const allTools = [...internationalTools, ...chineseTools];
         </h1>
         <p class="text-lg text-gray-400 mb-2">国内外主流 AI Agent 命令行工具精选</p>
         <p class="text-sm text-gold">2026 年 4 月更新</p>
+        <div class="mt-4">
+          <a href="/arena" class="inline-flex items-center gap-2 px-5 py-2 bg-gold/10 border border-gold/30 text-gold rounded-full text-sm font-medium hover:bg-gold/20 transition-colors">
+            <span>🥊</span>
+            <span>AI 擂台赛 — 本地模型多轮对话对比</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
       </div>
 
       <!-- 标签切换 -->
@@ -396,9 +411,18 @@ const allTools = [...internationalTools, ...chineseTools];
                     <svg class="check-icon w-3.5 h-3.5 text-emerald-400 shrink-0 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                   </div>
                 </div>
-                <div class="flex items-center gap-3 sm:w-40 shrink-0 text-sm">
-                  <span class="text-gray-500 sm:hidden">价格 </span>
-                  <span class="text-white font-medium">{tool.price}</span>
+                <div class="flex sm:flex-col items-center sm:items-end gap-3 sm:gap-1 sm:w-40 shrink-0 text-sm">
+                  <div>
+                    <span class="text-gray-500 sm:hidden">价格 </span>
+                    <span class="text-white font-medium">{tool.price}</span>
+                  </div>
+                  {tool.swebench !== '-' && (
+                    <div>
+                      <span class="text-gray-500 sm:hidden">SWE-bench </span>
+                      <p class="text-gray-500 text-xs hidden sm:block">SWE-bench</p>
+                      <span class="text-gold font-medium">{tool.swebench}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </a>
