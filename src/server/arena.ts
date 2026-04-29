@@ -1,5 +1,3 @@
-import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { fetch } from 'undici';
@@ -130,7 +128,7 @@ async function fetchModelResponse(model: string, body: any, send: (data: any) =>
   } catch (err) {
     send({ type: 'error', model: label, error: String(err) });
   }
-});
+}
 
 apiApp.post('/api/chat', async (c) => {
   const { model, messages, temperature, maxTokens } = await c.req.json().catch(() => ({}));
