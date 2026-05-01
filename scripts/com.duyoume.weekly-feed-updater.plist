@@ -26,11 +26,11 @@
     <key>StandardErrorPath</key>
     <string>/tmp/duyou-feeds-update-error.log</string>
     
-    <!-- 运行时间配置 - 每天凌晨 2:00 -->
+    <!-- 运行时间配置 - 每天下午 1:00 (13:00) -->
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
-        <integer>2</integer>
+        <integer>13</integer>
         <key>Minute</key>
         <integer>0</integer>
     </dict>
