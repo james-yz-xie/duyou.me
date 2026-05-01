@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- 任务标识 -->
+    <key>Label</key>
+    <string>com.duyoume.weekly-feed-updater</string>
+    
+    <!-- 要执行的脚本 -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/james/git/duyou.me/scripts/auto-update-feeds.sh</string>
+        <string>--both</string>
+    </array>
+    
+    <!-- 工作目录 -->
+    <key>WorkingDirectory</key>
+    <string>/Users/james/git/duyou.me</string>
+    
+    <!-- 标准输出日志 -->
+    <key>StandardOutPath</key>
+    <string>/tmp/duyou-feeds-update.log</string>
+    
+    <!-- 标准错误日志 -->
+    <key>StandardErrorPath</key>
+    <string>/tmp/duyou-feeds-update-error.log</string>
+    
+    <!-- 运行时间配置 - 每周一上午 9:00 -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>9</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+        <key>Weekday</key>
+        <integer>1</integer>
+    </dict>
+    
+    <!-- 如果错过执行时间，立即补跑 -->
+    <key>RunAtLoad</key>
+    <false/>
+    
+    <!-- 防止重复执行 -->
+    <key>ThrottleInterval</key>
+    <integer>3600</integer>
+</dict>
+</plist>
