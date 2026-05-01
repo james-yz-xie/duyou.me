@@ -26,15 +26,13 @@
     <key>StandardErrorPath</key>
     <string>/tmp/duyou-feeds-update-error.log</string>
     
-    <!-- 运行时间配置 - 每周一上午 9:00 -->
+    <!-- 运行时间配置 - 每天凌晨 2:00 -->
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
-        <integer>9</integer>
+        <integer>2</integer>
         <key>Minute</key>
         <integer>0</integer>
-        <key>Weekday</key>
-        <integer>1</integer>
     </dict>
     
     <!-- 如果错过执行时间，立即补跑 -->
