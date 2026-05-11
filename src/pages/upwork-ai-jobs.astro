@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+  titleZh="Upwork AI 工作情报 | 谢灵江" 
+  titleEn="Upwork AI Jobs Intelligence | James Xie" 
+  descriptionZh="Upwork 平台最新 AI 自由职业工作机会、薪资水平、技能需求和市场趋势分析。" 
+  descriptionEn="Latest AI freelance job opportunities, salary levels, skill demands, and market trends on Upwork platform."
+  ogImage="/og-research.svg"
+>
+  <section class="bg-dark px-4 py-20 min-h-screen">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-4xl font-bold text-center mb-4 text-white">
+        <span class="lang-zh">Upwork AI 工作<span class="text-gold">情报</span></span>
+        <span class="lang-en hidden">Upwork AI Jobs <span class="text-gold">Intelligence</span></span>
+      </h1>
+      <p class="text-center text-gray-400 mb-12">
+        <span class="lang-zh">来自 Upwork 平台的最新 AI 自由职业市场信号</span>
+        <span class="lang-en hidden">Latest AI freelance market signals from Upwork platform</span>
+      </p>
+      <p class="text-center text-gray-600 text-sm mb-4">
+        <span class="lang-zh">最后更新：2026年05月11日</span>
+        <span class="lang-en hidden">Last updated: May 11, 2026</span>
+      </p>
+      <div class="h-1 w-16 bg-gold mx-auto mb-16"></div>
+
+      <div class="prose prose-invert max-w-none">
+        <h2 class="text-2xl font-bold text-gold mb-6">
+          <span class="lang-zh">📊 市场概览</span>
+          <span class="lang-en hidden">📊 Market Overview</span>
+        </h2>
+        
+        <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
+          <h3 class="text-lg font-bold text-white mb-2">
+            <span class="lang-zh">AI 相关工作量激增 40%，年化规模超 3 亿美元</span>
+            <span class="lang-en hidden">AI Job Volume Surges 40%, Annual Scale Exceeds $300M</span>
+          </h3>
+          <p class="text-gray-400">
+            <span class="lang-zh">Upwork 2026年第一季度报告显示，AI 相关工作的年化规模已超过 3 亿美元，AI 类别工作总量同比增长逾 40%。</span>
+            <span class="lang-en hidden">Upwork Q1 2026 report shows AI-related work annualized scale exceeded $300M, with AI category job volume up 40% YoY.</span>
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gold mb-6 mt-12">
+          <span class="lang-zh">💼 热门岗位与薪资</span>
+          <span class="lang-en hidden">💼 Hot Positions & Salaries</span>
+        </h2>
+        
+        <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
+          <h3 class="text-lg font-bold text-white mb-2">
+            <span class="lang-zh">AI 智能体工程师：月薪 25-40K</span>
+            <span class="lang-en hidden">AI Agent Engineer: ¥25-40K/month</span>
+          </h3>
+          <p class="text-gray-400">
+            <span class="lang-zh">负责将 AI 接入业务流程，设计并监督 Agent 工作流。技术要求包括 LangChain/AutoGen/Dify 等框架。</span>
+            <span class="lang-en hidden">Responsible for integrating AI into business processes and designing/supervising Agent workflows. Technical requirements include LangChain/AutoGen/Dify frameworks.</span>
+          </p>
+        </div>
+
+        <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
+          <h3 class="text-lg font-bold text-white mb-2">
+            <span class="lang-zh">提示词工程师：月薪 15-30K</span>
+            <span class="lang-en hidden">Prompt Engineer: ¥15-30K/month</span>
+          </h3>
+          <p class="text-gray-400">
+            <span class="lang-zh">精准设计 AI 指令，不需要写代码，但需要逻辑清晰、懂业务场景。</span>
+            <span class="lang-en hidden">Precisely design AI prompts. No coding required, but needs clear logic and business scenario understanding.</span>
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gold mb-6 mt-12">
+          <span class="lang-zh">🚀 热门技能增长</span>
+          <span class="lang-en hidden">🚀 Top Skill Growth</span>
+        </h2>
+        
+        <ul class="space-y-3 text-gray-400">
+          <li>
+            <span class="lang-zh">• AI 视频生成和编辑：增长超过 300%</span>
+            <span class="lang-en hidden">• AI Video Generation & Editing: 300%+ Growth</span>
+          </li>
+          <li>
+            <span class="lang-zh">• AI 集成（融入现有工作流程）：增长 178%</span>
+            <span class="lang-en hidden">• AI Integration (Into Existing Workflows): 178% Growth</span>
+          </li>
+          <li>
+            <span class="lang-zh">• 数据注释与标记：增长 154%</span>
+            <span class="lang-en hidden">• Data Annotation & Labeling: 154% Growth</span>
+          </li>
+          <li>
+            <span class="lang-zh">• AI 图像生成和编辑：增长 95%</span>
+            <span class="lang-en hidden">• AI Image Generation & Editing: 95% Growth</span>
+          </li>
+          <li>
+            <span class="lang-zh">• AI 聊天机器人开发：增长 71%</span>
+            <span class="lang-en hidden">• AI Chatbot Development: 71% Growth</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="text-center mt-12">
+        <a href="/" class="inline-block px-8 py-3 border-2 border-gold text-gold hover:bg-gold hover:text-dark transition-all font-semibold">
+          <span class="lang-zh">返回首页</span>
+          <span class="lang-en hidden">Back to Home</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <Footer />
+</Layout>
