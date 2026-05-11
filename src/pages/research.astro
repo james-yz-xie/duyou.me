@@ -5,6 +5,24 @@ import Footer from '../components/Footer.astro';
 const articles = [
   {
     title: {
+      zh: '从简单 Proxy 到 Agent Gateway：如何利用 LiteLLM 深度榨干 NVIDIA NIM 免费额度',
+      en: 'From Simple Proxy to Agent Gateway: Maximizing Free NVIDIA NIM Credits with LiteLLM'
+    },
+    category: {
+      zh: 'AI 工程',
+      en: 'AI Engineering'
+    },
+    excerpt: {
+      zh: '通过构建一个高性能、带工具清洗功能的 Agent Gateway，让 Claude Code 完美运行在 NVIDIA NIM 的各种开源模型上。独创"分层容灾与多级重试"架构，实现永不宕机的 AI 动力源。',
+      en: 'Build a high-performance Agent Gateway with tool sanitization to run Claude Code flawlessly on NVIDIA NIM open-source models. Features unique "Tiered Resilience & Retry" architecture for never-down AI infrastructure.'
+    },
+    status: {
+      zh: '已发布',
+      en: 'Published'
+    }
+  },
+  {
+    title: {
       zh: '对标美国六巨头，解读中国 AI 的"一超多强、四龙夺珠"',
       en: 'China AI vs. the U.S. Big Six: Mapping the One Superpower, Many Strong Players, and Four Dragons Race'
     },
@@ -180,8 +198,8 @@ const articles = [
         <span class="lang-en hidden">Published articles from the WeChat newsletter "Mr. Xie’s AI Deep Dive Notes"</span>
       </p>
       <p class="text-center text-gray-600 text-sm mb-4">
-        <span class="lang-zh">最后更新：2026年4月12日</span>
-        <span class="lang-en hidden">Last updated: Apr 12, 2026</span>
+        <span class="lang-zh">最后更新：2026年5月10日</span>
+        <span class="lang-en hidden">Last updated: May 10, 2026</span>
       </p>
       <div class="h-1 w-16 bg-gold mx-auto mb-4"></div>
       
