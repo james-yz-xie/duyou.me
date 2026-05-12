@@ -13,6 +13,7 @@
 
 - **禁止自动执行 `git push`**：AI Agent 仅负责代码修改与 `git commit`。所有 `git push` 动作必须由用户在手动审查代码后执行，以控制发布节奏。
 - **路径规范**：优先使用项目根目录下的相对路径，避免写死绝对路径（除非是访问特定的外部 Obsidian 知识库）。
+- **最小化改动原则**：每次更新只做必要的最小改动，避免一次性引入过多复杂功能，确保稳定性。
 
 ---
 
@@ -136,6 +137,24 @@ Hero 组件：`src/components/Hero.astro`
 
 ---
 
+### 更新 Upwork AI 工作情报
+
+页面位置：`src/pages/upwork-ai-jobs.astro`
+导航链接：在 Header.astro 中配置
+
+**内容来源**：Upwork 平台 AI 相关工作数据
+
+**规范**：
+- 采用简洁的 HTML 结构，避免复杂的 sections 数组
+- 包含 3 个主要部分：市场概览、热门岗位与薪资、热门技能增长
+- 保持双语支持（中文/英文）
+- 左侧金色边框卡片布局
+- 导航栏显示完整文字 "Upwork AI"
+
+**用户指令**：`更新 Upwork AI 情报`
+
+---
+
 ## 内容来源路径
 
 | 内容 | 路径 |
@@ -143,6 +162,7 @@ Hero 组件：`src/components/Hero.astro`
 | AI 研究成果（已发布文章） | `/Users/james/git/obsidian/MrXie AI consulting/Knowledge_Base/` |
 | AI 咨询 Briefings | `/Users/james/git/obsidian/MrXie AI consulting/Outputs/Briefings/` |
 | AI 咨询 Articles | `/Users/james/git/obsidian/MrXie AI consulting/Outputs/Articles/` |
+| GitHub Trending 监控 | `/Users/james/git/obsidian/MrXie GitHub Trending/` |
 | AI 养生公司 | `/Users/james/git/obsidian/MrXie AI养生公司` |
 | 个人简历 | `/Users/james/git/obsidian/MrXie AI resume/谢灵江_简历_Base.md` |
 
@@ -153,17 +173,49 @@ Hero 组件：`src/components/Hero.astro`
 ```
 src/
 ├── components/
-│   ├── Hero.astro        # 首页个人介绍
-│   ├── Timeline.astro    # 项目里程碑
-│   ├── WeeklyFeed.astro  # 周报摘要（首页）
-│   ├── Footer.astro      # 页脚
+│   ├── Hero.astro           # 首页个人介绍
+│   ├── Timeline.astro       # 项目里程碑
+│   ├── WeeklyFeed.astro     # 周报摘要（首页）
+│   ├── OpenSourceFeed.astro # 开源热点摘要（首页）
+│   ├── CardGrid.astro       # 核心成果卡片网格
+│   ├── Footer.astro         # 页脚
 │   └── ...
 ├── pages/
-│   ├── index.astro       # 首页
-│   └── briefings.astro   # 周报详情页
+│   ├── index.astro          # 首页
+│   ├── briefings.astro      # AI 前沿情报详情页
+│   ├── opensource.astro     # GitHub 开源热点详情页
+│   ├── upwork-ai-jobs.astro # Upwork AI 工作情报页
+│   ├── achievements.astro   # 核心成果页
+│   ├── agents.astro         # AI Agent 导航页
+│   ├── blog/                # Solo 日志（博客）
+│   │   ├── index.astro      # 博客列表
+│   │   └── [slug].astro     # 博客文章详情
+│   └── ...
+├── content/
+│   ├── blog/                # 博客 Markdown 文件
+│   └── config.ts            # 内容配置
 └── layouts/
-    └── Layout.astro      # 页面布局
+    └── Layout.astro         # 页面布局
 ```
+
+---
+
+## 网站页面清单
+
+| 页面 | 路径 | 说明 |
+|------|------|------|
+| 首页 | `/` | 个人介绍 + 最新动态 |
+| AI Agent 导航 | `/agents` | AI 工具推荐和导航 |
+| 开源热点 | `/opensource` | GitHub Trending 监控 |
+| 前沿情报 | `/briefings` | AI 行业资讯简报 |
+| Upwork AI | `/upwork-ai-jobs` | Upwork AI 工作情报 |
+| Solo 日志 | `/blog` | 个人博客文章 |
+| 核心成果 | `/achievements` | 项目成果展示 |
+| 时间线 | `/timeline` | 发展历程 |
+| 交付服务 | `/delivery` | 企业服务介绍 |
+| 斗鱼小程序 | `/duyou` | 小程序介绍 |
+| Arena | `/arena` | AI 竞技场 |
+| Agent PK | `/agent-pk` | Agent 对战 |
 
 ---
 
