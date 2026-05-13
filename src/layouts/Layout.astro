@@ -86,8 +86,18 @@ const finalShareImageHeight = '630';
       function updateLanguage() {
         const lang = document.documentElement.lang;
 
-        document.querySelectorAll('.lang-zh').forEach(el => el.classList.toggle('hidden', lang !== 'zh'));
-        document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('hidden', lang !== 'en'));
+        document.querySelectorAll('.lang-zh').forEach(el => {
+          // Skip navigation items to avoid conflict with responsive classes
+          if (!el.closest('#floating-nav')) {
+            el.classList.toggle('hidden', lang !== 'zh');
+          }
+        });
+        document.querySelectorAll('.lang-en').forEach(el => {
+          // Skip navigation items to avoid conflict with responsive classes
+          if (!el.closest('#floating-nav')) {
+            el.classList.toggle('hidden', lang !== 'en');
+          }
+        });
 
         const titleEl = document.querySelector('title');
         if (titleEl) {

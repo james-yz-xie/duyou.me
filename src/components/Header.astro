@@ -30,10 +30,8 @@ const currentPath = Astro.url.pathname;
           {isActive && (
             <span class="absolute inset-0 bg-white/15 rounded-full"></span>
           )}
-          <span class="relative lang-zh hidden md:inline">{link.nameFull}</span>
-          <span class="relative lang-en hidden md:inline">{link.nameEnFull}</span>
-          <span class="relative lang-zh md:hidden">{link.name}</span>
-          <span class="relative lang-en hidden md:hidden">{link.nameEn}</span>
+          <span class="relative hidden md:inline">{link.nameFull}</span>
+          <span class="relative md:hidden">{link.name}</span>
         </a>
         </>
       );
