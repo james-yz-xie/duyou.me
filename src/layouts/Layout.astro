@@ -99,28 +99,8 @@ const finalShareImageHeight = '630';
           }
         });
 
-        // Handle navigation items with data-lang attribute
-        document.querySelectorAll('[data-lang]').forEach(el => {
-          const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-          const shouldBeVisible = el.getAttribute('data-lang') === lang;
-          const className = el.className || '';
-          
-          if (isDesktop) {
-            // Desktop: only show md:inline elements with matching language
-            if (className.includes('md:inline')) {
-              el.classList.toggle('hidden', !shouldBeVisible);
-            } else {
-              el.classList.add('hidden');
-            }
-          } else {
-            // Mobile: only show md:hidden elements with matching language
-            if (className.includes('md:hidden')) {
-              el.classList.toggle('hidden', !shouldBeVisible);
-            } else {
-              el.classList.add('hidden');
-            }
-          }
-        });
+        // Handle navigation items with data-lang attribute (skip for now, nav is Chinese only)
+        // document.querySelectorAll('[data-lang]').forEach(el => { ... });
 
         const titleEl = document.querySelector('title');
         if (titleEl) {

@@ -1,11 +1,11 @@
 ---
 const navLinks = [
-  { name: '首页', nameFull: '首页', nameEn: 'Home', nameEnFull: 'Home', href: '/' },
-  { name: 'Agent', nameFull: 'AI Agent', nameEn: 'Agents', nameEnFull: 'AI Agents', href: '/agents' },
-  { name: '开源', nameFull: '开源热点', nameEn: 'OpenSource', nameEnFull: 'Open Source', href: '/opensource' },
-  { name: '情报', nameFull: '前沿情报', nameEn: 'Briefings', nameEnFull: 'Tech Briefings', href: '/briefings' },
-  { name: '日志', nameFull: 'Solo日志', nameEn: 'Blog', nameEnFull: 'Solo Blog', href: '/blog' },
-  { name: 'Upwork', nameFull: 'Upwork AI', nameEn: 'Upwork', nameEnFull: 'Upwork AI', href: '/upwork-ai-jobs' }
+  { name: '首页', href: '/' },
+  { name: 'Agent', href: '/agents' },
+  { name: '开源', href: '/opensource' },
+  { name: '情报', href: '/briefings' },
+  { name: '日志', href: '/blog' },
+  { name: 'Upwork', href: '/upwork-ai-jobs' }
 ];
 
 const currentPath = Astro.url.pathname;
@@ -30,10 +30,7 @@ const currentPath = Astro.url.pathname;
           {isActive && (
             <span class="absolute inset-0 bg-white/15 rounded-full"></span>
           )}
-          <span class="relative hidden md:inline" data-lang="zh">{link.nameFull}</span>
-          <span class="relative hidden md:inline" data-lang="en">{link.nameEnFull}</span>
-          <span class="relative md:hidden" data-lang="zh">{link.name}</span>
-          <span class="relative md:hidden" data-lang="en">{link.nameEn}</span>
+          <span class="relative">{link.name}</span>
         </a>
         </>
       );
