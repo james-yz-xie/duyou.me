@@ -82,25 +82,13 @@ const finalShareImageHeight = '630';
     <slot />
 
     <script is:inline>
-      // 核心语言切换逻辑
+      // 核心语言切换逻辑（导航栏已改为纯中文，不再需要语言切换）
       function updateLanguage() {
         const lang = document.documentElement.lang;
 
-        document.querySelectorAll('.lang-zh').forEach(el => {
-          // Skip navigation items to avoid conflict with responsive classes
-          if (!el.closest('#floating-nav')) {
-            el.classList.toggle('hidden', lang !== 'zh');
-          }
-        });
-        document.querySelectorAll('.lang-en').forEach(el => {
-          // Skip navigation items to avoid conflict with responsive classes
-          if (!el.closest('#floating-nav')) {
-            el.classList.toggle('hidden', lang !== 'en');
-          }
-        });
-
-        // Handle navigation items with data-lang attribute (skip for now, nav is Chinese only)
-        // document.querySelectorAll('[data-lang]').forEach(el => { ... });
+        // Skip navigation language switching - nav is Chinese only now
+        // document.querySelectorAll('.lang-zh').forEach(...);
+        // document.querySelectorAll('.lang-en').forEach(...);
 
         const titleEl = document.querySelector('title');
         if (titleEl) {
