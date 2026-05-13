@@ -30,7 +30,7 @@ const currentPath = Astro.url.pathname;
           {isActive && (
             <span class="absolute inset-0 bg-white/15 rounded-full"></span>
           )}
-          <span class="relative lang-zh hidden md:inline">{link.name === 'Agent' ? 'AI<wbr/>Agent' : link.name === '开源' ? '开源<wbr/>热点' : link.name === '情报' ? '前沿<wbr/>情报' : link.name === '日志' ? 'Solo<wbr/>日志' : link.name === 'Upwork' ? 'Upwork<wbr/>AI' : link.name}</span>
+          <span class="relative lang-zh hidden md:inline">{link.name === 'Agent' ? 'AI<br/>Agent' : link.name === '开源' ? '开源<br/>热点' : link.name === '情报' ? '前沿<br/>情报' : link.name === '日志' ? 'Solo<br/>日志' : link.name === 'Upwork' ? 'Upwork<br/>AI' : link.name}</span>
           <span class="relative lang-zh md:hidden">{link.name}</span>
           <span class="relative lang-en hidden">{link.nameEn}</span>
         </a>
