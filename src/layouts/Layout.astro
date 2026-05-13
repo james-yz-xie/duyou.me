@@ -101,7 +101,24 @@ const finalShareImageHeight = '630';
 
         // Handle navigation items with data-lang attribute
         document.querySelectorAll('[data-lang]').forEach(el => {
-          el.classList.toggle('hidden', el.getAttribute('data-lang') !== lang);
+          const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+          const shouldBeVisible = el.getAttribute('data-lang') === lang;
+          
+          if (isDesktop) {
+            // Desktop: only show md:inline elements with matching language
+            if (el.classList.contains('md:inline')) {
+              el.classList.toggle('hidden', !shouldBeVisible);
+            } else {
+              el.classList.add('hidden');
+            }
+          } else {
+            // Mobile: only show md:hidden elements with matching language
+            if (el.classList.contains('md:hidden')) {
+              el.classList.toggle('hidden', !shouldBeVisible);
+            } else {
+              el.classList.add('hidden');
+            }
+          }
         });
 
         const titleEl = document.querySelector('title');
@@ -144,6 +161,7 @@ const finalShareImageHeight = '630';
 
       updateLanguage();
       document.addEventListener('languageChanged', updateLanguage);
+      window.addEventListener('resize', updateLanguage);
 
     </script>
   </body>
