@@ -99,6 +99,11 @@ const finalShareImageHeight = '630';
           }
         });
 
+        // Handle navigation items with data-lang attribute
+        document.querySelectorAll('[data-lang]').forEach(el => {
+          el.classList.toggle('hidden', el.getAttribute('data-lang') !== lang);
+        });
+
         const titleEl = document.querySelector('title');
         if (titleEl) {
           const zh = titleEl.getAttribute('data-zh');
