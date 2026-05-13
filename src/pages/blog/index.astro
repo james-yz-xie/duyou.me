@@ -14,19 +14,21 @@ const sortedPosts = posts.sort((a, b) => b.data.date.getTime() - a.data.date.get
   descriptionEn="Solitary Depths, Echoes of an Era: Documenting individual evolution and technical reflections."
   ogImage="/og-home.svg"
 >
-  <section class="bg-dark px-4 pt-32 pb-20 min-h-screen text-center">
+  <section class="bg-dark px-4 pt-24 pb-12 min-h-screen text-center">
     <div class="max-w-6xl mx-auto">
-      <h1 class="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white tracking-tight">
         <span class="lang-zh">Solo <span class="text-gold">日志</span></span>
         <span class="lang-en hidden">Solo <span class="text-gold">Log</span></span>
       </h1>
-      <div class="max-w-2xl mx-auto mb-12">
-        <p class="text-base md:text-xl text-gray-400 font-light leading-loose italic">
-          <span class="lang-zh">独行深度<br />回响时代</span>
-          <span class="lang-en hidden">Solitary Depths<br />Echoes of an Era</span>
+      <div class="max-w-2xl mx-auto mb-8">
+        <p class="text-base md:text-xl text-gray-400 font-light italic">
+          <span class="lang-zh block">独行深度</span>
+          <span class="lang-zh block">回响时代</span>
+          <span class="lang-en hidden block">Solitary Depths</span>
+          <span class="lang-en hidden block">Echoes of an Era</span>
         </p>
       </div>
-      <div class="h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-20"></div>
+      <div class="h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mb-12"></div>
 
       {sortedPosts.length > 0 ? (
         <div class="space-y-12 text-left">
