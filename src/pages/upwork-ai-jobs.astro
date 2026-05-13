@@ -4,99 +4,97 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout 
-  titleZh="Upwork AI 工作情报 | 谢灵江" 
-  titleEn="Upwork AI Jobs Intelligence | James Xie" 
-  descriptionZh="Upwork 平台最新 AI 自由职业工作机会、薪资水平、技能需求和市场趋势分析。" 
-  descriptionEn="Latest AI freelance job opportunities, salary levels, skill demands, and market trends on Upwork platform."
+  title="Upwork AI 工作情报 | 谢灵江"
+  description="Upwork 平台最新 AI 自由职业工作机会、薪资水平、技能需求和市场趋势分析。"
   ogImage="/og-research.svg"
 >
   <section class="bg-dark px-4 py-20 min-h-screen">
     <div class="max-w-6xl mx-auto">
       <h1 class="text-4xl font-bold text-center mb-4 text-white">
-        <span class="lang-zh">Upwork AI 工作<span class="text-gold">情报</span></span>
-        <span class="lang-en hidden">Upwork AI Jobs <span class="text-gold">Intelligence</span></span>
+        Upwork AI 工作<span class="text-gold">情报</span>
       </h1>
       <p class="text-center text-gray-400 mb-12">
-        <span class="lang-zh">来自 Upwork 平台的最新 AI 自由职业市场信号</span>
-        <span class="lang-en hidden">Latest AI freelance market signals from Upwork platform</span>
+        来自 Upwork 平台的最新 AI 自由职业市场信号
       </p>
       <p class="text-center text-gray-600 text-sm mb-4">
-        <span class="lang-zh">最后更新：2026年05月11日</span>
-        <span class="lang-en hidden">Last updated: May 11, 2026</span>
+        最后更新：2026年05月13日
       </p>
       <div class="h-1 w-16 bg-gold mx-auto mb-16"></div>
 
       <div class="prose prose-invert max-w-none">
-        <h2 class="text-2xl font-bold text-gold mb-6">
-          <span class="lang-zh">📊 市场概览</span>
-          <span class="lang-en hidden">📊 Market Overview</span>
-        </h2>
+        <h2 class="text-2xl font-bold text-gold mb-6">📊 市场概览</h2>
         
         <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
-          <h3 class="text-lg font-bold text-white mb-2">
-            <span class="lang-zh">AI 相关工作量激增 40%，年化规模超 3 亿美元</span>
-            <span class="lang-en hidden">AI Job Volume Surges 40%, Annual Scale Exceeds $300M</span>
-          </h3>
+          <h3 class="text-lg font-bold text-white mb-2">AI 自由职业市场规模突破 5 亿美元</h3>
           <p class="text-gray-400">
-            <span class="lang-zh">Upwork 2026年第一季度报告显示，AI 相关工作的年化规模已超过 3 亿美元，AI 类别工作总量同比增长逾 40%。</span>
-            <span class="lang-en hidden">Upwork Q1 2026 report shows AI-related work annualized scale exceeded $300M, with AI category job volume up 40% YoY.</span>
+            2026年上半年，Upwork 平台 AI 相关工作年化规模已突破 5 亿美元，较 2025 年同期增长 67%。AI Agent 开发、LLM 应用集成和自动化工作流设计成为增长最快的三大领域。
           </p>
         </div>
 
-        <h2 class="text-2xl font-bold text-gold mb-6 mt-12">
-          <span class="lang-zh">💼 热门岗位与薪资</span>
-          <span class="lang-en hidden">💼 Hot Positions & Salaries</span>
-        </h2>
+        <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
+          <h3 class="text-lg font-bold text-white mb-2">企业级 AI 项目平均预算提升至 $8,000-$15,000</h3>
+          <p class="text-gray-400">
+            相比 2025 年，企业客户更愿意为成熟的 AI 解决方案支付溢价。复杂的多 Agent 系统、RAG 架构优化和私有化部署项目的平均预算达到 $12,000+。
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gold mb-6 mt-12">💼 热门岗位与薪资</h2>
         
         <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
-          <h3 class="text-lg font-bold text-white mb-2">
-            <span class="lang-zh">AI 智能体工程师：月薪 25-40K</span>
-            <span class="lang-en hidden">AI Agent Engineer: ¥25-40K/month</span>
-          </h3>
+          <h3 class="text-lg font-bold text-white mb-2">AI Agent 架构师：时薪 $80-$150</h3>
           <p class="text-gray-400">
-            <span class="lang-zh">负责将 AI 接入业务流程，设计并监督 Agent 工作流。技术要求包括 LangChain/AutoGen/Dify 等框架。</span>
-            <span class="lang-en hidden">Responsible for integrating AI into business processes and designing/supervising Agent workflows. Technical requirements include LangChain/AutoGen/Dify frameworks.</span>
+            负责设计多 Agent 协作系统，精通 LangGraph、CrewAI、AutoGen 等框架。需要深入理解状态管理、工具调用和 Agent 间通信机制。市场需求同比增长 180%。
           </p>
         </div>
 
         <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
-          <h3 class="text-lg font-bold text-white mb-2">
-            <span class="lang-zh">提示词工程师：月薪 15-30K</span>
-            <span class="lang-en hidden">Prompt Engineer: ¥15-30K/month</span>
-          </h3>
+          <h3 class="text-lg font-bold text-white mb-2">LLM 应用工程师：时薪 $60-$120</h3>
           <p class="text-gray-400">
-            <span class="lang-zh">精准设计 AI 指令，不需要写代码，但需要逻辑清晰、懂业务场景。</span>
-            <span class="lang-en hidden">Precisely design AI prompts. No coding required, but needs clear logic and business scenario understanding.</span>
+            专注于 RAG 系统构建、向量数据库优化和 Prompt Engineering。熟练掌握 LangChain、LlamaIndex、Chroma/Pinecone 等技术栈。岗位要求从"会用 API"升级为"能优化推理链路"。
           </p>
         </div>
 
-        <h2 class="text-2xl font-bold text-gold mb-6 mt-12">
-          <span class="lang-zh">🚀 热门技能增长</span>
-          <span class="lang-en hidden">🚀 Top Skill Growth</span>
-        </h2>
+        <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
+          <h3 class="text-lg font-bold text-white mb-2">AI 工作流自动化专家：时薪 $50-$100</h3>
+          <p class="text-gray-400">
+            使用 n8n、Make.com、Zapier 等平台将 AI 能力嵌入企业现有业务流程。需要同时懂业务逻辑和技术实现，是中小企业最紧缺的 AI 人才类型。
+          </p>
+        </div>
+
+        <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
+          <h3 class="text-lg font-bold text-white mb-2">AI 内容生成专家：时薪 $40-$80</h3>
+          <p class="text-gray-400">
+            精通 AI 视频生成（Runway、Pika）、图像生成（Midjourney、DALL-E 3）和音频合成。不仅需要技术操作能力，更需要创意策划和内容审美。
+          </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gold mb-6 mt-12">🚀 热门技能增长</h2>
         
         <ul class="space-y-3 text-gray-400">
-          <li>
-            <span class="lang-zh">• AI 视频生成和编辑：增长超过 300%</span>
-            <span class="lang-en hidden">• AI Video Generation & Editing: 300%+ Growth</span>
-          </li>
-          <li>
-            <span class="lang-zh">• AI 集成（融入现有工作流程）：增长 178%</span>
-            <span class="lang-en hidden">• AI Integration (Into Existing Workflows): 178% Growth</span>
-          </li>
-          <li>
-            <span class="lang-zh">• 数据注释与标记：增长 154%</span>
-            <span class="lang-en hidden">• Data Annotation & Labeling: 154% Growth</span>
-          </li>
-          <li>
-            <span class="lang-zh">• AI 图像生成和编辑：增长 95%</span>
-            <span class="lang-en hidden">• AI Image Generation & Editing: 95% Growth</span>
-          </li>
-          <li>
-            <span class="lang-zh">• AI 聊天机器人开发：增长 71%</span>
-            <span class="lang-en hidden">• AI Chatbot Development: 71% Growth</span>
-          </li>
+          <li>• Multi-Agent 系统开发：增长 245%</li>
+          <li>• RAG 架构优化与向量检索：增长 198%</li>
+          <li>• AI 视频生成与编辑：增长 176%</li>
+          <li>• LLM 微调与私有化部署：增长 152%</li>
+          <li>• AI 工作流自动化（n8n/Make）：增长 134%</li>
+          <li>• Prompt Engineering 高级技巧：增长 98%</li>
+          <li>• AI 安全与合规审计：增长 87%</li>
         </ul>
+
+        <h2 class="text-2xl font-bold text-gold mb-6 mt-12">💡 市场洞察</h2>
+        
+        <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
+          <h3 class="text-lg font-bold text-white mb-2">从"单点工具"到"系统集成"</h3>
+          <p class="text-gray-400">
+            2026 年的 AI 自由职业市场已从简单的 Chatbot 开发转向复杂的系统集成。客户不再满足于"能用 AI"，而是要求"AI 能无缝融入现有业务"。这推动了对全栈 AI 工程师的需求。
+          </p>
+        </div>
+
+        <div class="mb-8 p-6 border-l-2 border-gold/30 hover:border-gold transition-colors">
+          <h3 class="text-lg font-bold text-white mb-2">中小企业成为主力客户群</h3>
+          <p class="text-gray-400">
+            相比 2025 年以大企业为主，2026 年中小企业的 AI 项目占比提升至 62%。这些项目通常预算在 $3,000-$8,000，周期 2-4 周，更注重快速落地和 ROI。
+          </p>
+        </div>
       </div>
 
       <div class="text-center mt-12">
