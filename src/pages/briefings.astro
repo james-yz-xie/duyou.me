@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
 
+// Generated from Briefing_2026-05-14.md
+const generatedDate = "2026-05-14";
+
 const sections = [
   {
     icon: '🏛️',
@@ -12,48 +15,172 @@ const sections = [
     items: [
       {
         title: {
-          zh: '马斯克解散 xAI，22 万 GPU 超算租给 Anthropic',
-          en: 'Musk Dissolves xAI, Rents 220K GPU Supercomputer to Anthropic'
+          zh: 'Securing AI agents: How AWS and Cisco AI Defense scale MCP and A2A deployments',
+          en: 'Securing AI agents: How AWS and Cisco AI Defense scale MCP and A2A deployments'
         },
-        date: '2026-05-06',
+        date: '2026-05-13',
         summary: {
-          zh: '马斯克宣布 xAI 正式解散并入 SpaceX，全球最大超算 Colossus 1（22 万张 GPU）全部出租给 Anthropic，年租金 50 亿美元。xAI 全年预计亏损 130 亿美元，Grok 利用率仅 11%。从模型竞赛者转型算力供应商。',
-          en: 'Musk announces xAI dissolution into SpaceX, with the world\'s largest supercomputer Colossus 1 (220K GPUs) fully rented to Anthropic at $5B/year. xAI projected annual loss of $13B with Grok utilization at only 11%. Transition from model competitor to compute supplier.'
-        }
+          zh: 'The Cisco and AWS partnership addresses three challenges enterprises face when scaling AI agents: visibility gaps, security bottlenecks, and compliance risks. In this post, we explore how you can o...',
+          en: 'The Cisco and AWS partnership addresses three challenges enterprises face when scaling AI agents: visibility gaps, security bottlenecks, and compliance risks. In this post, we explore how you can o...'
+        },
+        links: [
+          { label: 'AWS Machine Learning Blog', href: 'https://aws.amazon.com/blogs/machine-learning/securing-ai-agents-how-aws-and-cisco-ai-defense-scale-mcp-and-a2a-deployments/' }
+        ]
       },
       {
         title: {
-          zh: 'Anthropic Claude "做梦"记忆功能：Agent 空闲时自动整理',
-          en: 'Anthropic Claude "Dreaming" Memory: Agents Self-Organize During Idle Time'
+          zh: 'How finance teams use Codex',
+          en: 'How finance teams use Codex'
         },
-        date: '2026-05-07',
+        date: '2026-05-12',
         summary: {
-          zh: 'Anthropic 为 Claude Managed Agents 上线"做梦"功能，Agent 在空闲时自动整理记忆、识别模式，效率最高提升 6 倍。这是业界首个系统化的 Agent 记忆管理方案。同时推出多 Agent 协作和任务质量评估功能。',
-          en: 'Anthropic launches "Dreaming" feature for Claude Managed Agents—agents automatically organize memories and identify patterns during idle time, boosting efficiency up to 6x. This is the industry\'s first systematic agent memory management solution, alongside multi-agent collaboration and outcome assessment capabilities.'
-        }
+          zh: 'See how finance teams can use Codex to build MBRs, reporting packs, variance bridges, model checks, and planning scenarios from real work inputs.',
+          en: 'See how finance teams can use Codex to build MBRs, reporting packs, variance bridges, model checks, and planning scenarios from real work inputs.'
+        },
+        links: [
+          { label: 'OpenAI News', href: 'https://openai.com/academy/how-finance-teams-use-codex' }
+        ]
       },
       {
         title: {
-          zh: '豆包推出分层订阅（68-500 元/月），国内大模型进入变现深水区',
-          en: 'Doubao Launches Tiered Subscription (¥68-500/month), Chinese LLM Monetization Deepens'
+          zh: 'Streaming Tokens and Tools: Multi-Turn Agentic Harness Support in NVIDIA Dynamo',
+          en: 'Streaming Tokens and Tools: Multi-Turn Agentic Harness Support in NVIDIA Dynamo'
         },
         date: '2026-05-08',
         summary: {
-          zh: '字节跳动旗下豆包（3.45 亿月活）官宣付费方案：68 元标准版、200 元加强版、500 元专业版。免费服务保留，付费版聚焦复杂生产力场景。国内大模型行业正式从烧钱换流量转向价值变现。',
-          en: 'ByteDance\'s Doubao (345M MAU) announces paid tiers: ¥68 Standard, ¥200 Enhanced, ¥500 Professional. Free service retained, paid tiers focus on complex productivity scenarios. Chinese LLM industry shifts from burning cash for traffic to value monetization.'
-        }
+          zh: 'An agentic exchange must preserve a structured interaction: assistant turns interleave reasoning with one or more tool calls, and subsequent user turns return...',
+          en: 'An agentic exchange must preserve a structured interaction: assistant turns interleave reasoning with one or more tool calls, and subsequent user turns return...'
+        },
+        links: [
+          { label: 'NVIDIA Developer Blog', href: 'https://developer.nvidia.com/blog/streaming-tokens-and-tools-multi-turn-agentic-harness-support-in-nvidia-dynamo/' }
+        ]
       },
       {
         title: {
-          zh: 'Fivetran 报告：仅 15% 企业准备好生产级 Agentic AI',
-          en: 'Fivetran Report: Only 15% of Enterprises Ready for Production Agentic AI'
+          zh: 'Automate schema generation for intelligent document processing',
+          en: 'Automate schema generation for intelligent document processing'
+        },
+        date: '2026-05-12',
+        summary: {
+          zh: 'In this post, we\'ll show you how our multi-document discovery feature solves this problem. It serves as an automated pre-processing step, analyzing unknown documents, clustering them by type, and g...',
+          en: 'In this post, we\'ll show you how our multi-document discovery feature solves this problem. It serves as an automated pre-processing step, analyzing unknown documents, clustering them by type, and g...'
+        },
+        links: [
+          { label: 'AWS Machine Learning Blog', href: 'https://aws.amazon.com/blogs/machine-learning/automate-schema-generation-for-intelligent-document-processing/' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Building a safe, effective sandbox to enable Codex on Windows',
+          en: 'Building a safe, effective sandbox to enable Codex on Windows'
+        },
+        date: '2026-05-13',
+        summary: {
+          zh: 'Learn how OpenAI built a secure sandbox for Codex on Windows, enabling safe, efficient coding agents with controlled file access and network restrictions.',
+          en: 'Learn how OpenAI built a secure sandbox for Codex on Windows, enabling safe, efficient coding agents with controlled file access and network restrictions.'
+        },
+        links: [
+          { label: 'OpenAI News', href: 'https://openai.com/index/building-codex-windows-sandbox' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Transform Video Into Instantly Searchable, Actionable Intelligence with AI Agents and Skills',
+          en: 'Transform Video Into Instantly Searchable, Actionable Intelligence with AI Agents and Skills'
+        },
+        date: '2026-05-13',
+        summary: {
+          zh: 'In today’s data-driven world, organizations increasingly rely on video to capture critical information, yet extracting meaningful, real-time insights from...',
+          en: 'In today’s data-driven world, organizations increasingly rely on video to capture critical information, yet extracting meaningful, real-time insights from...'
+        },
+        links: [
+          { label: 'NVIDIA Developer Blog', href: 'https://developer.nvidia.com/blog/transform-video-into-instantly-searchable-actionable-intelligence-with-ai-agents-and-skills/' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Anthropic carves all non-interactive use out of monthly subscriptions',
+          en: 'Anthropic carves all non-interactive use out of monthly subscriptions'
+        },
+        date: '2026-05-14',
+        summary: {
+          zh: 'Article URL: https://venturebeat.com/technology/anthropic-reinstates-openclaw-and-third-party-agent-usage-on-claude-subscriptions-with-a-catch Comments URL: https://news.ycombinator.com/item?id=481...',
+          en: 'Article URL: https://venturebeat.com/technology/anthropic-reinstates-openclaw-and-third-party-agent-usage-on-claude-subscriptions-with-a-catch Comments URL: https://news.ycombinator.com/item?id=481...'
+        },
+        links: [
+          { label: 'Anthropic (via HN)', href: 'https://venturebeat.com/technology/anthropic-reinstates-openclaw-and-third-party-agent-usage-on-claude-subscriptions-with-a-catch' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Meta launches WhatsApp \'incognito\' mode to address privacy concerns for AI chats',
+          en: 'Meta launches WhatsApp \'incognito\' mode to address privacy concerns for AI chats'
+        },
+        date: '2026-05-14',
+        summary: {
+          zh: 'Article URL: https://apnews.com/article/whatsapp-meta-ai-chatbot-privacy-9a5f7565c969cbf04cf150dfc318cfae Comments URL: https://news.ycombinator.com/item?id=48130297 Points: 5 # Comments: 0',
+          en: 'Article URL: https://apnews.com/article/whatsapp-meta-ai-chatbot-privacy-9a5f7565c969cbf04cf150dfc318cfae Comments URL: https://news.ycombinator.com/item?id=48130297 Points: 5 # Comments: 0'
+        },
+        links: [
+          { label: 'Meta AI (via HN)', href: 'https://apnews.com/article/whatsapp-meta-ai-chatbot-privacy-9a5f7565c969cbf04cf150dfc318cfae' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Meta-Meta-Prompting: The Secret to Making AI Agents Work',
+          en: 'Meta-Meta-Prompting: The Secret to Making AI Agents Work'
+        },
+        date: '2026-05-11',
+        summary: {
+          zh: 'Article URL: https://twitter.com/garrytan/status/2053127519872614419 Comments URL: https://news.ycombinator.com/item?id=48100866 Points: 2 # Comments: 0',
+          en: 'Article URL: https://twitter.com/garrytan/status/2053127519872614419 Comments URL: https://news.ycombinator.com/item?id=48100866 Points: 2 # Comments: 0'
+        },
+        links: [
+          { label: 'Meta AI (via HN)', href: 'https://twitter.com/garrytan/status/2053127519872614419' }
+        ]
+      },
+      {
+        title: {
+          zh: 'New Grok and OpenAI voice models head to head testing',
+          en: 'New Grok and OpenAI voice models head to head testing'
+        },
+        date: '2026-05-09',
+        summary: {
+          zh: 'Article URL: https://techstackups.com/comparisons/grok-tts-vs-openai/ Comments URL: https://news.ycombinator.com/item?id=48074942 Points: 2 # Comments: 0',
+          en: 'Article URL: https://techstackups.com/comparisons/grok-tts-vs-openai/ Comments URL: https://news.ycombinator.com/item?id=48074942 Points: 2 # Comments: 0'
+        },
+        links: [
+          { label: 'xAI (via HN)', href: 'https://techstackups.com/comparisons/grok-tts-vs-openai/' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Grok TTS vs. OpenAI',
+          en: 'Grok TTS vs. OpenAI'
         },
         date: '2026-05-08',
         summary: {
-          zh: '2026 Agentic AI Readiness Index 显示：近 60% 企业已投资数百万至数千万美元，但只有 15% 的数据基础能安全支撑 Agent 规模化运行。数据质量与血缘（42%）、合规（39%）、安全隐私（39%）是三大瓶颈。基础设施成为 ROI 限速器。',
-          en: '2026 Agentic AI Readiness Index reveals: nearly 60% of enterprises have invested millions, but only 15% have data infrastructure ready for safe agent scaling. Data quality & lineage (42%), compliance (39%), security & privacy (39%) are top bottlenecks. Infrastructure becomes the ROI limiter.'
-        }
-      }
+          zh: 'Article URL: https://techstackups.com/comparisons/grok-tts-vs-openai/ Comments URL: https://news.ycombinator.com/item?id=48068727 Points: 3 # Comments: 0',
+          en: 'Article URL: https://techstackups.com/comparisons/grok-tts-vs-openai/ Comments URL: https://news.ycombinator.com/item?id=48068727 Points: 3 # Comments: 0'
+        },
+        links: [
+          { label: 'xAI (via HN)', href: 'https://techstackups.com/comparisons/grok-tts-vs-openai/' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Anthropic tests Jupiter-v1-p ahead of its developer conference',
+          en: 'Anthropic tests Jupiter-v1-p ahead of its developer conference'
+        },
+        date: '2026-05-13',
+        summary: {
+          zh: 'Article URL: https://www.testingcatalog.com/anthropic-tests-jupiter-v1-p-before-potential-launch-on-may-6/ Comments URL: https://news.ycombinator.com/item?id=48126515 Points: 2 # Comments: 0',
+          en: 'Article URL: https://www.testingcatalog.com/anthropic-tests-jupiter-v1-p-before-potential-launch-on-may-6/ Comments URL: https://news.ycombinator.com/item?id=48126515 Points: 2 # Comments: 0'
+        },
+        links: [
+          { label: 'Anthropic (via HN)', href: 'https://www.testingcatalog.com/anthropic-tests-jupiter-v1-p-before-potential-launch-on-may-6/' }
+        ]
+      },
     ]
   },
   {
@@ -65,48 +192,60 @@ const sections = [
     items: [
       {
         title: {
-          zh: '月之暗面 Kimi 完成 136 亿元 D 轮融资，创中国大模型纪录',
-          en: 'Moonshot AI (Kimi) Closes ¥13.6B Series D, Record for Chinese LLM'
+          zh: 'Three things in AI to watch, according to a Nobel-winning economist',
+          en: 'Three things in AI to watch, according to a Nobel-winning economist'
         },
-        date: '2026-05-07',
+        date: '2026-05-11',
         summary: {
-          zh: '月之暗面完成约 20 亿美元 D 轮融资，投后估值突破 200 亿美元，创下中国大模型单笔融资最高纪录。4 月发布开源旗舰模型 Kimi K2.6，OpenRouter 周调用量 1.85 万亿 tokens，全球排名第二。聚焦 Agent 赛道，下一代 K3 目标追平世界前沿。',
-          en: 'Moonshot AI closes ~$2B Series D, post-money valuation exceeds $20B, setting a record for Chinese LLM funding. April launch of open-source flagship Kimi K2.6 achieves 1.85T weekly tokens on OpenRouter, ranking second globally. Focused on Agent赛道, next-gen K3 aims to match frontier performance.'
+          zh: 'This story originally appeared in The Algorithm, our weekly newsletter on AI. To get stories like this in your inbox first, sign up here. A few months before he was awarded the Nobel Prize in econo...',
+          en: 'This story originally appeared in The Algorithm, our weekly newsletter on AI. To get stories like this in your inbox first, sign up here. A few months before he was awarded the Nobel Prize in econo...'
         },
+        links: [
+          { label: 'MIT Technology Review AI', href: 'https://www.technologyreview.com/2026/05/11/1137090/three-things-in-ai-to-watch-according-to-a-nobel-winning-economist/' }
+        ]
       },
       {
         title: {
-          zh: 'DeepSeek 获大基金领投，估值直奔 450 亿美元',
-          en: 'DeepSeek Secures Big Fund Investment, Valuation Heads to $45B'
+          zh: 'Fostering breakthrough AI innovation through customer-back engineering',
+          en: 'Fostering breakthrough AI innovation through customer-back engineering'
         },
-        date: '2026-05-08',
+        date: '2026-05-11',
         summary: {
-          zh: '国家集成电路产业投资基金（大基金）洽谈领投 DeepSeek，估值从 100 亿→200 亿→450 亿美元快速攀升，腾讯、阿里拟共同注资。国产大模型从技术驱动转向资本+国家战略双轮驱动。',
-          en: 'China\'s National IC Industry Investment Fund (Big Fund) negotiates lead investment in DeepSeek, with valuation rapidly climbing from $10B→$20B→$45B. Tencent and Alibaba plan co-investment. Chinese LLMs shift from tech-driven to capital + national strategy dual propulsion.'
+          zh: 'Despite years of digitization, organizations capture less than one-third of the value expected from digital investments, according to McKinsey research. That’s because most big companies begin with...',
+          en: 'Despite years of digitization, organizations capture less than one-third of the value expected from digital investments, according to McKinsey research. That’s because most big companies begin with...'
         },
+        links: [
+          { label: 'MIT Technology Review AI', href: 'https://www.technologyreview.com/2026/05/11/1136967/fostering-breakthrough-ai-innovation-through-customer-back-engineering/' }
+        ]
       },
       {
         title: {
-          zh: '无问芯穹完成超 7 亿元融资，清华系 AGI 基础设施厂商',
-          en: 'Infinigence AI Closes ¥700M+ Funding, Tsinghua-backed AGI Infrastructure'
+          zh: 'Notion just turned its workspace into a hub for AI agents',
+          en: 'Notion just turned its workspace into a hub for AI agents'
         },
-        date: '2026-05-08',
+        date: '2026-05-13',
         summary: {
-          zh: '清华系 AGI 基础设施厂商无问芯穹完成超 7 亿元人民币融资，为国内最大原生 AGI 基础设施单笔融资。日均 Token 调用量较去年末增长 20 倍以上，显示国产 AI 基础设施快速扩张。',
-          en: 'Tsinghua-backed AGI infrastructure company Infinigence AI closes over ¥700M funding, the largest single round for native AGI infrastructure in China. Daily token calls grew 20x since year-end, showing rapid expansion of domestic AI infrastructure.'
+          zh: 'Notion’s new developer platform lets teams connect AI agents, external data sources, and custom code directly into their workspace as the company pushes deeper into agentic productivity software.',
+          en: 'Notion’s new developer platform lets teams connect AI agents, external data sources, and custom code directly into their workspace as the company pushes deeper into agentic productivity software.'
         },
+        links: [
+          { label: 'TechCrunch AI', href: 'https://techcrunch.com/2026/05/13/notion-just-turned-its-workspace-into-a-hub-for-ai-agents/' }
+        ]
       },
       {
         title: {
-          zh: '阿里发布 Qwen3.6 系列：推理更灵活，多模态增强',
-          en: 'Alibaba Releases Qwen3.6 Series: Flexible Reasoning, Enhanced Multimodal'
+          zh: 'Who decides what AI tells you? Campbell Brown, once Meta’s news chief, has thoughts',
+          en: 'Who decides what AI tells you? Campbell Brown, once Meta’s news chief, has thoughts'
         },
-        date: '2026-05-08',
+        date: '2026-05-14',
         summary: {
-          zh: '阿里通义千问发布 Qwen3.6-Plus（推理更灵活，多模态识别增强，Vibe Coding 效果提升）、Qwen3.5-Omni（支持超 10 小时音视频处理）、Wan2.7-Image（图像生成与编辑能力升级）。持续迭代巩固开源生态地位。',
-          en: 'Alibaba\'s Tongyi Qianwen releases Qwen3.6-Plus (flexible reasoning, enhanced multimodal recognition, improved Vibe Coding), Qwen3.5-Omni (supports 10+ hour audio/video processing), and Wan2.7-Image (upgraded image generation & editing). Continuous iteration solidifies open-source ecosystem position.'
+          zh: '"The conversation is sort of happening in Silicon Valley around one thing, and a totally different conversation is happening among consumers."',
+          en: '"The conversation is sort of happening in Silicon Valley around one thing, and a totally different conversation is happening among consumers."'
         },
-      }
+        links: [
+          { label: 'TechCrunch AI', href: 'https://techcrunch.com/2026/05/13/who-decides-what-ai-tells-you-campbell-brown-once-metas-news-chief-has-thoughts/' }
+        ]
+      },
     ]
   },
   {
@@ -118,95 +257,157 @@ const sections = [
     items: [
       {
         title: {
-          zh: 'ProgramBench 发布：顶尖模型完整完成率全为 0%',
-          en: 'ProgramBench Released: Top Models Achieve 0% Complete Success Rate'
+          zh: 'ClinicalBench: Stress-Testing Assertion-Aware Retrieval for Cross-Admission Clinical QA on MIMIC-IV',
+          en: 'ClinicalBench: Stress-Testing Assertion-Aware Retrieval for Cross-Admission Clinical QA on MIMIC-IV'
         },
-        date: '2026-05-08',
+        date: '2026-05-14',
         summary: {
-          zh: 'Meta、斯坦福、哈佛联合发布新基准：200 个真实软件项目要求从零重写。9 款顶尖模型完整通过率全部为零，最佳模型 Claude Opus 4.7 平均完成率仅 51.2%。这是对 AI Coding 能力的残酷压力测试。',
-          en: 'Meta, Stanford, Harvard jointly release new benchmark: 200 real software projects requiring full rewrite from scratch. All 9 top models achieve 0% complete success rate, best performer Claude Opus 4.7 averages only 51.2%. A brutal stress test for AI coding capabilities.'
+          zh: 'arXiv:2605.11143v1 Announce Type: new Abstract: Reasoning benchmarks measure clinical performance on clean inputs. We evaluate the step before reasoning: retrieval over real EHR notes, where negati...',
+          en: 'arXiv:2605.11143v1 Announce Type: new Abstract: Reasoning benchmarks measure clinical performance on clean inputs. We evaluate the step before reasoning: retrieval over real EHR notes, where negati...'
         },
+        links: [
+          { label: 'Arxiv (AI/CL)', href: 'https://arxiv.org/abs/2605.11143' }
+        ]
       },
       {
         title: {
-          zh: 'Subquadratic SSA 架构：算力暴减千倍',
-          en: 'Subquadratic SSA Architecture: Compute Requirements Reduced 1000x'
+          zh: 'CAWI: Copula-Aligned Weight Initialization for Randomized Neural Networks',
+          en: 'CAWI: Copula-Aligned Weight Initialization for Randomized Neural Networks'
         },
-        date: '2026-05-08',
+        date: '2026-05-14',
         summary: {
-          zh: '迈阿密 13 人公司发布基于 SSA 架构的 SubQ 模型，支持 1200 万 Token 上下文，算力需求仅为 Transformer 的千分之一，使用成本是 Claude Opus 的 5%。若属实，将颠覆 Transformer 垄断地位。',
-          en: 'A 13-person Miami company releases SubQ model based on SSA architecture, supporting 12M token context with compute requirements just 1/1000th of Transformers, costing 5% of Claude Opus. If verified, this could disrupt Transformer monopoly.'
+          zh: 'arXiv:2605.12580v1 Announce Type: new Abstract: Randomized neural networks (RdNNs) enable efficient, backpropagation-free training by freezing randomly initialized input-to-hidden weights, which pe...',
+          en: 'arXiv:2605.12580v1 Announce Type: new Abstract: Randomized neural networks (RdNNs) enable efficient, backpropagation-free training by freezing randomly initialized input-to-hidden weights, which pe...'
         },
-      }
+        links: [
+          { label: 'Arxiv (AI/LG)', href: 'https://arxiv.org/abs/2605.12580' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Synthesizing the Expert: A Validated Multimodal Dataset for Trustworthy AI-Assisted Swimming Coaching',
+          en: 'Synthesizing the Expert: A Validated Multimodal Dataset for Trustworthy AI-Assisted Swimming Coaching'
+        },
+        date: '2026-05-14',
+        summary: {
+          zh: 'arXiv:2605.12799v1 Announce Type: new Abstract: This research is primarily concerned with the critical problem of synthesizing a structured Retrieval-Augmented Generation (RAG) system for advanced ...',
+          en: 'arXiv:2605.12799v1 Announce Type: new Abstract: This research is primarily concerned with the critical problem of synthesizing a structured Retrieval-Augmented Generation (RAG) system for advanced ...'
+        },
+        links: [
+          { label: 'Arxiv (CS/MA)', href: 'https://arxiv.org/abs/2605.12799' }
+        ]
+      },
+      {
+        title: {
+          zh: 'SHM-Agents: A Generalist-Specialist Integrated Agent System for Structural Health Monitoring',
+          en: 'SHM-Agents: A Generalist-Specialist Integrated Agent System for Structural Health Monitoring'
+        },
+        date: '2026-05-14',
+        summary: {
+          zh: 'arXiv:2605.12916v1 Announce Type: new Abstract: Artificial intelligence is increasingly used to simplify complex tasks. In engineering applications of structural health monitoring (SHM), existing s...',
+          en: 'arXiv:2605.12916v1 Announce Type: new Abstract: Artificial intelligence is increasingly used to simplify complex tasks. In engineering applications of structural health monitoring (SHM), existing s...'
+        },
+        links: [
+          { label: 'Arxiv (CS/MA)', href: 'https://arxiv.org/abs/2605.12916' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Think Twice, Act Once: Verifier-Guided Action Selection For Embodied Agents',
+          en: 'Think Twice, Act Once: Verifier-Guided Action Selection For Embodied Agents'
+        },
+        date: '2026-05-14',
+        summary: {
+          zh: 'arXiv:2605.12620v1 Announce Type: new Abstract: Building generalist embodied agents capable of solving complex real-world tasks remains a fundamental challenge in AI. Multimodal Large Language Mode...',
+          en: 'arXiv:2605.12620v1 Announce Type: new Abstract: Building generalist embodied agents capable of solving complex real-world tasks remains a fundamental challenge in AI. Multimodal Large Language Mode...'
+        },
+        links: [
+          { label: 'Arxiv (CS/AI)', href: 'https://arxiv.org/abs/2605.12620' }
+        ]
+      },
+      {
+        title: {
+          zh: 'Towards Robust Federated Multimodal Graph Learning under Modality Heterogeneity',
+          en: 'Towards Robust Federated Multimodal Graph Learning under Modality Heterogeneity'
+        },
+        date: '2026-05-14',
+        summary: {
+          zh: 'arXiv:2605.12584v1 Announce Type: new Abstract: Recently, multimodal graph learning (MGL) has garnered significant attention for integrating diverse modality information and structured context to s...',
+          en: 'arXiv:2605.12584v1 Announce Type: new Abstract: Recently, multimodal graph learning (MGL) has garnered significant attention for integrating diverse modality information and structured context to s...'
+        },
+        links: [
+          { label: 'Arxiv (AI/LG)', href: 'https://arxiv.org/abs/2605.12584' }
+        ]
+      },
+      {
+        title: {
+          zh: 'CHAL: Council of Hierarchical Agentic Language',
+          en: 'CHAL: Council of Hierarchical Agentic Language'
+        },
+        date: '2026-05-14',
+        summary: {
+          zh: 'arXiv:2605.12718v1 Announce Type: new Abstract: Multi-agent debate has emerged as a promising approach for improving LLM reasoning on ground-truth tasks, yet current methodologies face certain stru...',
+          en: 'arXiv:2605.12718v1 Announce Type: new Abstract: Multi-agent debate has emerged as a promising approach for improving LLM reasoning on ground-truth tasks, yet current methodologies face certain stru...'
+        },
+        links: [
+          { label: 'Arxiv (CS/AI)', href: 'https://arxiv.org/abs/2605.12718' }
+        ]
+      },
+      {
+        title: {
+          zh: 'ReVision: Scaling Computer-Use Agents via Temporal Visual Redundancy Reduction',
+          en: 'ReVision: Scaling Computer-Use Agents via Temporal Visual Redundancy Reduction'
+        },
+        date: '2026-05-14',
+        summary: {
+          zh: 'arXiv:2605.11212v2 Announce Type: new Abstract: Computer-use agents (CUAs) rely on visual observations of graphical user interfaces, where each screenshot is encoded into a large number of visual t...',
+          en: 'arXiv:2605.11212v2 Announce Type: new Abstract: Computer-use agents (CUAs) rely on visual observations of graphical user interfaces, where each screenshot is encoded into a large number of visual t...'
+        },
+        links: [
+          { label: 'Arxiv (AI/CL)', href: 'https://arxiv.org/abs/2605.11212' }
+        ]
+      },
     ]
   },
   {
     icon: '🔥',
     title: {
       zh: '社区与工程',
-      en: 'Community & Engineering'
+      en: 'Community'
     },
     items: [
       {
         title: {
-          zh: 'Karpathy 改名："Vibe Coding" → "Agentic Engineering"',
-          en: 'Karpathy Renames: "Vibe Coding" → "Agentic Engineering"'
+          zh: 'Building Blocks for Foundation Model Training and Inference on AWS',
+          en: 'Building Blocks for Foundation Model Training and Inference on AWS'
         },
-        date: '2026-05-08',
+        date: '2026-05-11',
         summary: {
-          zh: 'Andrej Karpathy 将之前流行的"Vibe Coding"重新命名为"Agentic Engineering"，强调更结构化的 AI 辅助开发方法，标志着 AI 编程从随意探索走向系统化工程实践。',
-          en: 'Andrej Karpathy renames the popular "Vibe Coding" to "Agentic Engineering," emphasizing more structured AI-assisted development methods, marking AI programming\'s transition from casual exploration to systematic engineering practice.'
+          zh: '',
+          en: ''
         },
+        links: [
+          { label: 'Hugging Face Blog', href: 'https://huggingface.co/blog/amazon/foundation-model-building-blocks' }
+        ]
       },
       {
         title: {
-          zh: 'Airbnb：AI 编写 60% 新代码',
-          en: 'Airbnb: AI Writes 60% of New Code'
+          zh: 'EMO: Pretraining mixture of experts for emergent modularity',
+          en: 'EMO: Pretraining mixture of experts for emergent modularity'
         },
         date: '2026-05-08',
         summary: {
-          zh: 'Airbnb 透露 AI 已承担六成新代码编写，显著减少错误、加速交付。这验证了 AI 辅助编程在生产环境中的实际价值，也为 Agentic Engineering 提供了成功案例。',
-          en: 'Airbnb reveals AI now handles 60% of new code writing, significantly reducing errors and accelerating delivery. This validates the real-world value of AI-assisted programming in production environments and provides a success case for Agentic Engineering.'
+          zh: '',
+          en: ''
         },
+        links: [
+          { label: 'Hugging Face Blog', href: 'https://huggingface.co/blog/allenai/emo' }
+        ]
       },
-      {
-        title: {
-          zh: 'SAP 收购 Prior Labs，投资 10 亿欧元打造欧洲 AI 实验室',
-          en: 'SAP Acquires Prior Labs, €1B Investment in European AI Lab'
-        },
-        date: '2026-05-08',
-        summary: {
-          zh: 'SAP 计划收购德国 Freiburg 的表格基础模型（TFM）先驱 Prior Labs，四年内投资超 10 亿欧元，打造欧洲前沿 AI 实验室。专注结构化商业数据（ERP 表格），而非互联网文本。',
-          en: 'SAP plans to acquire Prior Labs, a Table Foundation Model (TFM) pioneer in Freiburg, Germany, investing over €1B over four years to build a cutting-edge European AI lab. Focus on structured business data (ERP tables) rather than internet text.'
-        },
-      },
-      {
-        title: {
-          zh: 'Pinecone 发布 Nexus 知识引擎',
-          en: 'Pinecone Launches Nexus Knowledge Engine'
-        },
-        date: '2026-05-08',
-        summary: {
-          zh: '推出 Pinecone Nexus（面向 AI Agent 的知识引擎）、KnowQL（声明式检索语言）、90+ 知识应用市场。同时开放 AWS 法兰克福区域，Dedicated Read Nodes 可降低 97% 读取成本。',
-          en: 'Launches Pinecone Nexus (knowledge engine for AI agents), KnowQL (declarative retrieval language), and 90+ knowledge application marketplace. Also opens AWS Frankfurt region, with Dedicated Read Nodes reducing read costs by 97%.'
-        },
-      },
-      {
-        title: {
-          zh: 'OpenAI + 英伟达 + AMD + 英特尔 联合开源 MRC 协议',
-          en: 'OpenAI + NVIDIA + AMD + Intel Jointly Open Source MRC Protocol'
-        },
-        date: '2026-05-08',
-        summary: {
-          zh: '历时两年开发，解决 10 万+ GPU 规模训练时的网络通信稳定性问题。通过 OCP 开源，所有主流 AI 芯片厂商受益。这是算力基础设施标准化的重要里程碑。',
-          en: 'After two years of development, solves network communication stability issues for 100K+ GPU scale training. Open sourced through OCP, benefiting all major AI chip vendors. A major milestone in compute infrastructure standardization.'
-        },
-      }
     ]
-  }
+  },
 ];
 ---
-
 <Layout titleZh="AI 前沿周报 | 谢灵江" titleEn="AI Frontier Weekly | James Xie" descriptionZh="AI 前沿周报，汇总大厂动态、学术进展与社区工程趋势。" descriptionEn="An AI frontier weekly covering big tech moves, academic progress, and community engineering trends." ogImage="/og-briefings.svg">
   <section class="bg-dark px-4 py-20 min-h-screen">
     <div class="max-w-6xl mx-auto">
@@ -260,6 +461,13 @@ const sections = [
                     <span class="lang-zh">{item.summary.zh}</span>
                     <span class="lang-en hidden">{item.summary.en}</span>
                   </p>
+                  {item.links && item.links.length > 0 && (
+                    <div class="flex flex-wrap gap-4">
+                      {item.links.map((link) => (
+                        <a href={link.href} target="_blank" rel="noopener" class="text-gold text-sm hover:text-white transition-colors">{link.label}</a>
+                      ))}
+                    </div>
+                  )}
                 </article>
               ))}
             </div>
