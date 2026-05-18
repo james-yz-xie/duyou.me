@@ -12,11 +12,7 @@ draft: false
 author: "James Xie"
 ---
 
-# Agent 记忆工程入门到精通：为什么你的 Claude 上了 Production 就失忆？
-
 > 本文是 Harness Engineering 三部曲的第三篇。如果你还没读过前两篇，建议先快速浏览，因为我们会直接沿用那两篇文章的术语和架构。
-
----
 
 ## 引子：一个尴尬的事实
 
