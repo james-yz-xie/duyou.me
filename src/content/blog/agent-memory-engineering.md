@@ -5,7 +5,7 @@ title:
 description:
   zh: "Harness Engineering 三部曲第三篇。Anthropic 给 Claude 加了'做梦'功能整理记忆，但这恰恰说明 Agent 失忆是行业基础架构缺陷。从物理天花板、Context Window 限制，到记忆工程的实操解决方案。"
   en: "The third part of the Harness Engineering trilogy. Anthropic added a 'Dreaming' feature to Claude for memory organization, which precisely illustrates that agent amnesia is an industry-wide infrastructure flaw. From physical ceilings and context window limits to practical memory engineering solutions."
-date: "2026-05-12"
+date: "2026-05-11"
 category: "AI Engineering"
 tags: ["Harness Engineering", "Agent Memory", "Production AI", "Context Management", "Claude"]
 draft: false

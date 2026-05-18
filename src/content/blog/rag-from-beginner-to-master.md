@@ -2,7 +2,7 @@
 title:
   zh: "RAG 从入门到精通：长上下文时代的能力边界与架构演进"
   en: "RAG from Beginner to Master: Capability Boundaries and Architecture Evolution in the Long Context Era"
-date: "2026-05-15"
+date: "2026-05-18"
 description:
   zh: "深度解析 RAG 在长上下文时代的定位变化，从入门实践到架构选型，再到异常检测场景的真实局限"
   en: "Deep analysis of RAG's positioning in the long context era, from beginner practices to architecture selection, and real limitations in anomaly detection scenarios"

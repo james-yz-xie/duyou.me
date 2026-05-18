@@ -5,7 +5,7 @@ title:
 description:
   zh: "当模型推理速度远超人类审查速度时，谁来保证产出的质量、安全和可控？Harness 就是答案——不是换更强的模型，而是给模型一个能可靠工作的环境。"
   en: "When model inference speed far exceeds human review speed, who ensures quality, safety, and control? Harness is the answer—not stronger models, but a reliable working environment for models."
-date: "2026-05-06"
+date: "2026-05-07"
 category: "AI Engineering"
 tags: ["Harness Engineering", "Agent Architecture", "Production AI", "Control Systems"]
 draft: false
