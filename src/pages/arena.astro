@@ -275,6 +275,7 @@ import Layout from '../layouts/Layout.astro';
       debateTopic: '',    // 辩题
       debateRound: 0,     // 当前辩论轮次
       isAutoDebate: false, // 是否正在自动辩论
+      autoDebateMaxRounds: 10, // 自动辩论最大轮数
     };
 
     // --- Model Loading ---
@@ -802,6 +803,14 @@ import Layout from '../layouts/Layout.astro';
       isRunning = false;
       sendBtn.disabled = false;
       sendBtn.textContent = '发送';
+      
+      // 如果是辩论模式的第一轮，启动自动辩论
+      if (state.debateMode && state.debateRound === 1) {
+        state.isAutoDebate = true; // 开启自动辩论
+        setTimeout(() => {
+          autoContinueDebate();
+        }, 1000); // 等待 1 秒后开始第二轮
+      }
     }
 
     // --- Voting ---
@@ -818,6 +827,172 @@ import Layout from '../layouts/Layout.astro';
       // Hide vote buttons until next round
       document.getElementById('vote-a')?.classList.add('hidden');
       document.getElementById('vote-b')?.classList.add('hidden');
+    }
+
+    // --- Auto Continue Debate ---
+    async function autoContinueDebate() {
+      if (!state.debateMode || !state.isAutoDebate || state.debateRound >= state.autoDebateMaxRounds) {
+        state.isAutoDebate = false;
+        return;
+      }
+
+      const sendBtn = document.getElementById('send-btn');
+      if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.textContent = `辩论中 (${state.debateRound}/${state.autoDebateMaxRounds})...`;
+      }
+
+      // 构建下一轮的消息
+      const lastResponseA = state.messagesA[state.messagesA.length - 1];
+      const lastResponseB = state.messagesB[state.messagesB.length - 1];
+      
+      let nextUserContent;
+      if (state.debateRound % 2 === 1) {
+        // 奇数轮：B 刚说完，轮到 A 回应
+        nextUserContent = lastResponseB ? `对方（反方）的观点：${lastResponseB.content}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '请继续你的论证。';
+      } else {
+        // 偶数轮：A 刚说完，轮到 B 回应
+        nextUserContent = lastResponseA ? `对方（正方）的观点：${lastResponseA.content}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '请继续你的论证。';
+      }
+
+      // 添加到消息历史
+      state.messagesA.push({ role: 'user', content: nextUserContent });
+      state.messagesB.push({ role: 'user', content: nextUserContent });
+
+      // 在 UI 上显示用户消息（标注为自动继续）
+      addUserMessage(`[自动继续] ${nextUserContent.substring(0, 50)}...`, null);
+
+      // 创建助手气泡
+      const bubbleA = createAssistantBubble('A');
+      const bubbleB = createAssistantBubble('B');
+      const metricsA = document.getElementById('panel-a-metrics');
+      const metricsB = document.getElementById('panel-b-metrics');
+      if (metricsA) metricsA.textContent = '⏳';
+      if (metricsB) metricsB.textContent = '⏳';
+
+      // 隐藏投票按钮
+      document.getElementById('vote-a')?.classList.add('hidden');
+      document.getElementById('vote-b')?.classList.add('hidden');
+
+      // 构建系统提示词
+      const systemMsg = state.systemPrompt ? [{ role: 'system', content: state.systemPrompt }] : [];
+      const proSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的正方。你的任务是支持辩题：${state.debateTopic}。请给出有力的论据和例子来支持这个观点。` };
+      const conSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的反方。你的任务是反对辩题：${state.debateTopic}。请给出有力的论据和例子来反驳这个观点。` };
+      
+      const msgA = [proSystem, ...state.messagesA];
+      const msgB = [conSystem, ...state.messagesB];
+
+      const startTime = performance.now();
+      const firstToken = { A: 0, B: 0 };
+      const tokenCounts = { A: 0, B: 0 };
+      let contentA = '';
+      let contentB = '';
+
+      try {
+        const res = await fetch(`${API_BASE}/compare`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            modelA: state.modelA,
+            modelB: state.modelB,
+            messagesA: msgA,
+            messagesB: msgB,
+            temperature: state.temperature,
+            maxTokens: state.maxTokens,
+          }),
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed.startsWith('data: ')) continue;
+            const jsonStr = trimmed.slice(6);
+            if (jsonStr === '[DONE]') continue;
+
+            try {
+              const data = JSON.parse(jsonStr);
+              const model = data.model;
+
+              if (data.type === 'chunk' && data.content) {
+                if (!firstToken[model]) firstToken[model] = performance.now();
+                tokenCounts[model]++;
+                if (model === 'A') {
+                  contentA += data.content;
+                  updateAssistantBubble(bubbleA, contentA, false);
+                } else {
+                  contentB += data.content;
+                  updateAssistantBubble(bubbleB, contentB, false);
+                }
+              } else if (data.type === 'complete') {
+                const bubble = model === 'A' ? bubbleA : bubbleB;
+                const metricsEl = model === 'A' ? metricsA : metricsB;
+                const content = model === 'A' ? contentA : contentB;
+                updateAssistantBubble(bubble, content, true);
+
+                const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
+                const ttft = firstToken[model] ? ((firstToken[model] - startTime) / 1000).toFixed(2) : '-';
+                const chars = content.length;
+                const tokens = tokenCounts[model];
+                if (metricsEl) metricsEl.textContent = `${elapsed}s | 首字${ttft}s | ${chars}字 | ${tokens}tokens`;
+              } else if (data.type === 'error') {
+                if (model === 'A') {
+                  contentA += `\n\nError: ${data.error}`;
+                  updateAssistantBubble(bubbleA, contentA, true);
+                  if (metricsA) metricsA.textContent = '❌';
+                } else {
+                  contentB += `\n\nError: ${data.error}`;
+                  updateAssistantBubble(bubbleB, contentB, true);
+                  if (metricsB) metricsB.textContent = '❌';
+                }
+              }
+            } catch {}
+          }
+        }
+      } catch (err) {
+        updateAssistantBubble(bubbleA, `Error: ${err.message}`, true);
+        updateAssistantBubble(bubbleB, `Error: ${err.message}`, true);
+        if (metricsA) metricsA.textContent = '❌';
+        if (metricsB) metricsB.textContent = '❌';
+      }
+
+      // 保存助手响应
+      if (contentA) state.messagesA.push({ role: 'assistant', content: contentA });
+      if (contentB) state.messagesB.push({ role: 'assistant', content: contentB });
+
+      state.debateRound++;
+      state.roundCount++;
+
+      // 如果还没达到最大轮数，继续下一轮
+      if (state.debateRound < state.autoDebateMaxRounds) {
+        setTimeout(() => {
+          autoContinueDebate();
+        }, 1000); // 等待 1 秒
+      } else {
+        // 辩论结束
+        state.isAutoDebate = false;
+        if (sendBtn) {
+          sendBtn.disabled = false;
+          sendBtn.textContent = '发送';
+        }
+        document.getElementById('vote-a')?.classList.remove('hidden');
+        document.getElementById('vote-b')?.classList.remove('hidden');
+        
+        // 显示辩论结束提示
+        addUserMessage('[辩论结束] 已完成 10 轮辩论', null);
+      }
     }
 
     // --- Input Handling ---
@@ -856,6 +1031,7 @@ import Layout from '../layouts/Layout.astro';
         state.roundCount = 0;
         state.debateRound = 0;  // 重置辩论轮次
         state.debateTopic = '';  // 清空辩题
+        state.isAutoDebate = false;  // 关闭自动辩论
         document.getElementById('score-a').textContent = '0';
         document.getElementById('score-b').textContent = '0';
         document.getElementById('score-draw').textContent = '0';
