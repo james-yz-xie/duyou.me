@@ -311,22 +311,22 @@ import Layout from '../layouts/Layout.astro';
         selB.appendChild(opt.cloneNode(true));
       });
 
-      // 默认选择两个稳定的轻量级模型（避免 LM Studio 内存问题）
+      // 默认选择 qwen 3.5 a3b 和 gemma（本地性能优化）
       let defaultModelA = '';
       let defaultModelB = '';
       
-      // Model A: nemotron nano (稳定且轻量)
+      // Model A: qwen 3.5-35b-a3b (本地性能好)
       for (const m of models) {
-        if (m.id.includes('nemotron') && m.id.includes('nano')) {
+        if (m.id === 'qwen/qwen3.5-35b-a3b') {
           defaultModelA = m.id;
           break;
         }
       }
       
-      // Model B: glm-4.7-flash (稳定且快速)
+      // Model B: gemma-4-26b-a4b-it
       if (!defaultModelB) {
         for (const m of models) {
-          if (m.id.includes('glm') && m.id.includes('flash')) {
+          if (m.id === 'gemma-4-26b-a4b-it') {
             defaultModelB = m.id;
             break;
           }
