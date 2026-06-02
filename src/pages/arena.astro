@@ -209,46 +209,75 @@ import Layout from '../layouts/Layout.astro';
       font-size: 0.875rem;
       line-height: 1.6;
       word-break: break-word;
+      animation: fadeInUp 0.3s ease-out;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     .bubble p { margin: 0.5em 0; }
     .bubble p:first-child { margin-top: 0; }
     .bubble p:last-child { margin-bottom: 0; }
-    .bubble h1, .bubble h2, .bubble h3 { font-weight: 700; margin: 0.8em 0 0.4em; }
-    .bubble h1 { font-size: 1.25em; }
+    .bubble h1, .bubble h2, .bubble h3 { font-weight: 700; margin: 0.8em 0 0.4em; color: #D4AF37; }
+    .bubble h1 { font-size: 1.25em; border-bottom: 2px solid rgba(212, 175, 55, 0.3); padding-bottom: 0.3em; }
     .bubble h2 { font-size: 1.1em; }
     .bubble h3 { font-size: 1em; }
     .bubble ul, .bubble ol { padding-left: 1.5em; margin: 0.5em 0; }
     .bubble li { margin: 0.2em 0; }
-    .bubble blockquote { border-left: 3px solid #D4AF37; padding-left: 0.8em; margin: 0.5em 0; color: #9ca3af; }
+    .bubble li::marker { color: #D4AF37; }
+    .bubble blockquote { 
+      border-left: 3px solid #D4AF37; 
+      padding-left: 0.8em; 
+      margin: 0.5em 0; 
+      color: #9ca3af;
+      background: rgba(212, 175, 55, 0.05);
+      padding: 0.5em 0.8em;
+      border-radius: 0 4px 4px 0;
+    }
     .bubble table { border-collapse: collapse; margin: 0.5em 0; width: 100%; }
-    .bubble th, .bubble td { border: 1px solid #374151; padding: 4px 8px; text-align: left; }
-    .bubble th { background: rgba(0,0,0,0.3); }
-    .bubble a { color: #D4AF37; text-decoration: underline; }
-    .bubble hr { border-color: #374151; margin: 0.8em 0; }
+    .bubble th, .bubble td { border: 1px solid #374151; padding: 6px 10px; text-align: left; }
+    .bubble th { background: rgba(212, 175, 55, 0.1); color: #D4AF37; font-weight: 600; }
+    .bubble tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+    .bubble a { color: #D4AF37; text-decoration: underline; transition: opacity 0.2s; }
+    .bubble a:hover { opacity: 0.8; }
+    .bubble hr { border: none; border-top: 1px solid #374151; margin: 1em 0; }
     .bubble code {
-      background: rgba(0,0,0,0.3);
-      padding: 1px 5px;
+      background: rgba(212, 175, 55, 0.1);
+      padding: 2px 6px;
       border-radius: 4px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
+      color: #D4AF37;
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
     }
     .bubble pre {
-      background: rgba(0,0,0,0.3);
-      padding: 10px;
+      background: rgba(0,0,0,0.4);
+      padding: 12px;
       border-radius: 8px;
       overflow-x: auto;
-      margin: 8px 0;
+      margin: 10px 0;
+      border: 1px solid rgba(212, 175, 55, 0.2);
     }
     .bubble pre code {
       background: none;
       padding: 0;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
+      color: #e5e7eb;
     }
     .typing-cursor::after {
       content: '▊';
       animation: blink 1s step-end infinite;
       color: #D4AF37;
+      margin-left: 2px;
+      font-size: 0.9em;
     }
     @keyframes blink {
+      0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
     /* Auto-resize textarea */
