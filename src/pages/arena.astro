@@ -667,13 +667,17 @@ import Layout from '../layouts/Layout.astro';
       // 辩论模式：创建共享的对话历史，让两个模型都能看到完整的辩论过程
       let sharedHistory = [];
       if (state.debateMode && state.debateRound > 0) {
-        // 将 A 和 B 的回答交替加入共享历史
+        // 将 A 和 B 的回答交替加入共享历史，但使用总结版本减少 token
         const maxLen = Math.max(state.messagesA.length, state.messagesB.length);
         for (let i = 0; i < maxLen; i++) {
           if (i < state.messagesA.length) {
             const msgA = state.messagesA[i];
             if (msgA.role === 'assistant') {
-              sharedHistory.push({ role: 'assistant', content: `[正方] ${msgA.content}` });
+              // 对长回答进行简化（取前 200 字符 + 省略号）
+              const summary = msgA.content.length > 200 
+                ? msgA.content.substring(0, 200) + '...' 
+                : msgA.content;
+              sharedHistory.push({ role: 'assistant', content: `[正方] ${summary}` });
             } else if (msgA.role === 'user' && i === 0) {
               // 第一个 user message 是辩题
               sharedHistory.push(msgA);
@@ -682,7 +686,11 @@ import Layout from '../layouts/Layout.astro';
           if (i < state.messagesB.length) {
             const msgB = state.messagesB[i];
             if (msgB.role === 'assistant') {
-              sharedHistory.push({ role: 'assistant', content: `[反方] ${msgB.content}` });
+              // 对长回答进行简化（取前 200 字符 + 省略号）
+              const summary = msgB.content.length > 200 
+                ? msgB.content.substring(0, 200) + '...' 
+                : msgB.content;
+              sharedHistory.push({ role: 'assistant', content: `[反方] ${summary}` });
             }
           }
         }
