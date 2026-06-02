@@ -64,13 +64,21 @@ app.post('/api/compare', async (c) => {
         controller.close();
       };
 
-      const [promiseA, promiseB] = await Promise.allSettled([
-        fetchModelResponse(modelA, chatBodyA, send, 'A'),
-        fetchModelResponse(modelB, chatBodyB, send, 'B'),
-      ]);
+      // 改为串行请求，避免 LM Studio 并行处理不同模型的问题
+      try {
+        await fetchModelResponse(modelA, chatBodyA, send, 'A');
+      } catch (err) {
+        send({ type: 'error', model: 'A', error: String(err) });
+      }
+      
+      try {
+        await fetchModelResponse(modelB, chatBodyB, send, 'B');
+      } catch (err) {
+        send({ type: 'error', model: 'B', error: String(err) });
+      }
 
-      send({ type: 'complete', model: 'A', status: promiseA.status === 'fulfilled' ? 'ok' : 'error', error: promiseA.status === 'rejected' ? String(promiseA.reason) : undefined });
-      send({ type: 'complete', model: 'B', status: promiseB.status === 'fulfilled' ? 'ok' : 'error', error: promiseB.status === 'rejected' ? String(promiseB.reason) : undefined });
+      send({ type: 'complete', model: 'A', status: 'ok' });
+      send({ type: 'complete', model: 'B', status: 'ok' });
       send({ type: 'done' });
       done();
     },
