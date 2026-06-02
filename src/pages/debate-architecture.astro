@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout titleZh="AI 辩论系统架构" titleEn="AI Debate System Architecture" descriptionZh="详解 AI 擂台赛辩论模式的技术实现原理" descriptionEn="Technical principles of AI Arena debate mode" ogImage="/og-home.svg">
+
+<div class="min-h-screen bg-black text-white">
+  <header class="border-b border-gray-800 bg-gray-950/80 backdrop-blur sticky top-0 z-10">
+    <div class="max-w-4xl mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-xl font-bold text-gold">🎭 AI 辩论系统架构</h1>
+          <p class="text-sm text-gray-400 mt-1">技术实现原理详解</p>
+        </div>
+        <a href="/arena" class="px-4 py-2 bg-gold/10 border border-gold text-gold rounded-lg hover:bg-gold/20 transition-colors text-sm">
+          ← 返回擂台赛
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 text-gold">核心创新：共享对话历史</h2>
+      <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6 space-y-4">
+        <p class="text-gray-300 leading-relaxed">
+          传统多模型对比让每个模型只能看到自己的对话历史，导致模型无法针对对方的实际论点进行反驳。
+          我们创建了共享对话历史，让两个模型都能看到完整的辩论过程。
+        </p>
+        
+        <div class="grid md:grid-cols-3 gap-4 mt-6">
+          <div class="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
+            <div class="text-2xl mb-2">🔄</div>
+            <h3 class="font-semibold text-gold mb-2">共享历史</h3>
+            <p class="text-sm text-gray-400">两个模型看到完整的辩论过程，包括对方的所有论点</p>
+          </div>
+          <div class="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
+            <div class="text-2xl mb-2">⏱️</div>
+            <h3 class="font-semibold text-gold mb-2">串行处理</h3>
+            <p class="text-sm text-gray-400">依次处理每个模型的请求，避免 LM Studio 并行冲突</p>
+          </div>
+          <div class="bg-gray-800/50 rounded-lg p-4 border border-gray-700">
+            <div class="text-2xl mb-2">🎯</div>
+            <h3 class="font-semibold text-gold mb-2">角色定位</h3>
+            <p class="text-sm text-gray-400">明确的正反方立场，针对性地进行论证和反驳</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 text-gold">技术要点</h2>
+      
+      <div class="space-y-6">
+        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gold mb-3">1. 共享对话历史构建</h3>
+          <p class="text-gray-300 mb-4">
+            将 Model A（正方）和 Model B（反方）的回答交替合并，添加 [正方]/[反方] 标签，
+            形成完整的辩论上下文。
+          </p>
+        </div>
+
+        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gold mb-3">2. 串行请求处理</h3>
+          <p class="text-gray-300 mb-4">
+            LM Studio 在并行处理不同模型时会出错。我们采用串行方式：先处理 Model A，再处理 Model B。
+            虽然略微增加总时间，但第一个模型立即开始流式输出，用户体验流畅。
+          </p>
+        </div>
+
+        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gold mb-3">3. System Prompt 优化</h3>
+          <p class="text-gray-300 mb-4">
+            System Prompt 设计为静态内容，不包含动态辩题文本，提高 LM Studio 缓存命中率。
+            辩题放在 user message 中，而不是 system prompt 中。
+          </p>
+        </div>
+
+        <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
+          <h3 class="text-xl font-semibold text-gold mb-3">4. Reasoning Content 处理</h3>
+          <p class="text-gray-300 mb-4">
+            Qwen 3.5 A3B 会输出思维链（reasoning_content）。系统只提取最终的 content，
+            隐藏内部推理过程，保持界面简洁。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4 text-gold">辩论流程</h2>
+      <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
+        <div class="space-y-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-gold/20 text-gold flex items-center justify-center font-bold shrink-0">1</div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">用户输入辩题</h4>
+              <p class="text-sm text-gray-400">例如："AI 是否会取代程序员？"</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-gold/20 text-gold flex items-center justify-center font-bold shrink-0">2</div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">第一轮：初始立场</h4>
+              <p class="text-sm text-gray-400">两个模型基于 System Prompt 确立正反方立场</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-gold/20 text-gold flex items-center justify-center font-bold shrink-0">3</div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">后续轮次：针对性反驳</h4>
+              <p class="text-sm text-gray-400">模型基于共享历史中的对方论点进行反驳，而非预测</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-gold/20 text-gold flex items-center justify-center font-bold shrink-0">4</div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">循环 10 轮或手动结束</h4>
+              <p class="text-sm text-gray-400">自动辩论持续 10 轮，用户可随时点击"认输"按钮提前结束</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="border-t border-gray-800 pt-8 mt-12">
+      <div class="text-center text-gray-500 text-sm">
+        <p>AI 擂台赛辩论系统 · 技术文档</p>
+        <p class="mt-2">
+          <a href="/arena" class="text-gold hover:underline">← 返回擂台赛</a>
+        </p>
+      </div>
+    </footer>
+  </main>
+</div>
+
+</Layout>
