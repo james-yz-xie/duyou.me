@@ -311,34 +311,34 @@ import Layout from '../layouts/Layout.astro';
         selB.appendChild(opt.cloneNode(true));
       });
 
-      // 默认选择两个 qwen 模型（避免 LM Studio 并行请求 500 错误）
+      // 默认选择两个稳定的轻量级模型（避免 LM Studio 内存问题）
       let defaultModelA = '';
       let defaultModelB = '';
       
-      // Model A: qwen 27b
+      // Model A: nemotron nano (稳定且轻量)
       for (const m of models) {
-        if (m.id.includes('qwen') && m.id.includes('27b')) {
+        if (m.id.includes('nemotron') && m.id.includes('nano')) {
           defaultModelA = m.id;
           break;
         }
       }
       
-      // Model B: qwen 35b a3b（同家族，避免并行请求冲突）
-      for (const m of models) {
-        if (m.id.includes('qwen') && m.id.includes('a3b')) {
-          defaultModelB = m.id;
-          break;
-        }
-      }
-      
-      // 如果没找到 a3b，使用其他 qwen 版本
+      // Model B: glm-4.7-flash (稳定且快速)
       if (!defaultModelB) {
         for (const m of models) {
-          if (m.id.includes('qwen') && m.id !== defaultModelA) {
+          if (m.id.includes('glm') && m.id.includes('flash')) {
             defaultModelB = m.id;
             break;
           }
         }
+      }
+      
+      // 最后的回退：使用前两个可用模型
+      if (!defaultModelA && models.length > 0) {
+        defaultModelA = models[0].id;
+      }
+      if (!defaultModelB && models.length > 1) {
+        defaultModelB = models[1].id;
       }
       
       // 如果找到了两个模型，设置默认值
