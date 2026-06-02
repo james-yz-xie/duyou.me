@@ -146,9 +146,12 @@ app.post('/api/chat', async (c) => {
 
             try {
               const parsed = JSON.parse(jsonStr);
-              const content = parsed.choices?.[0]?.delta?.content;
-              if (content) {
-                send({ type: 'chunk', content });
+              const delta = parsed.choices?.[0]?.delta;
+              // 支持 reasoning_content (Qwen 3.5 A3B) 和普通 content
+              const content = delta?.content || '';
+              const reasoning = delta?.reasoning_content || '';
+              if (content || reasoning) {
+                send({ type: 'chunk', content: content + reasoning });
               }
             } catch {
               // ignore parse errors
@@ -210,9 +213,12 @@ async function fetchModelResponse(model, body, send, label) {
 
         try {
           const parsed = JSON.parse(jsonStr);
-          const content = parsed.choices?.[0]?.delta?.content;
-          if (content) {
-            send({ type: 'chunk', model: label, content });
+          const delta = parsed.choices?.[0]?.delta;
+          // 支持 reasoning_content (Qwen 3.5 A3B) 和普通 content
+          const content = delta?.content || '';
+          const reasoning = delta?.reasoning_content || '';
+          if (content || reasoning) {
+            send({ type: 'chunk', model: label, content: content + reasoning });
           }
         } catch {
           // ignore
