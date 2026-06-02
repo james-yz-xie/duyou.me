@@ -308,7 +308,7 @@ import Layout from '../layouts/Layout.astro';
         selB.appendChild(opt.cloneNode(true));
       });
 
-      // 默认选择 qwen 和 gemma
+      // 默认选择两个 qwen 模型（避免 LM Studio 并行请求 500 错误）
       let defaultModelA = '';
       let defaultModelB = '';
       
@@ -320,18 +320,18 @@ import Layout from '../layouts/Layout.astro';
         }
       }
       
-      // Model B: gemma 26b
+      // Model B: qwen 35b a3b（同家族，避免并行请求冲突）
       for (const m of models) {
-        if (m.id.includes('gemma') && m.id.includes('26b')) {
+        if (m.id.includes('qwen') && m.id.includes('a3b')) {
           defaultModelB = m.id;
           break;
         }
       }
       
-      // 如果没找到 gemma 26b，使用其他 gemma
+      // 如果没找到 a3b，使用其他 qwen 版本
       if (!defaultModelB) {
         for (const m of models) {
-          if (m.id.includes('gemma')) {
+          if (m.id.includes('qwen') && m.id !== defaultModelA) {
             defaultModelB = m.id;
             break;
           }
