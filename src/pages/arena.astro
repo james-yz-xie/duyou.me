@@ -256,6 +256,74 @@ import Layout from '../layouts/Layout.astro';
       min-height: 48px;
       max-height: 120px;
     }
+    
+    /* Print styles - make conversation beautiful for printing */
+    @media print {
+      body {
+        background: white !important;
+        color: black !important;
+      }
+      
+      /* Hide UI elements */
+      header, footer, .no-print {
+        display: none !important;
+      }
+      
+      /* Optimize chat panels for print */
+      .chat-panel {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+      }
+      
+      /* Better bubble styling for print */
+      .bubble {
+        background: white !important;
+        border: 1px solid #ddd !important;
+        color: black !important;
+        box-shadow: none !important;
+      }
+      
+      .msg-user .bubble {
+        background: #f9f9f9 !important;
+        border-color: #ccc !important;
+      }
+      
+      .msg-assistant .bubble {
+        background: #fff !important;
+        border-color: #e0e0e0 !important;
+      }
+      
+      /* Improve text readability */
+      .bubble {
+        font-size: 11pt !important;
+        line-height: 1.8 !important;
+      }
+      
+      /* Better code blocks */
+      .bubble pre {
+        background: #f5f5f5 !important;
+        border: 1px solid #ddd !important;
+        padding: 12px !important;
+      }
+      
+      .bubble code {
+        background: #f0f0f0 !important;
+        color: #c7254e !important;
+      }
+      
+      /* Hide typing cursor */
+      .typing-cursor {
+        display: none !important;
+      }
+      
+      /* Show both panels side by side */
+      .grid.md\:grid-cols-2 {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 20px !important;
+      }
+    }
   </style>
 
   <script is:inline>
@@ -568,7 +636,13 @@ import Layout from '../layouts/Layout.astro';
         bubbleContent += escapeHtml(text);
         div.innerHTML = `<div class="bubble">${bubbleContent}</div>`;
         chat.appendChild(div);
-        chat.scrollTop = chat.scrollHeight;
+        // Smooth scroll to bottom
+        requestAnimationFrame(() => {
+          chat.scrollTo({
+            top: chat.scrollHeight,
+            behavior: 'smooth'
+          });
+        });
       });
     }
 
@@ -582,7 +656,13 @@ import Layout from '../layouts/Layout.astro';
       div.className = 'msg-assistant';
       div.innerHTML = `<div class="bubble"><span class="typing-cursor"></span></div>`;
       chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
+      // Smooth scroll to bottom
+      requestAnimationFrame(() => {
+        chat.scrollTo({
+          top: chat.scrollHeight,
+          behavior: 'smooth'
+        });
+      });
       return div.querySelector('.bubble');
     }
 
@@ -593,9 +673,17 @@ import Layout from '../layouts/Layout.astro';
         cursor.className = 'typing-cursor';
         bubble.appendChild(cursor);
       }
-      // Auto-scroll
+      // Auto-scroll to bottom smoothly
       const chat = bubble.closest('[id^="chat-"]');
-      if (chat) chat.scrollTop = chat.scrollHeight;
+      if (chat) {
+        // Use requestAnimationFrame for smoother scrolling
+        requestAnimationFrame(() => {
+          chat.scrollTo({
+            top: chat.scrollHeight,
+            behavior: 'smooth'
+          });
+        });
+      }
     }
 
     function escapeHtml(text) {
