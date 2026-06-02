@@ -1040,10 +1040,14 @@ import Layout from '../layouts/Layout.astro';
       let nextUserContent;
       if (state.debateRound % 2 === 1) {
         // 奇数轮：B 刚说完，轮到 A 回应
-        nextUserContent = lastResponseB ? `对方（反方）的观点：${lastResponseB.content}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '请继续你的论证。';
+        // 使用 B 的总结而不是完整内容
+        const summaryB = state.summariesB[state.messagesB.length - 1] || (lastResponseB ? lastResponseB.content.substring(0, 150) + '...' : '');
+        nextUserContent = lastResponseB ? `对方（反方）的观点：${summaryB}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '请继续你的论证。';
       } else {
         // 偶数轮：A 刚说完，轮到 B 回应
-        nextUserContent = lastResponseA ? `对方（正方）的观点：${lastResponseA.content}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '请继续你的论证。';
+        // 使用 A 的总结而不是完整内容
+        const summaryA = state.summariesA[state.messagesA.length - 1] || (lastResponseA ? lastResponseA.content.substring(0, 150) + '...' : '');
+        nextUserContent = lastResponseA ? `对方（正方）的观点：${summaryA}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '请继续你的论证。';
       }
 
       // 添加到消息历史
