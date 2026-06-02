@@ -225,9 +225,32 @@ import Layout from '../layouts/Layout.astro';
     .bubble p:first-child { margin-top: 0; }
     .bubble p:last-child { margin-bottom: 0; }
     .bubble h1, .bubble h2, .bubble h3 { font-weight: 700; margin: 0.8em 0 0.4em; color: #D4AF37; }
-    .bubble h1 { font-size: 1.25em; border-bottom: 2px solid rgba(212, 175, 55, 0.3); padding-bottom: 0.3em; }
-    .bubble h2 { font-size: 1.1em; }
-    .bubble h3 { font-size: 1em; }
+    .bubble h1 { 
+      font-size: 1.25em; 
+      border-bottom: 2px solid rgba(212, 175, 55, 0.3); 
+      padding-bottom: 0.3em;
+      margin-top: 1em;
+    }
+    .bubble h2 { 
+      font-size: 1.1em;
+      border-left: 3px solid #D4AF37;
+      padding-left: 0.6em;
+      background: rgba(212, 175, 55, 0.05);
+      padding: 0.3em 0.6em;
+      border-radius: 0 4px 4px 0;
+    }
+    .bubble h3 { 
+      font-size: 1em;
+      position: relative;
+      padding-left: 1em;
+    }
+    .bubble h3::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: #D4AF37;
+      font-weight: bold;
+    }
     .bubble ul, .bubble ol { padding-left: 1.5em; margin: 0.5em 0; }
     .bubble li { margin: 0.2em 0; }
     .bubble li::marker { color: #D4AF37; }
