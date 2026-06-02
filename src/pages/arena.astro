@@ -269,6 +269,8 @@ import Layout from '../layouts/Layout.astro';
       modelB: '',
       messagesA: [],
       messagesB: [],
+      summariesA: [], // 存储 A 的回答总结
+      summariesB: [], // 存储 B 的回答总结
       systemPrompt: '',
       temperature: 0.7,
       maxTokens: 4096,
@@ -621,6 +623,65 @@ import Layout from '../layouts/Layout.astro';
       return html;
     }
 
+    // --- Helper: Summarize long text using a lightweight model ---
+    async function summarizeText(text, maxLength = 200) {
+      if (text.length <= maxLength) return text;
+      
+      try {
+        // 使用当前 Model A 进行总结（因为它已经加载）
+        const res = await fetch(`${API_BASE}/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: state.modelA,
+            messages: [
+              { role: 'system', content: '你是一个专业的辩论助手。请用一句话总结以下观点的核心思想，不超过100字。只输出总结，不要其他内容。' },
+              { role: 'user', content: text }
+            ],
+            temperature: 0.3,
+            maxTokens: 150,
+          }),
+        });
+        
+        if (!res.ok) throw new Error('Summarization failed');
+        
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+        let summary = '';
+        
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+          
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed.startsWith('data: ')) continue;
+            const jsonStr = trimmed.slice(6);
+            if (jsonStr === '[DONE]') continue;
+            
+            try {
+              const parsed = JSON.parse(jsonStr);
+              const content = parsed.choices?.[0]?.delta?.content || '';
+              summary += content;
+            } catch {
+              // ignore
+            }
+          }
+        }
+        
+        return summary.trim() || text.substring(0, maxLength) + '...';
+      } catch (err) {
+        console.warn('Summarization failed, using truncation:', err);
+        // Fallback: simple truncation
+        return text.substring(0, maxLength) + '...';
+      }
+    }
+
     // --- Send Message ---
     async function sendMessage() {
       if (isRunning) return;
@@ -667,16 +728,14 @@ import Layout from '../layouts/Layout.astro';
       // 辩论模式：创建共享的对话历史，让两个模型都能看到完整的辩论过程
       let sharedHistory = [];
       if (state.debateMode && state.debateRound > 0) {
-        // 将 A 和 B 的回答交替加入共享历史，但使用总结版本减少 token
+        // 将 A 和 B 的回答交替加入共享历史，优先使用总结版本
         const maxLen = Math.max(state.messagesA.length, state.messagesB.length);
         for (let i = 0; i < maxLen; i++) {
           if (i < state.messagesA.length) {
             const msgA = state.messagesA[i];
             if (msgA.role === 'assistant') {
-              // 对长回答进行简化（取前 200 字符 + 省略号）
-              const summary = msgA.content.length > 200 
-                ? msgA.content.substring(0, 200) + '...' 
-                : msgA.content;
+              // 优先使用总结，如果没有则使用原文（短文本）
+              const summary = state.summariesA[i] || msgA.content;
               sharedHistory.push({ role: 'assistant', content: `[正方] ${summary}` });
             } else if (msgA.role === 'user' && i === 0) {
               // 第一个 user message 是辩题
@@ -686,10 +745,8 @@ import Layout from '../layouts/Layout.astro';
           if (i < state.messagesB.length) {
             const msgB = state.messagesB[i];
             if (msgB.role === 'assistant') {
-              // 对长回答进行简化（取前 200 字符 + 省略号）
-              const summary = msgB.content.length > 200 
-                ? msgB.content.substring(0, 200) + '...' 
-                : msgB.content;
+              // 优先使用总结，如果没有则使用原文（短文本）
+              const summary = state.summariesB[i] || msgB.content;
               sharedHistory.push({ role: 'assistant', content: `[反方] ${summary}` });
             }
           }
@@ -829,8 +886,24 @@ import Layout from '../layouts/Layout.astro';
       }
 
       // Save assistant responses to history
-      if (contentA) state.messagesA.push({ role: 'assistant', content: contentA });
-      if (contentB) state.messagesB.push({ role: 'assistant', content: contentB });
+      if (contentA) {
+        state.messagesA.push({ role: 'assistant', content: contentA });
+        // 异步总结 A 的回答（如果很长）
+        if (contentA.length > 200 && state.debateMode) {
+          summarizeText(contentA, 150).then(summary => {
+            state.summariesA[state.messagesA.length - 1] = summary;
+          });
+        }
+      }
+      if (contentB) {
+        state.messagesB.push({ role: 'assistant', content: contentB });
+        // 异步总结 B 的回答（如果很长）
+        if (contentB.length > 200 && state.debateMode) {
+          summarizeText(contentB, 150).then(summary => {
+            state.summariesB[state.messagesB.length - 1] = summary;
+          });
+        }
+      }
 
       // Show vote buttons
       state.roundCount++;
