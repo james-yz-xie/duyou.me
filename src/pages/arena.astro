@@ -137,6 +137,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="flex items-center gap-2">
               <span id="panel-a-metrics" class="text-xs text-gray-600"></span>
               <button id="vote-a" class="hidden px-2 py-0.5 text-xs border border-blue-500/30 text-blue-400 rounded hover:bg-blue-500/10 transition-colors" onclick="vote('A')">👍 A 更好</button>
+              <button id="surrender-a" class="hidden px-2 py-0.5 text-xs border border-red-500/30 text-red-400 rounded hover:bg-red-500/10 transition-colors" onclick="surrender('A')">🏳️ A 认输</button>
             </div>
           </div>
           <div id="chat-a" class="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
@@ -156,6 +157,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="flex items-center gap-2">
               <span id="panel-b-metrics" class="text-xs text-gray-600"></span>
               <button id="vote-b" class="hidden px-2 py-0.5 text-xs border border-red-500/30 text-red-400 rounded hover:bg-red-500/10 transition-colors" onclick="vote('B')">👍 B 更好</button>
+              <button id="surrender-b" class="hidden px-2 py-0.5 text-xs border border-red-500/30 text-red-400 rounded hover:bg-red-500/10 transition-colors" onclick="surrender('B')">🏳️ B 认输</button>
             </div>
           </div>
           <div id="chat-b" class="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
@@ -799,6 +801,12 @@ import Layout from '../layouts/Layout.astro';
       document.getElementById('vote-a')?.classList.remove('hidden');
       document.getElementById('vote-b')?.classList.remove('hidden');
       document.getElementById('score-bar')?.classList.remove('hidden');
+      
+      // 如果是自动辩论中，显示认输按钮
+      if (state.isAutoDebate && state.debateRound < state.autoDebateMaxRounds) {
+        document.getElementById('surrender-a')?.classList.remove('hidden');
+        document.getElementById('surrender-b')?.classList.remove('hidden');
+      }
 
       isRunning = false;
       sendBtn.disabled = false;
@@ -827,6 +835,39 @@ import Layout from '../layouts/Layout.astro';
       // Hide vote buttons until next round
       document.getElementById('vote-a')?.classList.add('hidden');
       document.getElementById('vote-b')?.classList.add('hidden');
+    }
+
+    // --- Surrender ---
+    function surrender(who) {
+      // 停止自动辩论
+      state.isAutoDebate = false;
+      
+      const winner = who === 'A' ? 'B' : 'A';
+      const loser = who;
+      
+      // 显示认输消息
+      addUserMessage(`[🏳️ ${loser} 认输] ${winner} 获胜！`, null);
+      
+      // 更新分数
+      if (winner === 'A') state.scoreA++;
+      else state.scoreB++;
+      
+      document.getElementById('score-a').textContent = state.scoreA;
+      document.getElementById('score-b').textContent = state.scoreB;
+      document.getElementById('score-bar')?.classList.remove('hidden');
+      
+      // 隐藏按钮
+      document.getElementById('vote-a')?.classList.add('hidden');
+      document.getElementById('vote-b')?.classList.add('hidden');
+      document.getElementById('surrender-a')?.classList.add('hidden');
+      document.getElementById('surrender-b')?.classList.add('hidden');
+      
+      // 恢复发送按钮
+      const sendBtn = document.getElementById('send-btn');
+      if (sendBtn) {
+        sendBtn.disabled = false;
+        sendBtn.textContent = '发送';
+      }
     }
 
     // --- Auto Continue Debate ---
@@ -975,6 +1016,14 @@ import Layout from '../layouts/Layout.astro';
       state.debateRound++;
       state.roundCount++;
 
+      // 显示投票和认输按钮
+      document.getElementById('vote-a')?.classList.remove('hidden');
+      document.getElementById('vote-b')?.classList.remove('hidden');
+      if (state.debateRound < state.autoDebateMaxRounds) {
+        document.getElementById('surrender-a')?.classList.remove('hidden');
+        document.getElementById('surrender-b')?.classList.remove('hidden');
+      }
+
       // 如果还没达到最大轮数，继续下一轮
       if (state.debateRound < state.autoDebateMaxRounds) {
         setTimeout(() => {
@@ -989,6 +1038,8 @@ import Layout from '../layouts/Layout.astro';
         }
         document.getElementById('vote-a')?.classList.remove('hidden');
         document.getElementById('vote-b')?.classList.remove('hidden');
+        document.getElementById('surrender-a')?.classList.add('hidden');
+        document.getElementById('surrender-b')?.classList.add('hidden');
         
         // 显示辩论结束提示
         addUserMessage('[辩论结束] 已完成 10 轮辩论', null);
