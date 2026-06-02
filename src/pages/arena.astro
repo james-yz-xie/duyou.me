@@ -18,6 +18,11 @@ import Layout from '../layouts/Layout.astro';
             <!-- LM Studio Status -->
             <div id="lm-status" class="text-xs text-gray-500">检查中...</div>
 
+            <!-- Debate Mode Toggle -->
+            <button id="debate-toggle" class="px-3 py-1.5 text-xs border border-gray-700 text-gray-400 rounded-lg hover:border-gold hover:text-gold transition-colors" title="切换辩论模式">
+              <span>🎭 普通模式</span>
+            </button>
+
             <!-- Model A Selector -->
             <div class="flex items-center gap-2">
               <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">A</span>
@@ -83,6 +88,12 @@ import Layout from '../layouts/Layout.astro';
     <!-- Input Bar -->
     <div class="border-b border-gray-800 bg-gray-950/80 backdrop-blur shrink-0">
       <div class="max-w-7xl mx-auto px-4 py-3">
+        <!-- Debate Mode Hint -->
+        <div id="debate-hint" class="hidden mb-2 text-xs text-gold">
+          <span class="inline-flex items-center gap-1">
+            🎭 辩论模式：输入辩题后，AI-A 将作为正方支持该观点，AI-B 将作为反方反对该观点
+          </span>
+        </div>
         <div class="flex items-end gap-3">
           <!-- Image upload -->
           <input type="file" id="image-input" accept="image/*" class="hidden">
@@ -257,6 +268,10 @@ import Layout from '../layouts/Layout.astro';
       scoreB: 0,
       scoreDraw: 0,
       roundCount: 0,
+      debateMode: false,  // 辩论模式
+      debateTopic: '',    // 辩题
+      debateRound: 0,     // 当前辩论轮次
+      isAutoDebate: false, // 是否正在自动辩论
     };
 
     // --- Model Loading ---
@@ -432,6 +447,31 @@ import Layout from '../layouts/Layout.astro';
       });
     }
 
+    // --- Debate Mode Toggle ---
+    const debateToggle = document.getElementById('debate-toggle');
+    const debateHint = document.getElementById('debate-hint');
+    if (debateToggle) {
+      debateToggle.addEventListener('click', () => {
+        state.debateMode = !state.debateMode;
+        if (state.debateMode) {
+          debateToggle.innerHTML = '<span>🎭 辩论模式</span>';
+          debateToggle.classList.add('border-gold', 'text-gold', 'bg-gold/10');
+          debateToggle.classList.remove('border-gray-700', 'text-gray-400');
+          // 设置辩论系统提示词
+          document.getElementById('system-prompt').value = '你正在进行一场辩论。请根据辩题和你的立场（正方或反方）进行有力的论证。';
+          // 显示辩论提示
+          if (debateHint) debateHint.classList.remove('hidden');
+        } else {
+          debateToggle.innerHTML = '<span>🎭 普通模式</span>';
+          debateToggle.classList.remove('border-gold', 'text-gold', 'bg-gold/10');
+          debateToggle.classList.add('border-gray-700', 'text-gray-400');
+          document.getElementById('system-prompt').value = '';
+          // 隐藏辩论提示
+          if (debateHint) debateHint.classList.add('hidden');
+        }
+      });
+    }
+
     const tempSlider = document.getElementById('temperature');
     const tempValue = document.getElementById('temp-value');
     if (tempSlider) {
@@ -595,8 +635,32 @@ import Layout from '../layouts/Layout.astro';
 
       // Use /api/compare endpoint for both models in one request
       const systemMsg = state.systemPrompt ? [{ role: 'system', content: state.systemPrompt }] : [];
-      const msgA = [...systemMsg, ...state.messagesA];
-      const msgB = [...systemMsg, ...state.messagesB];
+      
+      // 辩论模式：为两个模型设置不同的立场
+      let msgA, msgB;
+      if (state.debateMode && state.debateRound === 0) {
+        // 第一轮辩论：设置立场
+        const proSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的正方。你的任务是支持以下辩题：${text}。请给出有力的论据和例子来支持这个观点。` };
+        const conSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的反方。你的任务是反对以下辩题：${text}。请给出有力的论据和例子来反驳这个观点。` };
+        msgA = [proSystem, ...state.messagesA];
+        msgB = [conSystem, ...state.messagesB];
+        state.debateTopic = text;
+        state.debateRound = 1;
+      } else if (state.debateMode && state.debateRound > 0) {
+        // 后续辩论轮次：将对方的回答作为上下文
+        const lastResponseB = state.messagesB[state.messagesB.length - 1];
+        const lastResponseA = state.messagesA[state.messagesA.length - 1];
+        
+        const proContext = lastResponseB ? `\n\n对方（反方）的观点：${lastResponseB.content}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '';
+        const conContext = lastResponseA ? `\n\n对方（正方）的观点：${lastResponseA.content}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '';
+        
+        msgA = [...systemMsg, ...state.messagesA.slice(0, -1), { role: 'user', content: state.messagesA[state.messagesA.length - 1].content + proContext }];
+        msgB = [...systemMsg, ...state.messagesB.slice(0, -1), { role: 'user', content: state.messagesB[state.messagesB.length - 1].content + conContext }];
+      } else {
+        // 普通模式
+        msgA = [...systemMsg, ...state.messagesA];
+        msgB = [...systemMsg, ...state.messagesB];
+      }
 
       const startTime = performance.now();
       const firstToken = { A: 0, B: 0 };
@@ -749,6 +813,8 @@ import Layout from '../layouts/Layout.astro';
         state.scoreB = 0;
         state.scoreDraw = 0;
         state.roundCount = 0;
+        state.debateRound = 0;  // 重置辩论轮次
+        state.debateTopic = '';  // 清空辩题
         document.getElementById('score-a').textContent = '0';
         document.getElementById('score-b').textContent = '0';
         document.getElementById('score-draw').textContent = '0';
