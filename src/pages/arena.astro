@@ -659,6 +659,30 @@ import Layout from '../layouts/Layout.astro';
       // Build messages arrays
       state.messagesA.push({ role: 'user', content: userContent });
       state.messagesB.push({ role: 'user', content: userContent });
+      
+      // 辩论模式：创建共享的对话历史，让两个模型都能看到完整的辩论过程
+      let sharedHistory = [];
+      if (state.debateMode && state.debateRound > 0) {
+        // 将 A 和 B 的回答交替加入共享历史
+        const maxLen = Math.max(state.messagesA.length, state.messagesB.length);
+        for (let i = 0; i < maxLen; i++) {
+          if (i < state.messagesA.length) {
+            const msgA = state.messagesA[i];
+            if (msgA.role === 'assistant') {
+              sharedHistory.push({ role: 'assistant', content: `[正方] ${msgA.content}` });
+            } else if (msgA.role === 'user' && i === 0) {
+              // 第一个 user message 是辩题
+              sharedHistory.push(msgA);
+            }
+          }
+          if (i < state.messagesB.length) {
+            const msgB = state.messagesB[i];
+            if (msgB.role === 'assistant') {
+              sharedHistory.push({ role: 'assistant', content: `[反方] ${msgB.content}` });
+            }
+          }
+        }
+      }
 
       // Clear pending image
       state.pendingImage = null;
@@ -686,21 +710,20 @@ import Layout from '../layouts/Layout.astro';
         // 第一轮辩论：设置立场（使用固定的 System Prompt 提高缓存命中率）
         const proSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的正方。请支持用户提出的观点，给出有力的论据和例子。` };
         const conSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的反方。请反对用户提出的观点，给出有力的论据和例子来反驳。` };
-        msgA = [proSystem, ...state.messagesA];
-        msgB = [conSystem, ...state.messagesB];
+        
+        // 第一轮也使用共享历史（只有用户的辩题）
+        msgA = [proSystem, ...sharedHistory, { role: 'user', content: userContent }];
+        msgB = [conSystem, ...sharedHistory, { role: 'user', content: userContent }];
         state.debateTopic = text;
         state.debateRound = 1;
       } else if (state.debateMode && state.debateRound > 0) {
-        // 后续辩论轮次：将对方的回答作为上下文（保持 System Prompt 不变）
-        const lastResponseB = state.messagesB[state.messagesB.length - 1];
-        const lastResponseA = state.messagesA[state.messagesA.length - 1];
+        // 后续辩论轮次：使用共享的对话历史，让模型看到完整的辩论过程
+        // 为每个模型添加自己的立场提示
+        const proHistory = [...sharedHistory, { role: 'user', content: '请作为正方继续辩论，反驳对方的观点。' }];
+        const conHistory = [...sharedHistory, { role: 'user', content: '请作为反方继续辩论，反驳对方的观点。' }];
         
-        const proContext = lastResponseB ? `\n\n对方（反方）的观点：${lastResponseB.content}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '';
-        const conContext = lastResponseA ? `\n\n对方（正方）的观点：${lastResponseA.content}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '';
-        
-        // 关键优化：System Prompt 保持不变，只在 user message 中添加上下文
-        msgA = [...systemMsg, ...state.messagesA.slice(0, -1), { role: 'user', content: state.messagesA[state.messagesA.length - 1].content + proContext }];
-        msgB = [...systemMsg, ...state.messagesB.slice(0, -1), { role: 'user', content: state.messagesB[state.messagesB.length - 1].content + conContext }];
+        msgA = [...systemMsg, ...proHistory];
+        msgB = [...systemMsg, ...conHistory];
       } else {
         // 普通模式
         msgA = [...systemMsg, ...state.messagesA];
