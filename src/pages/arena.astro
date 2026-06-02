@@ -19,8 +19,8 @@ import Layout from '../layouts/Layout.astro';
             <div id="lm-status" class="text-xs text-gray-500">检查中...</div>
 
             <!-- Debate Mode Toggle -->
-            <button id="debate-toggle" class="px-3 py-1.5 text-xs border border-gray-700 text-gray-400 rounded-lg hover:border-gold hover:text-gold transition-colors" title="切换辩论模式">
-              <span>🎭 普通模式</span>
+            <button id="debate-toggle" class="px-3 py-1.5 text-xs border border-gold text-gold bg-gold/10 rounded-lg hover:bg-gold/20 transition-colors font-medium" title="切换辩论模式">
+              <span>🎭 辩论模式</span>
             </button>
 
             <!-- Model A Selector -->
@@ -57,6 +57,9 @@ import Layout from '../layouts/Layout.astro';
         <div class="flex flex-wrap gap-2 mt-2 items-center">
           <span id="quick-select"></span>
           <span class="text-gray-600 text-xs mx-1">|</span>
+          <button onclick="fillQuestion('AI 是否会取代程序员？')" class="px-2 py-1 bg-gold/10 border border-gold/30 rounded text-[11px] text-gold hover:bg-gold/20 transition-colors font-medium">🎭 AI vs 程序员</button>
+          <button onclick="fillQuestion('远程办公是否比办公室办公更高效？')" class="px-2 py-1 bg-gold/10 border border-gold/30 rounded text-[11px] text-gold hover:bg-gold/20 transition-colors font-medium">🎭 远程办公</button>
+          <button onclick="fillQuestion('开源软件是否比商业软件更可靠？')" class="px-2 py-1 bg-gold/10 border border-gold/30 rounded text-[11px] text-gold hover:bg-gold/20 transition-colors font-medium">🎭 开源 vs 商业</button>
           <button onclick="fillQuestion('用 Python 写一个快速排序，并解释时间复杂度')" class="px-2 py-1 bg-gray-800/50 border border-gray-700 rounded text-[11px] text-gray-500 hover:text-gold hover:border-gold transition-colors">排序算法</button>
           <button onclick="fillQuestion('解释量子计算的基本原理，和经典计算有什么区别？')" class="px-2 py-1 bg-gray-800/50 border border-gray-700 rounded text-[11px] text-gray-500 hover:text-gold hover:border-gold transition-colors">量子计算</button>
           <button onclick="fillQuestion('写一首关于秋天的七言绝句')" class="px-2 py-1 bg-gray-800/50 border border-gray-700 rounded text-[11px] text-gray-500 hover:text-gold hover:border-gold transition-colors">写诗</button>
@@ -268,7 +271,7 @@ import Layout from '../layouts/Layout.astro';
       scoreB: 0,
       scoreDraw: 0,
       roundCount: 0,
-      debateMode: false,  // 辩论模式
+      debateMode: true,   // 默认开启辩论模式
       debateTopic: '',    // 辩题
       debateRound: 0,     // 当前辩论轮次
       isAutoDebate: false, // 是否正在自动辩论
@@ -455,15 +458,15 @@ import Layout from '../layouts/Layout.astro';
         state.debateMode = !state.debateMode;
         if (state.debateMode) {
           debateToggle.innerHTML = '<span>🎭 辩论模式</span>';
-          debateToggle.classList.add('border-gold', 'text-gold', 'bg-gold/10');
+          debateToggle.classList.add('border-gold', 'text-gold', 'bg-gold/10', 'font-medium');
           debateToggle.classList.remove('border-gray-700', 'text-gray-400');
           // 设置辩论系统提示词
           document.getElementById('system-prompt').value = '你正在进行一场辩论。请根据辩题和你的立场（正方或反方）进行有力的论证。';
           // 显示辩论提示
           if (debateHint) debateHint.classList.remove('hidden');
         } else {
-          debateToggle.innerHTML = '<span>🎭 普通模式</span>';
-          debateToggle.classList.remove('border-gold', 'text-gold', 'bg-gold/10');
+          debateToggle.innerHTML = '<span>💬 普通模式</span>';
+          debateToggle.classList.remove('border-gold', 'text-gold', 'bg-gold/10', 'font-medium');
           debateToggle.classList.add('border-gray-700', 'text-gray-400');
           document.getElementById('system-prompt').value = '';
           // 隐藏辩论提示
@@ -824,5 +827,17 @@ import Layout from '../layouts/Layout.astro';
 
     // --- Init ---
     loadModels();
+    
+    // 初始化辩论模式 UI
+    setTimeout(() => {
+      const debateToggle = document.getElementById('debate-toggle');
+      const debateHint = document.getElementById('debate-hint');
+      if (debateToggle && state.debateMode) {
+        debateToggle.innerHTML = '<span>🎭 辩论模式</span>';
+        debateToggle.classList.add('border-gold', 'text-gold', 'bg-gold/10', 'font-medium');
+        debateToggle.classList.remove('border-gray-700', 'text-gray-400');
+        if (debateHint) debateHint.classList.remove('hidden');
+      }
+    }, 100);
   </script>
 </Layout>
