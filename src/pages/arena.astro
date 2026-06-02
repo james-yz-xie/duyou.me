@@ -82,7 +82,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
           <div>
             <label class="text-sm text-gray-400 block mb-1">系统提示词</label>
-            <textarea id="system-prompt" placeholder="可选，为两个模型设置系统提示词..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-600 focus:border-gold focus:outline-none resize-none" rows="2"></textarea>
+            <textarea id="system-prompt" placeholder="可选，为两个模型设置系统提示词..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-600 focus:border-gold focus:outline-none resize-none" rows="2">你是一个专业的辩论选手。请用清晰、有逻辑的方式表达观点，使用具体的例子和数据支持你的论点。</textarea>
           </div>
         </div>
       </div>
@@ -683,21 +683,22 @@ import Layout from '../layouts/Layout.astro';
       // 辩论模式：为两个模型设置不同的立场
       let msgA, msgB;
       if (state.debateMode && state.debateRound === 0) {
-        // 第一轮辩论：设置立场
-        const proSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的正方。你的任务是支持以下辩题：${text}。请给出有力的论据和例子来支持这个观点。` };
-        const conSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的反方。你的任务是反对以下辩题：${text}。请给出有力的论据和例子来反驳这个观点。` };
+        // 第一轮辩论：设置立场（使用固定的 System Prompt 提高缓存命中率）
+        const proSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的正方。请支持用户提出的观点，给出有力的论据和例子。` };
+        const conSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的反方。请反对用户提出的观点，给出有力的论据和例子来反驳。` };
         msgA = [proSystem, ...state.messagesA];
         msgB = [conSystem, ...state.messagesB];
         state.debateTopic = text;
         state.debateRound = 1;
       } else if (state.debateMode && state.debateRound > 0) {
-        // 后续辩论轮次：将对方的回答作为上下文
+        // 后续辩论轮次：将对方的回答作为上下文（保持 System Prompt 不变）
         const lastResponseB = state.messagesB[state.messagesB.length - 1];
         const lastResponseA = state.messagesA[state.messagesA.length - 1];
         
         const proContext = lastResponseB ? `\n\n对方（反方）的观点：${lastResponseB.content}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '';
         const conContext = lastResponseA ? `\n\n对方（正方）的观点：${lastResponseA.content}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '';
         
+        // 关键优化：System Prompt 保持不变，只在 user message 中添加上下文
         msgA = [...systemMsg, ...state.messagesA.slice(0, -1), { role: 'user', content: state.messagesA[state.messagesA.length - 1].content + proContext }];
         msgB = [...systemMsg, ...state.messagesB.slice(0, -1), { role: 'user', content: state.messagesB[state.messagesB.length - 1].content + conContext }];
       } else {
