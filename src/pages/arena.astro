@@ -137,6 +137,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="flex items-center gap-2">
               <span class="w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">A</span>
               <span id="panel-a-name" class="text-sm font-medium text-gray-400">模型 A</span>
+              <span id="panel-a-status" class="hidden px-2 py-0.5 text-[10px] bg-gold/20 text-gold rounded animate-pulse">💬 思考中...</span>
             </div>
             <div class="flex items-center gap-2">
               <span id="panel-a-metrics" class="text-xs text-gray-600"></span>
@@ -157,6 +158,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="flex items-center gap-2">
               <span class="w-5 h-5 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center text-xs font-bold">B</span>
               <span id="panel-b-name" class="text-sm font-medium text-gray-400">模型 B</span>
+              <span id="panel-b-status" class="hidden px-2 py-0.5 text-[10px] bg-gold/20 text-gold rounded animate-pulse">💬 思考中...</span>
             </div>
             <div class="flex items-center gap-2">
               <span id="panel-b-metrics" class="text-xs text-gray-600"></span>
@@ -720,6 +722,13 @@ import Layout from '../layouts/Layout.astro';
       const placeholder = chat.querySelector('.flex.items-center.justify-center');
       if (placeholder) placeholder.remove();
 
+      // Show status indicator
+      const statusEl = document.getElementById(`panel-${panel.toLowerCase()}-status`);
+      if (statusEl) {
+        statusEl.classList.remove('hidden');
+        statusEl.textContent = '💬 思考中...';
+      }
+
       const div = document.createElement('div');
       div.className = 'msg-assistant';
       div.innerHTML = `<div class="bubble"><span class="typing-cursor"></span></div>`;
@@ -735,6 +744,16 @@ import Layout from '../layouts/Layout.astro';
         const cursor = document.createElement('span');
         cursor.className = 'typing-cursor';
         bubble.appendChild(cursor);
+      } else {
+        // Hide status indicator when done
+        const chat = bubble.closest('[id^="chat-"]');
+        if (chat) {
+          const panelId = chat.id.replace('chat-', '');
+          const statusEl = document.getElementById(`panel-${panelId}-status`);
+          if (statusEl) {
+            statusEl.classList.add('hidden');
+          }
+        }
       }
       // Auto-scroll to bottom immediately during streaming
       const chat = bubble.closest('[id^="chat-"]');
