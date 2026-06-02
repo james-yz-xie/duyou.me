@@ -251,9 +251,25 @@ import Layout from '../layouts/Layout.astro';
       color: #D4AF37;
       font-weight: bold;
     }
-    .bubble ul, .bubble ol { padding-left: 1.5em; margin: 0.5em 0; }
-    .bubble li { margin: 0.2em 0; }
-    .bubble li::marker { color: #D4AF37; }
+    .bubble ul, .bubble ol { 
+      padding-left: 1.8em; 
+      margin: 0.6em 0;
+    }
+    .bubble li { 
+      margin: 0.3em 0;
+      line-height: 1.7;
+    }
+    .bubble li::marker { 
+      color: #D4AF37;
+      font-weight: bold;
+    }
+    .bubble ol {
+      list-style-type: decimal;
+    }
+    .bubble ol li::marker {
+      font-weight: 700;
+      color: #D4AF37;
+    }
     .bubble blockquote { 
       border-left: 3px solid #D4AF37; 
       padding-left: 0.8em; 
@@ -269,6 +285,11 @@ import Layout from '../layouts/Layout.astro';
     .bubble tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
     .bubble a { color: #D4AF37; text-decoration: underline; transition: opacity 0.2s; }
     .bubble a:hover { opacity: 0.8; }
+    .bubble strong, .bubble b {
+      color: #D4AF37;
+      font-weight: 700;
+      text-shadow: 0 0 1px rgba(212, 175, 55, 0.3);
+    }
     .bubble hr { border: none; border-top: 1px solid #374151; margin: 1em 0; }
     .bubble code {
       background: rgba(212, 175, 55, 0.1);
