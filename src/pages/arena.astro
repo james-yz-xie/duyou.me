@@ -623,65 +623,6 @@ import Layout from '../layouts/Layout.astro';
       return html;
     }
 
-    // --- Helper: Summarize long text using a lightweight model ---
-    async function summarizeText(text, maxLength = 200) {
-      if (text.length <= maxLength) return text;
-      
-      try {
-        // 使用当前 Model A 进行总结（因为它已经加载）
-        const res = await fetch(`${API_BASE}/chat`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: state.modelA,
-            messages: [
-              { role: 'system', content: '你是一个专业的辩论助手。请用一句话总结以下观点的核心思想，不超过100字。只输出总结，不要其他内容。' },
-              { role: 'user', content: text }
-            ],
-            temperature: 0.3,
-            maxTokens: 150,
-          }),
-        });
-        
-        if (!res.ok) throw new Error('Summarization failed');
-        
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = '';
-        let summary = '';
-        
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || '';
-          
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed.startsWith('data: ')) continue;
-            const jsonStr = trimmed.slice(6);
-            if (jsonStr === '[DONE]') continue;
-            
-            try {
-              const parsed = JSON.parse(jsonStr);
-              const content = parsed.choices?.[0]?.delta?.content || '';
-              summary += content;
-            } catch {
-              // ignore
-            }
-          }
-        }
-        
-        return summary.trim() || text.substring(0, maxLength) + '...';
-      } catch (err) {
-        console.warn('Summarization failed, using truncation:', err);
-        // Fallback: simple truncation
-        return text.substring(0, maxLength) + '...';
-      }
-    }
-
     // --- Send Message ---
     async function sendMessage() {
       if (isRunning) return;
@@ -777,8 +718,8 @@ import Layout from '../layouts/Layout.astro';
       let msgA, msgB;
       if (state.debateMode && state.debateRound === 0) {
         // 第一轮辩论：设置立场（使用固定的 System Prompt 提高缓存命中率）
-        const proSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的正方。请支持用户提出的观点，给出有力的论据和例子。` };
-        const conSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的反方。请反对用户提出的观点，给出有力的论据和例子来反驳。` };
+        const proSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的正方。请支持用户提出的观点，给出有力的论据和例子。\n\n【重要】在回答的最后，请用一行以 "SUMMARY:" 开头，用一句话总结你的核心观点（不超过50字）。` };
+        const conSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的反方。请反对用户提出的观点，给出有力的论据和例子来反驳。\n\n【重要】在回答的最后，请用一行以 "SUMMARY:" 开头，用一句话总结你的核心观点（不超过50字）。` };
         
         // 第一轮也使用共享历史（只有用户的辩题）
         msgA = [proSystem, ...sharedHistory, { role: 'user', content: userContent }];
@@ -788,8 +729,8 @@ import Layout from '../layouts/Layout.astro';
       } else if (state.debateMode && state.debateRound > 0) {
         // 后续辩论轮次：使用共享的对话历史，让模型看到完整的辩论过程
         // 为每个模型添加自己的立场提示
-        const proHistory = [...sharedHistory, { role: 'user', content: '请作为正方继续辩论，反驳对方的观点。' }];
-        const conHistory = [...sharedHistory, { role: 'user', content: '请作为反方继续辩论，反驳对方的观点。' }];
+        const proHistory = [...sharedHistory, { role: 'user', content: '请作为正方继续辩论，反驳对方的观点。\n\n【重要】在回答的最后，请用一行以 "SUMMARY:" 开头，用一句话总结你的核心观点（不超过50字）。' }];
+        const conHistory = [...sharedHistory, { role: 'user', content: '请作为反方继续辩论，反驳对方的观点。\n\n【重要】在回答的最后，请用一行以 "SUMMARY:" 开头，用一句话总结你的核心观点（不超过50字）。' }];
         
         msgA = [...systemMsg, ...proHistory];
         msgB = [...systemMsg, ...conHistory];
@@ -888,20 +829,18 @@ import Layout from '../layouts/Layout.astro';
       // Save assistant responses to history
       if (contentA) {
         state.messagesA.push({ role: 'assistant', content: contentA });
-        // 异步总结 A 的回答（如果很长）
-        if (contentA.length > 200 && state.debateMode) {
-          summarizeText(contentA, 150).then(summary => {
-            state.summariesA[state.messagesA.length - 1] = summary;
-          });
+        // 提取 SUMMARY 标记的总结（模型自己生成的）
+        const summaryMatchA = contentA.match(/SUMMARY:\s*(.+)$/m);
+        if (summaryMatchA) {
+          state.summariesA[state.messagesA.length - 1] = summaryMatchA[1].trim();
         }
       }
       if (contentB) {
         state.messagesB.push({ role: 'assistant', content: contentB });
-        // 异步总结 B 的回答（如果很长）
-        if (contentB.length > 200 && state.debateMode) {
-          summarizeText(contentB, 150).then(summary => {
-            state.summariesB[state.messagesB.length - 1] = summary;
-          });
+        // 提取 SUMMARY 标记的总结（模型自己生成的）
+        const summaryMatchB = contentB.match(/SUMMARY:\s*(.+)$/m);
+        if (summaryMatchB) {
+          state.summariesB[state.messagesB.length - 1] = summaryMatchB[1].trim();
         }
       }
 
