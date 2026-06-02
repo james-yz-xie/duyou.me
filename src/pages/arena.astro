@@ -665,13 +665,8 @@ import Layout from '../layouts/Layout.astro';
         bubbleContent += escapeHtml(text);
         div.innerHTML = `<div class="bubble">${bubbleContent}</div>`;
         chat.appendChild(div);
-        // Smooth scroll to bottom
-        requestAnimationFrame(() => {
-          chat.scrollTo({
-            top: chat.scrollHeight,
-            behavior: 'smooth'
-          });
-        });
+        // Instant scroll for user messages
+        chat.scrollTop = chat.scrollHeight;
       });
     }
 
@@ -685,13 +680,8 @@ import Layout from '../layouts/Layout.astro';
       div.className = 'msg-assistant';
       div.innerHTML = `<div class="bubble"><span class="typing-cursor"></span></div>`;
       chat.appendChild(div);
-      // Smooth scroll to bottom
-      requestAnimationFrame(() => {
-        chat.scrollTo({
-          top: chat.scrollHeight,
-          behavior: 'smooth'
-        });
-      });
+      // Instant scroll when assistant starts responding
+      chat.scrollTop = chat.scrollHeight;
       return div.querySelector('.bubble');
     }
 
@@ -702,16 +692,11 @@ import Layout from '../layouts/Layout.astro';
         cursor.className = 'typing-cursor';
         bubble.appendChild(cursor);
       }
-      // Auto-scroll to bottom smoothly
+      // Auto-scroll to bottom immediately during streaming
       const chat = bubble.closest('[id^="chat-"]');
       if (chat) {
-        // Use requestAnimationFrame for smoother scrolling
-        requestAnimationFrame(() => {
-          chat.scrollTo({
-            top: chat.scrollHeight,
-            behavior: 'smooth'
-          });
-        });
+        // Use instant scroll for streaming updates to keep up with content
+        chat.scrollTop = chat.scrollHeight;
       }
     }
 
