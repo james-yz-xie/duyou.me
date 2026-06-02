@@ -293,6 +293,17 @@ import Layout from '../layouts/Layout.astro';
       text-shadow: 0 0 1px rgba(212, 175, 55, 0.3);
     }
     .bubble hr { border: none; border-top: 1px solid #374151; margin: 1em 0; }
+    .bubble .summary-highlight {
+      background: rgba(212, 175, 55, 0.15);
+      border-left: 4px solid #D4AF37;
+      padding: 0.6em 0.8em;
+      margin: 0.8em 0;
+      border-radius: 0 6px 6px 0;
+      font-weight: 500;
+    }
+    .bubble .summary-highlight strong {
+      color: #D4AF37;
+    }
     .bubble code {
       background: rgba(212, 175, 55, 0.1);
       padding: 2px 6px;
@@ -774,7 +785,10 @@ import Layout from '../layouts/Layout.astro';
     function formatContent(text) {
       if (typeof marked !== 'undefined' && marked.parse) {
         try {
-          return marked.parse(text);
+          let html = marked.parse(text);
+          // Highlight SUMMARY line
+          html = html.replace(/SUMMARY:\s*(.+)$/gm, '<div class="summary-highlight">💡 <strong>核心观点：</strong>$1</div>');
+          return html;
         } catch {
           // fallback
         }
@@ -785,6 +799,8 @@ import Layout from '../layouts/Layout.astro';
       html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
       html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+      // Highlight SUMMARY line
+      html = html.replace(/SUMMARY:\s*(.+)$/gm, '<div class="summary-highlight">💡 <strong>核心观点：</strong>$1</div>');
       return html;
     }
 
