@@ -8,7 +8,8 @@
     "dev:arena": "concurrently \"npm run dev\" \"node src/server/arena.mjs\"",
     "build": "astro build",
     "preview": "astro preview",
-    "deploy": "npm run build"
+    "deploy": "npm run build",
+    "sync-resume": "node scripts/sync-resume.cjs"
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.1.0",
