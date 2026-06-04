@@ -8,8 +8,6 @@
 </div>
 
 <script>
-  // 语言切换功能
-  const toggleBtn = document.getElementById('language-toggle');
   const langKey = 'preferredLanguage';
   
   function detectBrowserLanguage() {
@@ -17,32 +15,34 @@
     return browserLang.toLowerCase().startsWith('zh') ? 'zh' : 'en';
   }
 
-  // 初始化语言
   function initLanguage() {
+    const toggleBtn = document.getElementById('language-toggle');
+    if (!toggleBtn) return;
+    
     const savedLang = localStorage.getItem(langKey);
     const initialLang = savedLang || detectBrowserLanguage();
     document.documentElement.lang = initialLang;
-    updateContent(initialLang);
+    updateContent(initialLang, toggleBtn);
+    
+    toggleBtn.addEventListener('click', () => {
+      const currentLang = document.documentElement.lang;
+      const newLang = currentLang === 'zh' ? 'en' : 'zh';
+      localStorage.setItem(langKey, newLang);
+      document.documentElement.lang = newLang;
+      updateContent(newLang, toggleBtn);
+    });
   }
   
-  // 切换语言
-  toggleBtn.addEventListener('click', () => {
-    const currentLang = document.documentElement.lang;
-    const newLang = currentLang === 'zh' ? 'en' : 'zh';
-    localStorage.setItem(langKey, newLang);
-    document.documentElement.lang = newLang;
-    updateContent(newLang);
-  });
-  
-  // 更新内容
-  function updateContent(lang) {
-    // 更新语言切换按钮文本
-    toggleBtn.textContent = lang === 'zh' ? '中 / EN' : 'EN / 中';
+  function updateContent(lang: string, toggleBtn: HTMLElement) {
+    if (!toggleBtn) return;
     
-    // 触发自定义事件，通知 Layout 和其他组件更新
+    toggleBtn.textContent = lang === 'zh' ? '中 / EN' : 'EN / 中';
     document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
   }
   
-  // 初始化
-  initLanguage();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLanguage);
+  } else {
+    initLanguage();
+  }
 </script>
