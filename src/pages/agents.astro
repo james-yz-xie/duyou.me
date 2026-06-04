@@ -322,14 +322,22 @@ const allTools = [...internationalTools, ...chineseTools];
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-16">
         <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">
-          AI Agent <span class="text-gold">CLI</span> 导航站
+          <span class="lang-zh">AI Agent <span class="text-gold">CLI</span> 导航站</span>
+          <span class="lang-en hidden">AI Agent <span class="text-gold">CLI</span> Hub</span>
         </h1>
-        <p class="text-lg text-gray-400 mb-2">国内外主流 AI Agent 命令行工具精选</p>
-        <p class="text-sm text-gold">2026 年 4 月更新</p>
+        <p class="text-lg text-gray-400 mb-2">
+          <span class="lang-zh">国内外主流 AI Agent 命令行工具精选</span>
+          <span class="lang-en hidden">Curated directory of AI Agent CLI tools with install commands and comparison</span>
+        </p>
+        <p class="text-sm text-gold">
+          <span class="lang-zh">2026 年 4 月更新</span>
+          <span class="lang-en hidden">Updated April 2026</span>
+        </p>
         <div class="mt-4">
           <a href="/arena" class="inline-flex items-center gap-2 px-5 py-2 bg-gold/10 border border-gold/30 text-gold rounded-full text-sm font-medium hover:bg-gold/20 transition-colors">
             <span>🥊</span>
-            <span>AI 擂台赛 — 本地模型多轮对话对比</span>
+            <span class="lang-zh">AI 擂台赛 — 本地模型多轮对话对比</span>
+            <span class="lang-en hidden">AI Arena - Local Model Multi-turn Comparison</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -338,13 +346,16 @@ const allTools = [...internationalTools, ...chineseTools];
       <!-- 标签切换 -->
       <div class="flex justify-center gap-2 sm:gap-4 mb-12 flex-wrap">
         <button class="tab-btn px-4 sm:px-6 py-2 text-sm sm:text-base bg-gold text-dark font-semibold rounded-full" data-tab="international">
-          国外工具
+          <span class="lang-zh">国外工具</span>
+          <span class="lang-en hidden">International Tools</span>
         </button>
         <button class="tab-btn px-4 sm:px-6 py-2 text-sm sm:text-base border-2 border-gray-600 text-gray-400 hover:border-gold hover:text-gold font-semibold rounded-full" data-tab="chinese">
-          中国工具
+          <span class="lang-zh">中国工具</span>
+          <span class="lang-en hidden">Chinese Tools</span>
         </button>
         <button class="tab-btn px-4 sm:px-6 py-2 text-sm sm:text-base border-2 border-gray-600 text-gray-400 hover:border-gold hover:text-gold font-semibold rounded-full" data-tab="comparison">
-          对比表格
+          <span class="lang-zh">对比表格</span>
+          <span class="lang-en hidden">Comparison Table</span>
         </button>
       </div>
 
@@ -356,14 +367,16 @@ const allTools = [...internationalTools, ...chineseTools];
               <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-6">
                 <div class="flex-1 min-w-0">
                   <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
-                    <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-gold">{tool.name}</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-gold lang-zh">{tool.name}</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-gold lang-en hidden">{tool.name}</h3>
                     {tool.stars !== '-' && (
                       <span class="text-xs sm:text-sm text-gray-500">★ {tool.stars}</span>
                     )}
                     <span class="text-xs px-2 py-1 bg-gray-800 text-gray-400 rounded">{tool.category}</span>
                     {tool.reasoning && <span class="text-[10px] px-2 py-0.5 bg-gold/10 text-gold border border-gold/20 rounded">REASONING</span>}
                   </div>
-                  <p class="text-gray-400 text-sm sm:text-base mb-2">{tool.description}</p>
+                  <p class="text-gray-400 text-sm sm:text-base mb-2 lang-zh">{tool.description}</p>
+                  <p class="text-gray-400 text-sm sm:text-base mb-2 lang-en hidden">{tool.descriptionEn}</p>
                   <div class="copy-cmd inline-flex items-center gap-2 text-xs sm:text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded cursor-pointer hover:bg-gray-700 transition-colors max-w-full overflow-x-auto" data-cmd={tool.install}>
                     <code class="whitespace-nowrap">{tool.install}</code>
                     <svg class="copy-icon w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
@@ -372,12 +385,14 @@ const allTools = [...internationalTools, ...chineseTools];
                 </div>
                 <div class="flex sm:flex-col items-center sm:items-end gap-3 sm:gap-1 sm:w-40 shrink-0 text-sm">
                   <div>
-                    <span class="text-gray-500 sm:hidden">价格 </span>
+                    <span class="text-gray-500 sm:hidden lang-zh">价格 </span>
+                    <span class="text-gray-500 sm:hidden lang-en hidden">Price </span>
                     <span class="text-white font-medium">{tool.price}</span>
                   </div>
                   {tool.swebench !== '-' && (
                     <div>
-                      <span class="text-gray-500 sm:hidden">SWE-bench </span>
+                      <span class="text-gray-500 sm:hidden lang-zh">SWE-bench </span>
+                      <span class="text-gray-500 sm:hidden lang-en hidden">SWE-bench </span>
                       <p class="text-gray-500 text-xs hidden sm:block">SWE-bench</p>
                       <span class="text-gold font-medium">{tool.swebench}</span>
                     </div>
@@ -397,14 +412,16 @@ const allTools = [...internationalTools, ...chineseTools];
               <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-6">
                 <div class="flex-1 min-w-0">
                   <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
-                    <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-gold">{tool.nameZh}</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-gold lang-zh">{tool.nameZh}</h3>
+                    <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-gold lang-en hidden">{tool.name}</h3>
                     {tool.stars !== '-' && (
                       <span class="text-xs sm:text-sm text-gray-500">★ {tool.stars}</span>
                     )}
                     <span class="text-xs px-2 py-1 bg-gray-800 text-gray-400 rounded">{tool.category}</span>
                     {tool.reasoning && <span class="text-[10px] px-2 py-0.5 bg-gold/10 text-gold border border-gold/20 rounded">REASONING</span>}
                   </div>
-                  <p class="text-gray-400 text-sm sm:text-base mb-2">{tool.description}</p>
+                  <p class="text-gray-400 text-sm sm:text-base mb-2 lang-zh">{tool.description}</p>
+                  <p class="text-gray-400 text-sm sm:text-base mb-2 lang-en hidden">{tool.descriptionEn}</p>
                   <div class="copy-cmd inline-flex items-center gap-2 text-xs sm:text-sm text-gold-dark bg-gray-800 px-2 py-1 rounded cursor-pointer hover:bg-gray-700 transition-colors max-w-full overflow-x-auto" data-cmd={tool.install}>
                     <code class="whitespace-nowrap">{tool.install}</code>
                     <svg class="copy-icon w-3.5 h-3.5 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
@@ -413,12 +430,14 @@ const allTools = [...internationalTools, ...chineseTools];
                 </div>
                 <div class="flex sm:flex-col items-center sm:items-end gap-3 sm:gap-1 sm:w-40 shrink-0 text-sm">
                   <div>
-                    <span class="text-gray-500 sm:hidden">价格 </span>
+                    <span class="text-gray-500 sm:hidden lang-zh">价格 </span>
+                    <span class="text-gray-500 sm:hidden lang-en hidden">Price </span>
                     <span class="text-white font-medium">{tool.price}</span>
                   </div>
                   {tool.swebench !== '-' && (
                     <div>
-                      <span class="text-gray-500 sm:hidden">SWE-bench </span>
+                      <span class="text-gray-500 sm:hidden lang-zh">SWE-bench </span>
+                      <span class="text-gray-500 sm:hidden lang-en hidden">SWE-bench </span>
                       <p class="text-gray-500 text-xs hidden sm:block">SWE-bench</p>
                       <span class="text-gold font-medium">{tool.swebench}</span>
                     </div>
@@ -433,23 +452,45 @@ const allTools = [...internationalTools, ...chineseTools];
       <!-- 对比表格 -->
       <div id="comparison" class="tool-section hidden">
         <div class="mt-16">
-          <h2 class="text-2xl font-bold text-white text-center mb-8">核心对比</h2>
+          <h2 class="text-2xl font-bold text-white text-center mb-8">
+            <span class="lang-zh">核心对比</span>
+            <span class="lang-en hidden">Core Comparison</span>
+          </h2>
           <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
             <table class="w-full text-left border-collapse min-w-[600px] text-sm sm:text-base">
               <thead>
                 <tr class="border-b border-gray-800">
-                  <th class="py-3 px-4 text-gray-400 font-medium">工具</th>
-                  <th class="py-3 px-4 text-gray-400 font-medium">类型</th>
-                  <th class="py-3 px-4 text-gray-400 font-medium text-center">开源</th>
-                  <th class="py-3 px-4 text-gray-400 font-medium text-center">长思考支持</th>
-                  <th class="py-3 px-4 text-gray-400 font-medium">价格</th>
-                  <th class="py-3 px-4 text-gray-400 font-medium">地区</th>
+                  <th class="py-3 px-4 text-gray-400 font-medium">
+                    <span class="lang-zh">工具</span>
+                    <span class="lang-en hidden">Tool</span>
+                  </th>
+                  <th class="py-3 px-4 text-gray-400 font-medium">
+                    <span class="lang-zh">类型</span>
+                    <span class="lang-en hidden">Type</span>
+                  </th>
+                  <th class="py-3 px-4 text-gray-400 font-medium text-center">
+                    <span class="lang-zh">开源</span>
+                    <span class="lang-en hidden">Open Source</span>
+                  </th>
+                  <th class="py-3 px-4 text-gray-400 font-medium text-center">
+                    <span class="lang-zh">长思考支持</span>
+                    <span class="lang-en hidden">Reasoning Support</span>
+                  </th>
+                  <th class="py-3 px-4 text-gray-400 font-medium">
+                    <span class="lang-zh">价格</span>
+                    <span class="lang-en hidden">Price</span>
+                  </th>
+                  <th class="py-3 px-4 text-gray-400 font-medium">
+                    <span class="lang-zh">地区</span>
+                    <span class="lang-en hidden">Region</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {allTools.map((tool) => (
                   <tr class="border-b border-gray-800 hover:bg-white/5 transition-colors">
-                    <td class="py-3 px-4 text-white font-medium">{tool.nameZh || tool.name}</td>
+                    <td class="py-3 px-4 text-white font-medium lang-zh">{tool.nameZh || tool.name}</td>
+                    <td class="py-3 px-4 text-white font-medium lang-en hidden">{tool.name}</td>
                     <td class="py-3 px-4 text-gray-400 text-sm">{tool.type}</td>
                     <td class="py-3 px-4 text-center">
                       {tool.isOpenSource ? <span class="text-gold">✓</span> : <span class="text-gray-600">❌</span>}
