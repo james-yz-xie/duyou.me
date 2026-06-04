@@ -22,6 +22,11 @@ import Layout from '../layouts/Layout.astro';
             <!-- LM Studio Status -->
             <div id="lm-status" class="text-xs text-gray-500">检查中...</div>
 
+            <!-- Clear Chat Button -->
+            <button id="clear-btn" class="px-3 py-1.5 text-xs bg-gray-800 border border-gray-700 rounded-lg hover:border-red-500 hover:text-red-400 transition-colors" title="清空对话">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            </button>
+
             <!-- Model Selectors -->
             <div class="flex items-center gap-2">
               <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">A</span>
@@ -290,6 +295,7 @@ import Layout from '../layouts/Layout.astro';
 
   <script is:inline>
     const API_BASE = 'http://localhost:3456/api';
+    const LM_STUDIO_URL = 'http://localhost:1234';
     
     const state = {
       modelA: '',
@@ -299,6 +305,8 @@ import Layout from '../layouts/Layout.astro';
       debateRound: 0,
       isAutoDebate: false,
       autoDebateMaxRounds: 10,
+      isLoading: false,
+      abortController: null, // For canceling requests
     };
 
     // Initialize
@@ -310,28 +318,55 @@ import Layout from '../layouts/Layout.astro';
 
     async function checkLMStudio() {
       const statusEl = document.getElementById('lm-status');
-      try {
-        const res = await fetch('http://localhost:1234/v1/models');
-        if (res.ok) {
-          statusEl.textContent = '✅ LM Studio 已连接';
-          statusEl.className = 'text-xs text-green-500';
-        } else {
-          throw new Error('Not ok');
+      let retryCount = 0;
+      const maxRetries = 3;
+      
+      while (retryCount < maxRetries) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 3000);
+          
+          const res = await fetch(`${LM_STUDIO_URL}/v1/models`, { 
+            signal: controller.signal,
+            headers: { 'Accept': 'application/json' }
+          });
+          clearTimeout(timeoutId);
+          
+          if (res.ok) {
+            statusEl.textContent = '✅ LM Studio 已连接';
+            statusEl.className = 'text-xs text-green-500';
+            return true;
+          }
+        } catch (err) {
+          retryCount++;
+          if (retryCount < maxRetries) {
+            await sleep(1000 * retryCount); // Exponential backoff
+          }
         }
-      } catch {
-        statusEl.textContent = '❌ LM Studio 未连接';
-        statusEl.className = 'text-xs text-red-500';
       }
+      
+      statusEl.textContent = '❌ LM Studio 未连接';
+      statusEl.className = 'text-xs text-red-500';
+      return false;
     }
 
     async function loadModels() {
       try {
-        const res = await fetch('http://localhost:1234/v1/models');
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        
+        const res = await fetch(`${LM_STUDIO_URL}/v1/models`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        
         const data = await res.json();
         const models = data.data || [];
         
         const selectA = document.getElementById('model-a');
         const selectB = document.getElementById('model-b');
+        
+        // Clear existing options
+        selectA.innerHTML = '<option value="">选择模型...</option>';
+        selectB.innerHTML = '<option value="">选择模型...</option>';
         
         // Default models
         let defaultA = '';
@@ -362,18 +397,31 @@ import Layout from '../layouts/Layout.astro';
         selectB.addEventListener('change', (e) => state.modelB = e.target.value);
       } catch (err) {
         console.error('Failed to load models:', err);
+        showError('加载模型失败，请检查 LM Studio 是否运行');
       }
     }
 
     function setupEventListeners() {
       const sendBtn = document.getElementById('send-btn');
       const userInput = document.getElementById('user-input');
+      const clearBtn = document.getElementById('clear-btn');
       
       sendBtn.addEventListener('click', sendMessage);
       userInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
           sendMessage();
+        }
+      });
+      
+      // Clear chat button
+      clearBtn.addEventListener('click', () => {
+        if (state.isLoading) {
+          showError('辩论进行中，无法清空');
+          return;
+        }
+        if (confirm('确定要清空所有对话吗？')) {
+          clearChat();
         }
       });
       
@@ -385,10 +433,14 @@ import Layout from '../layouts/Layout.astro';
         });
       });
       
-      // Auto-resize textarea
+      // Auto-resize textarea with debounce
+      let resizeTimeout;
       userInput.addEventListener('input', function() {
-        this.style.height = 'auto';
-        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          this.style.height = 'auto';
+          this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        }, 10);
       });
     }
 
@@ -397,19 +449,39 @@ import Layout from '../layouts/Layout.astro';
       const sendBtn = document.getElementById('send-btn');
       const text = userInput.value.trim();
       
-      if (!text || !state.modelA || !state.modelB) return;
+      if (!text || !state.modelA || !state.modelB) {
+        if (!state.modelA || !state.modelB) {
+          showError('请先选择两个模型');
+        }
+        return;
+      }
+      
+      // Prevent duplicate sends
+      if (state.isLoading) {
+        showError('辩论进行中，请等待...');
+        return;
+      }
       
       userInput.value = '';
       userInput.style.height = 'auto';
+      state.isLoading = true;
       sendBtn.disabled = true;
+      sendBtn.textContent = '辩论中...';
       
-      // Add user message
-      addUserMessage(text);
-      
-      // Start debate
-      await runDebateRound(text);
-      
-      sendBtn.disabled = false;
+      try {
+        // Add user message
+        addUserMessage(text);
+        
+        // Start debate with retry logic
+        await runDebateRoundWithRetry(text, 2);
+      } catch (err) {
+        console.error('Debate error:', err);
+        showError('辩论出错：' + err.message);
+      } finally {
+        state.isLoading = false;
+        sendBtn.disabled = false;
+        sendBtn.textContent = '发送';
+      }
     }
 
     function addUserMessage(text) {
@@ -426,6 +498,27 @@ import Layout from '../layouts/Layout.astro';
       `;
       container.appendChild(row);
       scrollToBottom();
+    }
+
+    async function runDebateRoundWithRetry(topic, maxRetries) {
+      let lastError;
+      
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          await runDebateRound(topic);
+          return; // Success
+        } catch (err) {
+          lastError = err;
+          console.warn(`Debate round attempt ${attempt} failed:`, err);
+          
+          if (attempt < maxRetries) {
+            showError(`第${attempt}次尝试失败，重试中...`);
+            await sleep(2000 * attempt); // Exponential backoff
+          }
+        }
+      }
+      
+      throw lastError;
     }
 
     async function runDebateRound(topic) {
@@ -461,9 +554,12 @@ import Layout from '../layouts/Layout.astro';
       container.appendChild(row);
       scrollToBottom();
       
-      // Stream response
+      // Stream response with abort controller
       let content = '';
       const messages = buildMessages(model, context);
+      
+      // Create new abort controller for this request
+      state.abortController = new AbortController();
       
       try {
         const res = await fetch(`${API_BASE}/chat`, {
@@ -474,18 +570,25 @@ import Layout from '../layouts/Layout.astro';
             messages,
             temperature: 0.7,
             maxTokens: 4096
-          })
+          }),
+          signal: state.abortController.signal
         });
+        
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
         
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
+        let buffer = ''; // Buffer for incomplete chunks
         
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
           
-          const chunk = decoder.decode(value);
-          const lines = chunk.split('\n');
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || ''; // Keep incomplete line in buffer
           
           for (const line of lines) {
             if (line.startsWith('data: ')) {
@@ -495,8 +598,12 @@ import Layout from '../layouts/Layout.astro';
                   content += data.content;
                   bubble.innerHTML = formatContent(content);
                   scrollToBottom();
+                } else if (data.type === 'error') {
+                  throw new Error(data.error || 'Unknown error');
                 }
-              } catch {}
+              } catch (parseErr) {
+                console.warn('Failed to parse chunk:', parseErr);
+              }
             }
           }
         }
@@ -510,7 +617,15 @@ import Layout from '../layouts/Layout.astro';
         state.messages.push({ role: model === 'A' ? 'assistant-a' : 'assistant-b', content });
         
       } catch (err) {
-        bubble.innerHTML = `<span class="text-red-500">Error: ${err.message}</span>`;
+        if (err.name === 'AbortError') {
+          bubble.innerHTML = '<span class="text-yellow-500">⚠️ 已取消</span>';
+        } else {
+          bubble.innerHTML = `<span class="text-red-500">❌ 错误: ${escapeHtml(err.message)}</span>`;
+          console.error('Stream error:', err);
+        }
+        throw err; // Re-throw for retry logic
+      } finally {
+        state.abortController = null;
       }
     }
 
@@ -576,6 +691,36 @@ import Layout from '../layouts/Layout.astro';
 
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    
+    function showError(message) {
+      // Create toast notification
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-20 right-4 bg-red-500/90 text-white px-4 py-3 rounded-lg shadow-lg z-50 animate-pulse';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+    
+    function clearChat() {
+      const container = document.getElementById('chat-container');
+      container.innerHTML = `
+        <div class="flex items-center justify-center h-full text-gray-600">
+          <div class="text-center">
+            <div class="text-5xl mb-3">🎭</div>
+            <p class="text-lg">输入辩题开始 AI 对决</p>
+            <p class="text-sm mt-2 text-gray-500">两个模型将轮流发言，展开精彩辩论</p>
+          </div>
+        </div>
+      `;
+      state.messages = [];
+      state.summaries = {};
+      state.debateRound = 0;
     }
   </script>
 </Layout>
