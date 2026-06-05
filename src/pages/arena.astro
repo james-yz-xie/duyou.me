@@ -1,9 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 ---
-
 <Layout titleZh="AI 擂台赛 - 多轮对话对比" titleEn="AI Arena - Chat Compare" descriptionZh="选择两个AI模型，多轮对话对比回答" descriptionEn="Pick two AI models, compare answers in multi-turn conversation" ogImage="/og-home.svg">
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script slot="head" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <div class="min-h-screen bg-dark text-white flex flex-col">
     <!-- Top Bar -->
     <div class="border-b border-gray-800 bg-gray-950/80 backdrop-blur shrink-0">
@@ -83,11 +82,28 @@ import Layout from '../layouts/Layout.astro';
               <span>Max Tokens</span>
               <input type="number" id="max-tokens" value="4096" min="256" max="32768" step="256" class="w-24 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-white text-sm focus:border-gold focus:outline-none">
             </label>
+            <label class="flex items-center gap-2 text-sm text-gray-400">
+              <span>辩论轮数</span>
+              <input type="number" id="debate-rounds" value="6" min="2" max="20" step="1" class="w-16 bg-gray-800 border border-gray-700 rounded px-2 py-1 text-white text-sm focus:border-gold focus:outline-none">
+            </label>
           </div>
           <div>
             <label class="text-sm text-gray-400 block mb-1">系统提示词</label>
             <textarea id="system-prompt" placeholder="可选，为两个模型设置系统提示词..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-600 focus:border-gold focus:outline-none resize-none" rows="2">你是一个专业的辩论选手。请用清晰、有逻辑的方式表达观点，使用具体的例子和数据支持你的论点。</textarea>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Debate Progress Bar (hidden by default) -->
+    <div id="debate-progress" class="hidden border-b border-gray-800 bg-gray-950/60 px-4 py-2">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between text-xs text-gray-400 mb-1">
+          <span id="debate-progress-label">辩论进行中</span>
+          <span id="debate-progress-text">0 / 6 轮</span>
+        </div>
+        <div class="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden">
+          <div id="debate-progress-bar" class="h-full bg-gradient-to-r from-blue-500 via-gold to-red-500 transition-all duration-500" style="width: 0%"></div>
         </div>
       </div>
     </div>
@@ -337,6 +353,49 @@ import Layout from '../layouts/Layout.astro';
       0%, 100% { opacity: 1; }
       50% { opacity: 0; }
     }
+    /* Debate round marker */
+    .debate-round-marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem 0;
+      position: relative;
+    }
+    .debate-round-marker::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+    }
+    .debate-round-marker span {
+      position: relative;
+      background: #111827;
+      padding: 0 12px;
+      font-size: 0.7rem;
+      color: #D4AF37;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      z-index: 1;
+    }
+    /* Debate verdict */
+    .debate-verdict {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+      animation: fadeInUp 0.5s ease-out;
+    }
+    .debate-verdict.winner-pro {
+      border-color: rgba(59, 130, 246, 0.5);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+    }
+    .debate-verdict.winner-con {
+      border-color: rgba(239, 68, 68, 0.5);
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+    }
     /* Auto-resize textarea */
     #user-input {
       min-height: 48px;
@@ -423,8 +482,8 @@ import Layout from '../layouts/Layout.astro';
       modelB: '',
       messagesA: [],
       messagesB: [],
-      summariesA: [], // 存储 A 的回答总结
-      summariesB: [], // 存储 B 的回答总结
+      // Unified debate history: [{ round: 1, pro: '...', con: '...', proSummary: '...', conSummary: '...' }, ...]
+      debateHistory: [],
       systemPrompt: '',
       temperature: 0.7,
       maxTokens: 4096,
@@ -437,7 +496,9 @@ import Layout from '../layouts/Layout.astro';
       debateTopic: '',    // 辩题
       debateRound: 0,     // 当前辩论轮次
       isAutoDebate: false, // 是否正在自动辩论
-      autoDebateMaxRounds: 10, // 自动辩论最大轮数
+      autoDebateMaxRounds: 6, // 自动辩论最大轮数（可配置）
+      // Abort controller for auto debate
+      autoDebateAbort: null,
     };
 
     // --- Model Loading ---
@@ -471,45 +532,8 @@ import Layout from '../layouts/Layout.astro';
         selB.appendChild(opt.cloneNode(true));
       });
 
-      // 默认选择 qwen 3.5 a3b 和 gemma（本地性能优化）
-      let defaultModelA = '';
-      let defaultModelB = '';
-      
-      // Model A: qwen 3.5-35b-a3b (本地性能好)
-      for (const m of models) {
-        if (m.id === 'qwen/qwen3.5-35b-a3b') {
-          defaultModelA = m.id;
-          break;
-        }
-      }
-      
-      // Model B: gemma-4-26b-a4b-it
-      if (!defaultModelB) {
-        for (const m of models) {
-          if (m.id === 'gemma-4-26b-a4b-it') {
-            defaultModelB = m.id;
-            break;
-          }
-        }
-      }
-      
-      // 最后的回退：使用前两个可用模型
-      if (!defaultModelA && models.length > 0) {
-        defaultModelA = models[0].id;
-      }
-      if (!defaultModelB && models.length > 1) {
-        defaultModelB = models[1].id;
-      }
-      
-      // 如果找到了两个模型，设置默认值
-      if (defaultModelA && defaultModelB) {
-        selA.value = defaultModelA;
-        selB.value = defaultModelB;
-        state.modelA = defaultModelA;
-        state.modelB = defaultModelB;
-        updatePanelNames();
-      } else if (models.length >= 2) {
-        // 回退：使用前两个模型
+      // 默认选择前两个可用模型
+      if (models.length >= 2) {
         selA.value = models[0].id;
         selB.value = models[1].id;
         state.modelA = models[0].id;
@@ -537,7 +561,6 @@ import Layout from '../layouts/Layout.astro';
         </button>
       `).join('');
 
-      // Highlight default pair
       highlightActivePair();
     }
 
@@ -661,16 +684,13 @@ import Layout from '../layouts/Layout.astro';
           debateToggle.innerHTML = '<span>🎭 辩论模式</span>';
           debateToggle.classList.add('border-gold', 'text-gold', 'bg-gold/10', 'font-medium');
           debateToggle.classList.remove('border-gray-700', 'text-gray-400');
-          // 设置辩论系统提示词
-          document.getElementById('system-prompt').value = '你正在进行一场辩论。请根据辩题和你的立场（正方或反方）进行有力的论证。';
-          // 显示辩论提示
+          document.getElementById('system-prompt').value = '你是一位逻辑严密的辩论选手。请用清晰、有逻辑的方式表达观点，使用具体的例子和数据支持你的论点。每次发言都要针对对方的论点进行有效反驳。';
           if (debateHint) debateHint.classList.remove('hidden');
         } else {
           debateToggle.innerHTML = '<span>💬 普通模式</span>';
           debateToggle.classList.remove('border-gold', 'text-gold', 'bg-gold/10', 'font-medium');
           debateToggle.classList.add('border-gray-700', 'text-gray-400');
           document.getElementById('system-prompt').value = '';
-          // 隐藏辩论提示
           if (debateHint) debateHint.classList.add('hidden');
         }
       });
@@ -692,6 +712,13 @@ import Layout from '../layouts/Layout.astro';
       });
     }
 
+    const debateRoundsInput = document.getElementById('debate-rounds');
+    if (debateRoundsInput) {
+      debateRoundsInput.addEventListener('change', () => {
+        state.autoDebateMaxRounds = parseInt(debateRoundsInput.value) || 6;
+      });
+    }
+
     // --- Chat Rendering ---
     function getChatPanel(panel) {
       return document.getElementById(panel === 'A' ? 'chat-a' : 'chat-b');
@@ -700,6 +727,7 @@ import Layout from '../layouts/Layout.astro';
     function clearChats() {
       state.messagesA = [];
       state.messagesB = [];
+      state.debateHistory = [];
       ['chat-a', 'chat-b'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerHTML = '<div class="flex items-center justify-center h-full text-gray-600 text-sm"><span>选择模型并开始对话</span></div>';
@@ -709,7 +737,6 @@ import Layout from '../layouts/Layout.astro';
     function addUserMessage(text, imageUrl) {
       ['A', 'B'].forEach(panel => {
         const chat = getChatPanel(panel);
-        // Remove placeholder if present
         const placeholder = chat.querySelector('.flex.items-center.justify-center');
         if (placeholder) placeholder.remove();
 
@@ -722,18 +749,15 @@ import Layout from '../layouts/Layout.astro';
         bubbleContent += escapeHtml(text);
         div.innerHTML = `<div class="bubble">${bubbleContent}</div>`;
         chat.appendChild(div);
-        // Instant scroll for user messages
         chat.scrollTop = chat.scrollHeight;
       });
     }
 
     function createAssistantBubble(panel) {
       const chat = getChatPanel(panel);
-      // Remove placeholder if present
       const placeholder = chat.querySelector('.flex.items-center.justify-center');
       if (placeholder) placeholder.remove();
 
-      // Show status indicator
       const statusEl = document.getElementById(`panel-${panel.toLowerCase()}-status`);
       if (statusEl) {
         statusEl.classList.remove('hidden');
@@ -744,7 +768,6 @@ import Layout from '../layouts/Layout.astro';
       div.className = 'msg-assistant';
       div.innerHTML = `<div class="bubble"><span class="typing-cursor"></span></div>`;
       chat.appendChild(div);
-      // Instant scroll when assistant starts responding
       chat.scrollTop = chat.scrollHeight;
       return div.querySelector('.bubble');
     }
@@ -756,7 +779,6 @@ import Layout from '../layouts/Layout.astro';
         cursor.className = 'typing-cursor';
         bubble.appendChild(cursor);
       } else {
-        // Hide status indicator when done
         const chat = bubble.closest('[id^="chat-"]');
         if (chat) {
           const panelId = chat.id.replace('chat-', '');
@@ -766,12 +788,35 @@ import Layout from '../layouts/Layout.astro';
           }
         }
       }
-      // Auto-scroll to bottom immediately during streaming
       const chat = bubble.closest('[id^="chat-"]');
       if (chat) {
-        // Use instant scroll for streaming updates to keep up with content
         chat.scrollTop = chat.scrollHeight;
       }
+    }
+
+    function addDebateRoundMarker(round) {
+      ['A', 'B'].forEach(panel => {
+        const chat = getChatPanel(panel);
+        const marker = document.createElement('div');
+        marker.className = 'debate-round-marker';
+        marker.innerHTML = `<span>第 ${round} 轮</span>`;
+        chat.appendChild(marker);
+      });
+    }
+
+    function addDebateVerdict(winner, reasoning) {
+      ['A', 'B'].forEach(panel => {
+        const chat = getChatPanel(panel);
+        const div = document.createElement('div');
+        div.className = `debate-verdict ${winner === 'pro' ? 'winner-pro' : winner === 'con' ? 'winner-con' : ''}`;
+        const winnerText = winner === 'pro' ? '🏆 正方获胜' : winner === 'con' ? '🏆 反方获胜' : '🤝 平局';
+        div.innerHTML = `
+          <div class="text-sm font-bold mb-1" style="color: ${winner === 'pro' ? '#60a5fa' : winner === 'con' ? '#f87171' : '#D4AF37'}">${winnerText}</div>
+          <div class="text-xs text-gray-400">${escapeHtml(reasoning)}</div>
+        `;
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+      });
     }
 
     function escapeHtml(text) {
@@ -786,7 +831,7 @@ import Layout from '../layouts/Layout.astro';
       if (typeof marked !== 'undefined' && marked.parse) {
         try {
           let html = marked.parse(text);
-          // Highlight SUMMARY line
+          // Highlight SUMMARY line (legacy support)
           html = html.replace(/SUMMARY:\s*(.+)$/gm, '<div class="summary-highlight">💡 <strong>核心观点：</strong>$1</div>');
           return html;
         } catch {
@@ -799,9 +844,96 @@ import Layout from '../layouts/Layout.astro';
       html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
       html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-      // Highlight SUMMARY line
       html = html.replace(/SUMMARY:\s*(.+)$/gm, '<div class="summary-highlight">💡 <strong>核心观点：</strong>$1</div>');
       return html;
+    }
+
+    // --- Debate Progress ---
+    function updateDebateProgress(round, max) {
+      const progressEl = document.getElementById('debate-progress');
+      const barEl = document.getElementById('debate-progress-bar');
+      const textEl = document.getElementById('debate-progress-text');
+      const labelEl = document.getElementById('debate-progress-label');
+
+      if (progressEl) progressEl.classList.remove('hidden');
+      if (barEl) barEl.style.width = `${(round / max) * 100}%`;
+      if (textEl) textEl.textContent = `${round} / ${max} 轮`;
+      if (labelEl) {
+        if (round >= max) {
+          labelEl.textContent = '辩论结束';
+          labelEl.classList.add('text-gold');
+        } else {
+          labelEl.textContent = '辩论进行中';
+          labelEl.classList.remove('text-gold');
+        }
+      }
+    }
+
+    function hideDebateProgress() {
+      const progressEl = document.getElementById('debate-progress');
+      if (progressEl) progressEl.classList.add('hidden');
+    }
+
+    // --- Summarize via API ---
+    async function summarizeText(text, model) {
+      try {
+        const res = await fetch(`${API_BASE}/summarize`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text, model }),
+        });
+        if (!res.ok) return text.slice(0, 200);
+        const data = await res.json();
+        return data.summary || text.slice(0, 200);
+      } catch {
+        return text.slice(0, 200);
+      }
+    }
+
+    // --- Build debate messages from unified history ---
+    function buildDebateMessages(side) {
+      // side: 'pro' (A) or 'con' (B)
+      const isPro = side === 'pro';
+      const messages = [];
+
+      // System prompt with stance
+      const stance = isPro ? '正方' : '反方';
+      const opponent = isPro ? '反方' : '正方';
+      messages.push({
+        role: 'system',
+        content: `${state.systemPrompt}\n\n你是辩论的${stance}。辩题是：${state.debateTopic}\n\n你的任务是支持${isPro ? '该观点' : '反对该观点'}，给出有力的论据和例子。每次发言都要针对对方的论点进行有效反驳，推进辩论深度。\n\n【规则】\n1. 每次发言先简要总结对方上一轮的论点\n2. 然后提出你的反驳和新论据\n3. 最后用一个简洁的短句总结你的核心立场`
+      });
+
+      // Build conversation from debate history
+      // First message is always the user's topic
+      messages.push({ role: 'user', content: state.debateTopic });
+
+      // Then alternate pro/con responses
+      for (const round of state.debateHistory) {
+        if (isPro) {
+          // Pro sees: con's response (as user), then pro's own response (as assistant)
+          messages.push({ role: 'user', content: `[${opponent}上一轮的观点] ${round.conSummary || round.con.slice(0, 200)}` });
+          messages.push({ role: 'assistant', content: round.pro });
+        } else {
+          // Con sees: pro's response (as user), then con's own response (as assistant)
+          messages.push({ role: 'user', content: `[${opponent}上一轮的观点] ${round.proSummary || round.pro.slice(0, 200)}` });
+          messages.push({ role: 'assistant', content: round.con });
+        }
+      }
+
+      // For the next round, add the prompt to continue
+      const lastRound = state.debateHistory[state.debateHistory.length - 1];
+      if (lastRound) {
+        const opponentSummary = isPro
+          ? (lastRound.conSummary || lastRound.con.slice(0, 200))
+          : (lastRound.proSummary || lastRound.pro.slice(0, 200));
+        messages.push({
+          role: 'user',
+          content: `对方（${opponent}）的观点：${opponentSummary}\n\n请针对对方观点进行有力反驳，并进一步强化你的立场。`
+        });
+      }
+
+      return messages;
     }
 
     // --- Send Message ---
@@ -843,42 +975,18 @@ import Layout from '../layouts/Layout.astro';
       // Add user message to UI
       addUserMessage(text || '(图片)', imageUrl);
 
-      // Build messages arrays
-      state.messagesA.push({ role: 'user', content: userContent });
-      state.messagesB.push({ role: 'user', content: userContent });
-      
-      // 辩论模式：创建共享的对话历史，让两个模型都能看到完整的辩论过程
-      let sharedHistory = [];
-      if (state.debateMode && state.debateRound > 0) {
-        // 将 A 和 B 的回答交替加入共享历史，优先使用总结版本
-        const maxLen = Math.max(state.messagesA.length, state.messagesB.length);
-        for (let i = 0; i < maxLen; i++) {
-          if (i < state.messagesA.length) {
-            const msgA = state.messagesA[i];
-            if (msgA.role === 'assistant') {
-              // 优先使用总结，如果没有则使用原文（短文本）
-              const summary = state.summariesA[i] || msgA.content;
-              sharedHistory.push({ role: 'assistant', content: `[正方] ${summary}` });
-            } else if (msgA.role === 'user' && i === 0) {
-              // 第一个 user message 是辩题
-              sharedHistory.push(msgA);
-            }
-          }
-          if (i < state.messagesB.length) {
-            const msgB = state.messagesB[i];
-            if (msgB.role === 'assistant') {
-              // 优先使用总结，如果没有则使用原文（短文本）
-              const summary = state.summariesB[i] || msgB.content;
-              sharedHistory.push({ role: 'assistant', content: `[反方] ${summary}` });
-            }
-          }
-        }
-      }
-
       // Clear pending image
       state.pendingImage = null;
       imgPreview.classList.add('hidden');
       imgPreviewSrc.src = '';
+
+      // Debate mode: first round setup
+      if (state.debateMode && state.debateRound === 0) {
+        state.debateTopic = text;
+        state.debateRound = 1;
+        state.systemPrompt = document.getElementById('system-prompt')?.value || '';
+        state.autoDebateMaxRounds = parseInt(document.getElementById('debate-rounds')?.value) || 6;
+      }
 
       // Create assistant bubbles
       const bubbleA = createAssistantBubble('A');
@@ -892,269 +1000,18 @@ import Layout from '../layouts/Layout.astro';
       document.getElementById('vote-a')?.classList.add('hidden');
       document.getElementById('vote-b')?.classList.add('hidden');
 
-      // Use /api/compare endpoint for both models in one request
-      const systemMsg = state.systemPrompt ? [{ role: 'system', content: state.systemPrompt }] : [];
-      
-      // 辩论模式：为两个模型设置不同的立场
+      // Build messages
       let msgA, msgB;
-      if (state.debateMode && state.debateRound === 0) {
-        // 第一轮辩论：设置立场（使用固定的 System Prompt 提高缓存命中率）
-        const proSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的正方。请支持用户提出的观点，给出有力的论据和例子。\n\n【重要】在回答的最后，请用一行以 "SUMMARY:" 开头，用一句话总结你的核心观点（不超过50字）。` };
-        const conSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的反方。请反对用户提出的观点，给出有力的论据和例子来反驳。\n\n【重要】在回答的最后，请用一行以 "SUMMARY:" 开头，用一句话总结你的核心观点（不超过50字）。` };
-        
-        // 第一轮也使用共享历史（只有用户的辩题）
-        msgA = [proSystem, ...sharedHistory, { role: 'user', content: userContent }];
-        msgB = [conSystem, ...sharedHistory, { role: 'user', content: userContent }];
-        state.debateTopic = text;
-        state.debateRound = 1;
-      } else if (state.debateMode && state.debateRound > 0) {
-        // 后续辩论轮次：使用共享的对话历史，让模型看到完整的辩论过程
-        // 为每个模型添加自己的立场提示
-        const proHistory = [...sharedHistory, { role: 'user', content: '请作为正方继续辩论，反驳对方的观点。\n\n【重要】在回答的最后，请用一行以 "SUMMARY:" 开头，用一句话总结你的核心观点（不超过50字）。' }];
-        const conHistory = [...sharedHistory, { role: 'user', content: '请作为反方继续辩论，反驳对方的观点。\n\n【重要】在回答的最后，请用一行以 "SUMMARY:" 开头，用一句话总结你的核心观点（不超过50字）。' }];
-        
-        msgA = [...systemMsg, ...proHistory];
-        msgB = [...systemMsg, ...conHistory];
+      if (state.debateMode) {
+        msgA = buildDebateMessages('pro');
+        msgB = buildDebateMessages('con');
       } else {
-        // 普通模式
+        const systemMsg = state.systemPrompt ? [{ role: 'system', content: state.systemPrompt }] : [];
+        state.messagesA.push({ role: 'user', content: userContent });
+        state.messagesB.push({ role: 'user', content: userContent });
         msgA = [...systemMsg, ...state.messagesA];
         msgB = [...systemMsg, ...state.messagesB];
       }
-
-      const startTime = performance.now();
-      const firstToken = { A: 0, B: 0 };
-      const tokenCounts = { A: 0, B: 0 };
-      let contentA = '';
-      let contentB = '';
-
-      try {
-        const res = await fetch(`${API_BASE}/compare`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            modelA: state.modelA,
-            modelB: state.modelB,
-            messagesA: msgA,
-            messagesB: msgB,
-            temperature: state.temperature,
-            maxTokens: state.maxTokens,
-          }),
-        });
-
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = '';
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || '';
-
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed.startsWith('data: ')) continue;
-            const jsonStr = trimmed.slice(6);
-            if (jsonStr === '[DONE]') continue;
-
-            try {
-              const data = JSON.parse(jsonStr);
-              const model = data.model; // 'A' or 'B'
-
-              if (data.type === 'chunk' && data.content) {
-                if (!firstToken[model]) firstToken[model] = performance.now();
-                tokenCounts[model]++;
-                if (model === 'A') {
-                  contentA += data.content;
-                  updateAssistantBubble(bubbleA, contentA, false);
-                } else {
-                  contentB += data.content;
-                  updateAssistantBubble(bubbleB, contentB, false);
-                }
-              } else if (data.type === 'complete') {
-                const bubble = model === 'A' ? bubbleA : bubbleB;
-                const metricsEl = model === 'A' ? metricsA : metricsB;
-                const content = model === 'A' ? contentA : contentB;
-                updateAssistantBubble(bubble, content, true);
-
-                const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
-                const ttft = firstToken[model] ? ((firstToken[model] - startTime) / 1000).toFixed(2) : '-';
-                const chars = content.length;
-                const tokens = tokenCounts[model];
-                if (metricsEl) metricsEl.textContent = `${elapsed}s | 首字${ttft}s | ${chars}字 | ${tokens}tokens`;
-              } else if (data.type === 'error') {
-                if (model === 'A') {
-                  contentA += `\n\nError: ${data.error}`;
-                  updateAssistantBubble(bubbleA, contentA, true);
-                  if (metricsA) metricsA.textContent = '❌';
-                } else {
-                  contentB += `\n\nError: ${data.error}`;
-                  updateAssistantBubble(bubbleB, contentB, true);
-                  if (metricsB) metricsB.textContent = '❌';
-                }
-              }
-            } catch {}
-          }
-        }
-      } catch (err) {
-        updateAssistantBubble(bubbleA, `Error: ${err.message}`, true);
-        updateAssistantBubble(bubbleB, `Error: ${err.message}`, true);
-        if (metricsA) metricsA.textContent = '❌';
-        if (metricsB) metricsB.textContent = '❌';
-      }
-
-      // Save assistant responses to history
-      if (contentA) {
-        state.messagesA.push({ role: 'assistant', content: contentA });
-        // 提取 SUMMARY 标记的总结（模型自己生成的）
-        const summaryMatchA = contentA.match(/SUMMARY:\s*(.+)$/m);
-        if (summaryMatchA) {
-          state.summariesA[state.messagesA.length - 1] = summaryMatchA[1].trim();
-        }
-      }
-      if (contentB) {
-        state.messagesB.push({ role: 'assistant', content: contentB });
-        // 提取 SUMMARY 标记的总结（模型自己生成的）
-        const summaryMatchB = contentB.match(/SUMMARY:\s*(.+)$/m);
-        if (summaryMatchB) {
-          state.summariesB[state.messagesB.length - 1] = summaryMatchB[1].trim();
-        }
-      }
-
-      // Show vote buttons
-      state.roundCount++;
-      document.getElementById('vote-a')?.classList.remove('hidden');
-      document.getElementById('vote-b')?.classList.remove('hidden');
-      document.getElementById('score-bar')?.classList.remove('hidden');
-      
-      // 如果是自动辩论中，显示认输按钮
-      if (state.isAutoDebate && state.debateRound < state.autoDebateMaxRounds) {
-        document.getElementById('surrender-a')?.classList.remove('hidden');
-        document.getElementById('surrender-b')?.classList.remove('hidden');
-      }
-
-      isRunning = false;
-      sendBtn.disabled = false;
-      sendBtn.textContent = '发送';
-      
-      // 如果是辩论模式的第一轮，启动自动辩论
-      if (state.debateMode && state.debateRound === 1) {
-        state.isAutoDebate = true; // 开启自动辩论
-        setTimeout(() => {
-          autoContinueDebate();
-        }, 1000); // 等待 1 秒后开始第二轮
-      }
-    }
-
-    // --- Voting ---
-    function vote(winner) {
-      if (winner === 'A') state.scoreA++;
-      else if (winner === 'B') state.scoreB++;
-      else state.scoreDraw++;
-
-      document.getElementById('score-a').textContent = state.scoreA;
-      document.getElementById('score-b').textContent = state.scoreB;
-      document.getElementById('score-draw').textContent = state.scoreDraw;
-      document.getElementById('score-bar')?.classList.remove('hidden');
-
-      // Hide vote buttons until next round
-      document.getElementById('vote-a')?.classList.add('hidden');
-      document.getElementById('vote-b')?.classList.add('hidden');
-    }
-
-    // --- Surrender ---
-    function surrender(who) {
-      // 停止自动辩论
-      state.isAutoDebate = false;
-      
-      const winner = who === 'A' ? 'B' : 'A';
-      const loser = who;
-      
-      // 显示认输消息
-      addUserMessage(`[🏳️ ${loser} 认输] ${winner} 获胜！`, null);
-      
-      // 更新分数
-      if (winner === 'A') state.scoreA++;
-      else state.scoreB++;
-      
-      document.getElementById('score-a').textContent = state.scoreA;
-      document.getElementById('score-b').textContent = state.scoreB;
-      document.getElementById('score-bar')?.classList.remove('hidden');
-      
-      // 隐藏按钮
-      document.getElementById('vote-a')?.classList.add('hidden');
-      document.getElementById('vote-b')?.classList.add('hidden');
-      document.getElementById('surrender-a')?.classList.add('hidden');
-      document.getElementById('surrender-b')?.classList.add('hidden');
-      
-      // 恢复发送按钮
-      const sendBtn = document.getElementById('send-btn');
-      if (sendBtn) {
-        sendBtn.disabled = false;
-        sendBtn.textContent = '发送';
-      }
-    }
-
-    // --- Auto Continue Debate ---
-    async function autoContinueDebate() {
-      if (!state.debateMode || !state.isAutoDebate || state.debateRound >= state.autoDebateMaxRounds) {
-        state.isAutoDebate = false;
-        return;
-      }
-
-      const sendBtn = document.getElementById('send-btn');
-      if (sendBtn) {
-        sendBtn.disabled = true;
-        sendBtn.textContent = `辩论中 (${state.debateRound}/${state.autoDebateMaxRounds})...`;
-      }
-
-      // 构建下一轮的消息
-      const lastResponseA = state.messagesA[state.messagesA.length - 1];
-      const lastResponseB = state.messagesB[state.messagesB.length - 1];
-      
-      let nextUserContent;
-      if (state.debateRound % 2 === 1) {
-        // 奇数轮：B 刚说完，轮到 A 回应
-        // 使用 B 的总结而不是完整内容
-        const summaryB = state.summariesB[state.messagesB.length - 1] || (lastResponseB ? lastResponseB.content.substring(0, 150) + '...' : '');
-        nextUserContent = lastResponseB ? `对方（反方）的观点：${summaryB}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '请继续你的论证。';
-      } else {
-        // 偶数轮：A 刚说完，轮到 B 回应
-        // 使用 A 的总结而不是完整内容
-        const summaryA = state.summariesA[state.messagesA.length - 1] || (lastResponseA ? lastResponseA.content.substring(0, 150) + '...' : '');
-        nextUserContent = lastResponseA ? `对方（正方）的观点：${summaryA}\n\n请针对对方的观点进行反驳，并进一步强化你的立场。` : '请继续你的论证。';
-      }
-
-      // 添加到消息历史
-      state.messagesA.push({ role: 'user', content: nextUserContent });
-      state.messagesB.push({ role: 'user', content: nextUserContent });
-
-      // 在 UI 上显示用户消息（标注为自动继续）
-      addUserMessage(`[自动继续] ${nextUserContent.substring(0, 50)}...`, null);
-
-      // 创建助手气泡
-      const bubbleA = createAssistantBubble('A');
-      const bubbleB = createAssistantBubble('B');
-      const metricsA = document.getElementById('panel-a-metrics');
-      const metricsB = document.getElementById('panel-b-metrics');
-      if (metricsA) metricsA.textContent = '⏳';
-      if (metricsB) metricsB.textContent = '⏳';
-
-      // 隐藏投票按钮
-      document.getElementById('vote-a')?.classList.add('hidden');
-      document.getElementById('vote-b')?.classList.add('hidden');
-
-      // 构建系统提示词
-      const systemMsg = state.systemPrompt ? [{ role: 'system', content: state.systemPrompt }] : [];
-      const proSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的正方。你的任务是支持辩题：${state.debateTopic}。请给出有力的论据和例子来支持这个观点。` };
-      const conSystem = { role: 'system', content: `${state.systemPrompt}\n\n你是辩论的反方。你的任务是反对辩题：${state.debateTopic}。请给出有力的论据和例子来反驳这个观点。` };
-      
-      const msgA = [proSystem, ...state.messagesA];
-      const msgB = [conSystem, ...state.messagesB];
 
       const startTime = performance.now();
       const firstToken = { A: 0, B: 0 };
@@ -1236,46 +1093,303 @@ import Layout from '../layouts/Layout.astro';
           }
         }
       } catch (err) {
-        updateAssistantBubble(bubbleA, `Error: ${err.message}`, true);
-        updateAssistantBubble(bubbleB, `Error: ${err.message}`, true);
+        const errMsg = err.message || String(err);
+        const displayErr = errMsg.includes('Failed to fetch') 
+          ? '无法连接到 API 服务器 (localhost:3456)，请运行 `node src/server/arena.mjs`' 
+          : errMsg;
+        updateAssistantBubble(bubbleA, `Error: ${displayErr}`, true);
+        updateAssistantBubble(bubbleB, `Error: ${displayErr}`, true);
         if (metricsA) metricsA.textContent = '❌';
         if (metricsB) metricsB.textContent = '❌';
       }
 
-      // 保存助手响应
-      if (contentA) state.messagesA.push({ role: 'assistant', content: contentA });
-      if (contentB) state.messagesB.push({ role: 'assistant', content: contentB });
+      // Save responses
+      if (state.debateMode) {
+        // Add round marker
+        addDebateRoundMarker(state.debateRound);
 
-      state.debateRound++;
+        // Store in unified history
+        state.debateHistory.push({
+          round: state.debateRound,
+          pro: contentA,
+          con: contentB,
+          proSummary: '',
+          conSummary: '',
+        });
+
+        // Generate summaries in background
+        const roundIndex = state.debateHistory.length - 1;
+        Promise.all([
+          summarizeText(contentA, state.modelA),
+          summarizeText(contentB, state.modelB),
+        ]).then(([sumA, sumB]) => {
+          state.debateHistory[roundIndex].proSummary = sumA;
+          state.debateHistory[roundIndex].conSummary = sumB;
+        });
+      } else {
+        if (contentA) state.messagesA.push({ role: 'assistant', content: contentA });
+        if (contentB) state.messagesB.push({ role: 'assistant', content: contentB });
+      }
+
+      // Show vote buttons
       state.roundCount++;
-
-      // 显示投票和认输按钮
       document.getElementById('vote-a')?.classList.remove('hidden');
       document.getElementById('vote-b')?.classList.remove('hidden');
+      document.getElementById('score-bar')?.classList.remove('hidden');
+
+      isRunning = false;
+      sendBtn.disabled = false;
+      sendBtn.textContent = '发送';
+
+      // Debate mode: start auto debate after first round
+      if (state.debateMode && state.debateRound === 1) {
+        state.isAutoDebate = true;
+        updateDebateProgress(1, state.autoDebateMaxRounds);
+        setTimeout(() => {
+          if (state.isAutoDebate) autoContinueDebate();
+        }, 1500);
+      }
+    }
+
+    // --- Voting ---
+    function vote(winner) {
+      if (winner === 'A') state.scoreA++;
+      else if (winner === 'B') state.scoreB++;
+      else state.scoreDraw++;
+
+      document.getElementById('score-a').textContent = state.scoreA;
+      document.getElementById('score-b').textContent = state.scoreB;
+      document.getElementById('score-draw').textContent = state.scoreDraw;
+      document.getElementById('score-bar')?.classList.remove('hidden');
+
+      document.getElementById('vote-a')?.classList.add('hidden');
+      document.getElementById('vote-b')?.classList.add('hidden');
+    }
+
+    // --- Surrender ---
+    function surrender(who) {
+      state.isAutoDebate = false;
+
+      const winner = who === 'A' ? 'B' : 'A';
+      const loser = who;
+
+      addUserMessage(`[🏳️ ${loser} 认输] ${winner} 获胜！`, null);
+
+      if (winner === 'A') state.scoreA++;
+      else state.scoreB++;
+
+      document.getElementById('score-a').textContent = state.scoreA;
+      document.getElementById('score-b').textContent = state.scoreB;
+      document.getElementById('score-bar')?.classList.remove('hidden');
+
+      document.getElementById('vote-a')?.classList.add('hidden');
+      document.getElementById('vote-b')?.classList.add('hidden');
+      document.getElementById('surrender-a')?.classList.add('hidden');
+      document.getElementById('surrender-b')?.classList.add('hidden');
+
+      hideDebateProgress();
+
+      const sendBtn = document.getElementById('send-btn');
+      if (sendBtn) {
+        sendBtn.disabled = false;
+        sendBtn.textContent = '发送';
+      }
+    }
+
+    // --- Auto Continue Debate ---
+    async function autoContinueDebate() {
+      if (!state.debateMode || !state.isAutoDebate || state.debateRound >= state.autoDebateMaxRounds) {
+        state.isAutoDebate = false;
+        return;
+      }
+
+      const sendBtn = document.getElementById('send-btn');
+      if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.textContent = `辩论中 (${state.debateRound}/${state.autoDebateMaxRounds})...`;
+      }
+
+      state.debateRound++;
+      updateDebateProgress(state.debateRound, state.autoDebateMaxRounds);
+
+      // Create assistant bubbles
+      const bubbleA = createAssistantBubble('A');
+      const bubbleB = createAssistantBubble('B');
+      const metricsA = document.getElementById('panel-a-metrics');
+      const metricsB = document.getElementById('panel-b-metrics');
+      if (metricsA) metricsA.textContent = '⏳';
+      if (metricsB) metricsB.textContent = '⏳';
+
+      // Hide vote/surrender buttons
+      document.getElementById('vote-a')?.classList.add('hidden');
+      document.getElementById('vote-b')?.classList.add('hidden');
       if (state.debateRound < state.autoDebateMaxRounds) {
         document.getElementById('surrender-a')?.classList.remove('hidden');
         document.getElementById('surrender-b')?.classList.remove('hidden');
       }
 
-      // 如果还没达到最大轮数，继续下一轮
-      if (state.debateRound < state.autoDebateMaxRounds) {
-        setTimeout(() => {
-          autoContinueDebate();
-        }, 1000); // 等待 1 秒
-      } else {
-        // 辩论结束
+      // Build messages from unified history
+      const msgA = buildDebateMessages('pro');
+      const msgB = buildDebateMessages('con');
+
+      const startTime = performance.now();
+      const firstToken = { A: 0, B: 0 };
+      const tokenCounts = { A: 0, B: 0 };
+      let contentA = '';
+      let contentB = '';
+
+      try {
+        const res = await fetch(`${API_BASE}/compare`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            modelA: state.modelA,
+            modelB: state.modelB,
+            messagesA: msgA,
+            messagesB: msgB,
+            temperature: state.temperature,
+            maxTokens: state.maxTokens,
+          }),
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed.startsWith('data: ')) continue;
+            const jsonStr = trimmed.slice(6);
+            if (jsonStr === '[DONE]') continue;
+
+            try {
+              const data = JSON.parse(jsonStr);
+              const model = data.model;
+
+              if (data.type === 'chunk' && data.content) {
+                if (!firstToken[model]) firstToken[model] = performance.now();
+                tokenCounts[model]++;
+                if (model === 'A') {
+                  contentA += data.content;
+                  updateAssistantBubble(bubbleA, contentA, false);
+                } else {
+                  contentB += data.content;
+                  updateAssistantBubble(bubbleB, contentB, false);
+                }
+              } else if (data.type === 'complete') {
+                const bubble = model === 'A' ? bubbleA : bubbleB;
+                const metricsEl = model === 'A' ? metricsA : metricsB;
+                const content = model === 'A' ? contentA : contentB;
+                updateAssistantBubble(bubble, content, true);
+
+                const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
+                const ttft = firstToken[model] ? ((firstToken[model] - startTime) / 1000).toFixed(2) : '-';
+                const chars = content.length;
+                const tokens = tokenCounts[model];
+                if (metricsEl) metricsEl.textContent = `${elapsed}s | 首字${ttft}s | ${chars}字 | ${tokens}tokens`;
+              } else if (data.type === 'error') {
+                if (model === 'A') {
+                  contentA += `\n\nError: ${data.error}`;
+                  updateAssistantBubble(bubbleA, contentA, true);
+                  if (metricsA) metricsA.textContent = '❌';
+                } else {
+                  contentB += `\n\nError: ${data.error}`;
+                  updateAssistantBubble(bubbleB, contentB, true);
+                  if (metricsB) metricsB.textContent = '❌';
+                }
+              }
+            } catch {}
+          }
+        }
+      } catch (err) {
+        const errMsg = err.message || String(err);
+        const displayErr = errMsg.includes('Failed to fetch') 
+          ? '无法连接到 API 服务器 (localhost:3456)，请运行 `node src/server/arena.mjs`' 
+          : errMsg;
+        updateAssistantBubble(bubbleA, `Error: ${displayErr}`, true);
+        updateAssistantBubble(bubbleB, `Error: ${displayErr}`, true);
+        if (metricsA) metricsA.textContent = '❌';
+        if (metricsB) metricsB.textContent = '❌';
+      }
+
+      // Save responses to unified history
+      addDebateRoundMarker(state.debateRound);
+      state.debateHistory.push({
+        round: state.debateRound,
+        pro: contentA,
+        con: contentB,
+        proSummary: '',
+        conSummary: '',
+      });
+
+      // Generate summaries in background
+      const roundIndex = state.debateHistory.length - 1;
+      Promise.all([
+        summarizeText(contentA, state.modelA),
+        summarizeText(contentB, state.modelB),
+      ]).then(([sumA, sumB]) => {
+        state.debateHistory[roundIndex].proSummary = sumA;
+        state.debateHistory[roundIndex].conSummary = sumB;
+      });
+
+      state.roundCount++;
+
+      // Show vote buttons
+      document.getElementById('vote-a')?.classList.remove('hidden');
+      document.getElementById('vote-b')?.classList.remove('hidden');
+
+      if (state.debateRound >= state.autoDebateMaxRounds) {
+        // Debate finished
         state.isAutoDebate = false;
+        hideDebateProgress();
+
         if (sendBtn) {
           sendBtn.disabled = false;
           sendBtn.textContent = '发送';
         }
-        document.getElementById('vote-a')?.classList.remove('hidden');
-        document.getElementById('vote-b')?.classList.remove('hidden');
         document.getElementById('surrender-a')?.classList.add('hidden');
         document.getElementById('surrender-b')?.classList.add('hidden');
-        
-        // 显示辩论结束提示
-        addUserMessage('[辩论结束] 已完成 10 轮辩论', null);
+
+        // Show end message
+        addUserMessage('[辩论结束] 已完成 ' + state.autoDebateMaxRounds + ' 轮辩论', null);
+
+        // Call judge
+        try {
+          const judgeRes = await fetch(`${API_BASE}/judge`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              topic: state.debateTopic,
+              history: state.debateHistory.map(h => ({
+                round: h.round,
+                pro: h.proSummary || h.pro.slice(0, 300),
+                con: h.conSummary || h.con.slice(0, 300),
+              })),
+              model: state.modelA, // Use model A as judge (or could be a dedicated model)
+            }),
+          });
+          if (judgeRes.ok) {
+            const verdict = await judgeRes.json();
+            addDebateVerdict(verdict.winner, verdict.reasoning);
+          }
+        } catch (e) {
+          console.error('Judge failed:', e);
+        }
+      } else {
+        // Continue to next round
+        setTimeout(() => {
+          if (state.isAutoDebate) autoContinueDebate();
+        }, 1000);
       }
     }
 
@@ -1313,20 +1427,23 @@ import Layout from '../layouts/Layout.astro';
         state.scoreB = 0;
         state.scoreDraw = 0;
         state.roundCount = 0;
-        state.debateRound = 0;  // 重置辩论轮次
-        state.debateTopic = '';  // 清空辩题
-        state.isAutoDebate = false;  // 关闭自动辩论
+        state.debateRound = 0;
+        state.debateTopic = '';
+        state.isAutoDebate = false;
         document.getElementById('score-a').textContent = '0';
         document.getElementById('score-b').textContent = '0';
         document.getElementById('score-draw').textContent = '0';
         document.getElementById('score-bar')?.classList.add('hidden');
+        hideDebateProgress();
+        document.getElementById('surrender-a')?.classList.add('hidden');
+        document.getElementById('surrender-b')?.classList.add('hidden');
       });
     }
 
     // --- Init ---
     loadModels();
-    
-    // 初始化辩论模式 UI
+
+    // Initialize debate mode UI
     setTimeout(() => {
       const debateToggle = document.getElementById('debate-toggle');
       const debateHint = document.getElementById('debate-hint');
