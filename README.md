@@ -46,6 +46,29 @@ git add -A && git commit -m "message"
 - **Frontmatter**：必须包含 `title` (zh/en), `description` (zh/en), `date`, `category`, `tags`, `draft`, `author`。
 - **语言**：正文默认使用中文，Metadata 需提供中英双语。
 
+**博客管理工具**：
+
+项目提供了两个自动化脚本来简化博客管理：
+
+1. **检查博客状态** (`scripts/check-blog-posts.cjs`)
+   ```bash
+   node scripts/check-blog-posts.cjs
+   ```
+   - 检查所有文章的元数据完整性
+   - 显示每篇文章的发布状态和字数
+   - 生成统计报告
+
+2. **发布新文章** (`scripts/publish-blog-posts.cjs`)
+   ```bash
+   node scripts/publish-blog-posts.cjs
+   ```
+   - 自动检测新文章和修改的文章
+   - 验证元数据并自动添加 `draft: false`
+   - 自动执行 `git add`
+   - 提供提交建议
+
+详细使用说明请参考：`scripts/BLOG-TOOLS-README.md`
+
 **用户交互口令**：`发布博客`
 
 ---
