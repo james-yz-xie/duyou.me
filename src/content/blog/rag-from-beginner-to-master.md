@@ -8,6 +8,7 @@ description:
   en: "Deep analysis of RAG's positioning in the long context era, from beginner practices to architecture selection, and real limitations in anomaly detection scenarios"
 category: "AI Architecture"
 tags: ["RAG", "LLM", "Vector Database", "Knowledge Base"]
+draft: false
 author: "James Xie"
 ---
 
