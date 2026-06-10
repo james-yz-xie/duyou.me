@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { execSync } = require('child_process');
 
 const KB_DIR = '/Users/james/git/obsidian/MrXie AI consulting/Knowledge_Base';
@@ -62,6 +63,26 @@ function extractDateFromFilename(filename) {
   return match ? match[1] : null;
 }
 
+function calculateContentHash(content) {
+  // Remove frontmatter for hash calculation
+  const bodyContent = content.replace(/^---[\s\S]*?---/, '').trim();
+  return crypto.createHash('md5').update(bodyContent).digest('hex');
+}
+
+function getExistingBlogPosts() {
+  const blogFiles = fs.readdirSync(BLOG_DIR).filter(f => f.endsWith('.md'));
+  const existingPosts = {};
+  
+  blogFiles.forEach(filename => {
+    const filepath = path.join(BLOG_DIR, filename);
+    const content = fs.readFileSync(filepath, 'utf-8');
+    const hash = calculateContentHash(content);
+    existingPosts[hash] = filename;
+  });
+  
+  return existingPosts;
+}
+
 function createFrontmatter(title, date, category, tags, description) {
   return `---
 title:
@@ -80,9 +101,18 @@ author: "James Xie"
 `;
 }
 
-function syncArticle(filename) {
+function syncArticle(filename, existingHashes) {
   const sourcePath = path.join(KB_DIR, filename);
   const content = fs.readFileSync(sourcePath, 'utf-8');
+  
+  // Calculate hash of source content
+  const sourceHash = calculateContentHash(content);
+  
+  // Check if content already exists in blog
+  if (existingHashes[sourceHash]) {
+    log(`⏭️  ${filename}: 内容已存在 (${existingHashes[sourceHash]})`, colors.yellow);
+    return false;
+  }
   
   // Extract metadata
   const title = extractTitle(content);
@@ -103,10 +133,17 @@ function syncArticle(filename) {
   const targetFilename = `${slug}.md`;
   const targetPath = path.join(BLOG_DIR, targetFilename);
   
-  // Check if already exists
+  // Check if file with same name exists but different content
   if (fs.existsSync(targetPath)) {
-    log(`⚠️  ${filename}: 已存在 (${targetFilename})`, colors.yellow);
-    return false;
+    const existingContent = fs.readFileSync(targetPath, 'utf-8');
+    const existingHash = calculateContentHash(existingContent);
+    
+    if (existingHash !== sourceHash) {
+      log(`🔄 ${filename}: 内容已更新，覆盖 ${targetFilename}`, colors.cyan);
+    } else {
+      log(`⏭️  ${filename}: 文件已存在且内容相同`, colors.yellow);
+      return false;
+    }
   }
   
   // Determine category and tags based on content
@@ -150,36 +187,35 @@ function main() {
   log('\n📝 Knowledge Base 文章同步工具', colors.cyan);
   log('=' .repeat(60), colors.cyan);
   
-  // Get recent articles (last 7 days)
+  // Get existing blog posts hash map
+  const existingHashes = getExistingBlogPosts();
+  log(`\n📚 博客系统已有 ${Object.keys(existingHashes).length} 篇文章\n`, colors.blue);
+  
+  // Get recent articles (last 30 days)
   const files = fs.readdirSync(KB_DIR)
-    .filter(f => f.endsWith('.md') && !f.includes('WeChat') && !f.includes('_Archived'))
+    .filter(f => f.endsWith('.md') && !f.includes('WeChat'))
     .sort()
     .reverse();
   
-  // Also check _Archived files from last week
-  const archivedFiles = fs.readdirSync(KB_DIR)
-    .filter(f => f.endsWith('_Archived.md'))
-    .sort()
-    .reverse();
-  
-  const allFiles = [...files, ...archivedFiles];
-  
-  log(`\n找到 ${allFiles.length} 篇文章\n`, colors.blue);
+  log(`找到 ${files.length} 篇 Knowledge Base 文章\n`, colors.blue);
   
   let syncedCount = 0;
+  let skippedCount = 0;
   
-  allFiles.forEach(filename => {
+  files.forEach(filename => {
     const sourcePath = path.join(KB_DIR, filename);
     const stats = fs.statSync(sourcePath);
     const modifiedTime = stats.mtime;
     
-    // Only process files modified in the last 7 days
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    // Only process files modified in the last 30 days
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     
-    if (modifiedTime > sevenDaysAgo) {
-      if (syncArticle(filename)) {
+    if (modifiedTime > thirtyDaysAgo) {
+      if (syncArticle(filename, existingHashes)) {
         syncedCount++;
+      } else {
+        skippedCount++;
       }
     }
   });
@@ -187,7 +223,8 @@ function main() {
   log('\n' + '='.repeat(60), colors.cyan);
   log('📊 同步摘要', colors.cyan);
   log('=' .repeat(60), colors.cyan);
-  log(`同步文章数: ${syncedCount}`, colors.blue);
+  log(`新增/更新文章数: ${syncedCount}`, colors.blue);
+  log(`跳过文章数: ${skippedCount}`, colors.yellow);
   
   if (syncedCount > 0) {
     log('\n💡 提示:', colors.yellow);
