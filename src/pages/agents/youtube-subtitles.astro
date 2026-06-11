@@ -24,10 +24,10 @@ const pageData = {
 >
   <div class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
     {/* Header */}
-    <div class="py-8 px-4 sm:px-6 lg:px-8">
+    <div class="py-4 px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
         {/* Back Button */}
-        <div class="mb-6">
+        <div>
           <a href="/agents" class="inline-flex items-center gap-2 text-gold hover:text-gold/80 transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -36,25 +36,13 @@ const pageData = {
             <span class="lang-en hidden">{pageData.en.backToAgents}</span>
           </a>
         </div>
-
-        {/* Title */}
-        <div class="text-center">
-          <h1 class="text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-            <span class="lang-zh">{pageData.zh.title}</span>
-            <span class="lang-en hidden">{pageData.en.title}</span>
-          </h1>
-          <p class="text-gray-400">
-            <span class="lang-zh">{pageData.zh.description}</span>
-            <span class="lang-en hidden">{pageData.en.description}</span>
-          </p>
-        </div>
       </div>
     </div>
 
     {/* iframe Container */}
-    <div class="flex-1 px-4 sm:px-6 lg:px-8 pb-8">
+    <div class="flex-1 px-4 sm:px-6 lg:px-8 pb-4">
       <div class="max-w-7xl mx-auto">
-        <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-700/50 overflow-hidden" style="height: calc(100vh - 250px); min-height: 600px;">
+        <div class="bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-700/50 overflow-hidden" style="height: calc(100vh - 100px); min-height: 750px;">
           <iframe
             src="https://xvc-interview.xielingjiang.workers.dev/"
             class="w-full h-full border-0"
