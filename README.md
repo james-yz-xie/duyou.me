@@ -229,6 +229,7 @@ src/
 |------|------|------|
 | 首页 | `/` | 个人介绍 + 最新动态 |
 | AI Agent 导航 | `/agents` | AI 工具推荐和导航 |
+| YouTube 字幕提取器 | `/agents/youtube-subtitles` | iframe 内嵌的字幕提取工具 |
 | 开源热点 | `/opensource` | GitHub Trending 监控 |
 | 前沿情报 | `/briefings` | AI 行业资讯简报 |
 | Upwork AI | `/upwork-ai-jobs` | Upwork AI 工作情报 |
