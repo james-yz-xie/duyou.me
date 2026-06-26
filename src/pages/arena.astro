@@ -89,7 +89,19 @@ import Layout from '../layouts/Layout.astro';
           </div>
           <div>
             <label class="text-sm text-gray-400 block mb-1">系统提示词</label>
-            <textarea id="system-prompt" placeholder="可选，为两个模型设置系统提示词..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-600 focus:border-gold focus:outline-none resize-none" rows="2">你是一个专业的辩论选手。请用清晰、有逻辑的方式表达观点，使用具体的例子和数据支持你的论点。</textarea>
+            <textarea id="system-prompt" placeholder="可选，为两个模型设置系统提示词..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-600 focus:border-gold focus:outline-none resize-none" rows="3">你是一位犀利幽默的辩论高手。
+
+【风格要求】
+1. 简洁有力：每次发言控制在200字以内，直击要害
+2. 有梗有料：适当使用网络流行语、金句、类比，让辩论生动有趣
+3. 针锋相对：精准抓住对方逻辑漏洞，用一句话反杀
+4. 举例生动：用生活化、接地气的例子，不要堆砌数据
+5. 结尾点睛：最后一句用简短有力的话总结立场
+
+【禁止】
+- 长篇大论、啰嗦重复
+- 空洞说教、官话套话
+- 过度学术化、枯燥乏味</textarea>
           </div>
         </div>
       </div>
@@ -682,7 +694,7 @@ import Layout from '../layouts/Layout.astro';
           debateToggle.innerHTML = '<span>🎭 辩论模式</span>';
           debateToggle.classList.add('border-gold', 'text-gold', 'bg-gold/10', 'font-medium');
           debateToggle.classList.remove('border-gray-700', 'text-gray-400');
-          document.getElementById('system-prompt').value = '你是一位逻辑严密的辩论选手。请用清晰、有逻辑的方式表达观点，使用具体的例子和数据支持你的论点。每次发言都要针对对方的论点进行有效反驳。';
+          document.getElementById('system-prompt').value = '你是一位犀利幽默的辩论高手。\n\n【风格要求】\n1. 简洁有力：每次发言控制在200字以内，直击要害\n2. 有梗有料：适当使用网络流行语、金句、类比，让辩论生动有趣\n3. 针锋相对：精准抓住对方逻辑漏洞，用一句话反杀\n4. 举例生动：用生活化、接地气的例子，不要堆砌数据\n5. 结尾点睛：最后一句用简短有力的话总结立场\n\n【禁止】\n- 长篇大论、啰嗦重复\n- 空洞说教、官话套话\n- 过度学术化、枯燥乏味';
           if (debateHint) debateHint.classList.remove('hidden');
         } else {
           debateToggle.innerHTML = '<span>💬 普通模式</span>';
@@ -899,7 +911,7 @@ import Layout from '../layouts/Layout.astro';
       const opponent = isPro ? '反方' : '正方';
       messages.push({
         role: 'system',
-        content: `${state.systemPrompt}\n\n你是辩论的${stance}。辩题是：${state.debateTopic}\n\n你的任务是支持${isPro ? '该观点' : '反对该观点'}，给出有力的论据和例子。每次发言都要针对对方的论点进行有效反驳，推进辩论深度。\n\n【规则】\n1. 每次发言先简要总结对方上一轮的论点\n2. 然后提出你的反驳和新论据\n3. 最后用一个简洁的短句总结你的核心立场`
+        content: `${state.systemPrompt}\n\n你是辩论的${stance}。辩题是：${state.debateTopic}\n\n你的任务：支持${isPro ? '该观点' : '反对该观点'}，用犀利幽默的方式反驳对方。\n\n【每轮发言结构】\n1. 一句话点出对方漏洞（带梗）\n2. 给出你的核心论据（生活化例子）\n3. 金句收尾（简短有力）\n\n记住：少即是多，精炼才有力量！`
       });
 
       // Build conversation from debate history
