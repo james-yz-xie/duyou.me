@@ -49,6 +49,11 @@ import Layout from '../layouts/Layout.astro';
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             </button>
 
+            <!-- Voice Toggle -->
+            <button id="voice-toggle" class="p-2 text-gray-400 hover:text-gold transition-colors rounded-lg hover:bg-gray-800" title="开启语音">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+            </button>
+
             <!-- New Chat -->
             <button id="new-chat-btn" class="p-2 text-gray-400 hover:text-gold transition-colors rounded-lg hover:bg-gray-800" title="新对话">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -509,6 +514,10 @@ import Layout from '../layouts/Layout.astro';
       autoDebateMaxRounds: 6, // 自动辩论最大轮数（可配置）
       // Abort controller for auto debate
       autoDebateAbort: null,
+      // Voice settings
+      voiceEnabled: false,
+      speechQueue: [],
+      isSpeaking: false,
     };
 
     // --- Model Loading ---
@@ -796,6 +805,8 @@ import Layout from '../layouts/Layout.astro';
           if (statusEl) {
             statusEl.classList.add('hidden');
           }
+          // 语音输出
+          speakText(content, panelId.toUpperCase());
         }
       }
       const chat = bubble.closest('[id^="chat-"]');
@@ -1406,11 +1417,79 @@ import Layout from '../layouts/Layout.astro';
         state.debateRound = 0;
         state.debateTopic = '';
         state.isAutoDebate = false;
+        // 清除语音队列
+        window.speechSynthesis.cancel();
+        state.speechQueue = [];
+        state.isSpeaking = false;
         document.getElementById('score-a').textContent = '0';
         document.getElementById('score-b').textContent = '0';
         document.getElementById('score-draw').textContent = '0';
         document.getElementById('score-bar')?.classList.add('hidden');
         hideDebateProgress();
+      });
+    }
+
+    // --- Voice Control ---
+    const voiceToggle = document.getElementById('voice-toggle');
+    
+    function speakText(text, panel) {
+      if (!state.voiceEnabled || !text) return;
+      
+      // 添加到队列
+      state.speechQueue.push({ text, panel });
+      processSpeechQueue();
+    }
+    
+    function processSpeechQueue() {
+      if (state.isSpeaking || state.speechQueue.length === 0) return;
+      
+      state.isSpeaking = true;
+      const { text, panel } = state.speechQueue.shift();
+      
+      // 停止当前语音
+      window.speechSynthesis.cancel();
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-CN';
+      utterance.rate = 1.0;
+      utterance.pitch = panel === 'A' ? 0.9 : 1.1; // A低沉，B稍高
+      utterance.volume = 0.8;
+      
+      // 尝试选择中文语音
+      const voices = window.speechSynthesis.getVoices();
+      const zhVoice = voices.find(v => v.lang.includes('zh'));
+      if (zhVoice) utterance.voice = zhVoice;
+      
+      utterance.onend = () => {
+        state.isSpeaking = false;
+        processSpeechQueue(); // 处理下一个
+      };
+      
+      utterance.onerror = () => {
+        state.isSpeaking = false;
+        processSpeechQueue();
+      };
+      
+      window.speechSynthesis.speak(utterance);
+    }
+    
+    if (voiceToggle) {
+      voiceToggle.addEventListener('click', () => {
+        state.voiceEnabled = !state.voiceEnabled;
+        if (state.voiceEnabled) {
+          voiceToggle.classList.add('text-gold', 'bg-gold/10');
+          voiceToggle.classList.remove('text-gray-400');
+          voiceToggle.title = '关闭语音';
+          // 预加载语音
+          window.speechSynthesis.getVoices();
+        } else {
+          voiceToggle.classList.remove('text-gold', 'bg-gold/10');
+          voiceToggle.classList.add('text-gray-400');
+          voiceToggle.title = '开启语音';
+          window.speechSynthesis.cancel();
+          state.speechQueue = [];
+          state.isSpeaking = false;
+        }
       });
     }
 
