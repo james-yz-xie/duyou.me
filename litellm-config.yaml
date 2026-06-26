@@ -1,4 +1,14 @@
 model_list:
+  - model_name: "kimi-for-coding"
+    litellm_params:
+      model: "openai/kimi-for-coding"
+      api_base: "https://api.kimi.com/coding/"
+      api_key: "sk-kimi-tr20bTKT8v4NN8PrrgvxssQPxBAgKbyXjj5iyCtsGH2kr7tnD4B6fcWFlXlEGYZF"
+  - model_name: "kimi-k2"
+    litellm_params:
+      model: "openai/kimi-k2"
+      api_base: "https://api.kimi.com/coding/"
+      api_key: "sk-kimi-tr20bTKT8v4NN8PrrgvxssQPxBAgKbyXjj5iyCtsGH2kr7tnD4B6fcWFlXlEGYZF"
   - model_name: "nvidia/llama-3.1-nemotron-ultra-253b-v1"
     litellm_params:
       model: "openai/nvidia/llama-3.1-nemotron-ultra-253b-v1"

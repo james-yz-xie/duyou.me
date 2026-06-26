@@ -328,7 +328,7 @@ async function fetchModelResponse(model, body, send, label) {
 }
 
 // Start server
-const PORT = parseInt(process.env.PORT || '3457');
+const PORT = parseInt(process.env.PORT || '3456');
 serve({ fetch: app.fetch, port: PORT }, (info) => {
   console.log(`\n🥊 AI 擂台赛 API 已启动`);
   console.log(`   访问: http://localhost:${PORT}/api/health`);

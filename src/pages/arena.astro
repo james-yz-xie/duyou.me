@@ -158,7 +158,6 @@ import Layout from '../layouts/Layout.astro';
             <div class="flex items-center gap-2">
               <span id="panel-a-metrics" class="text-xs text-gray-600"></span>
               <button id="vote-a" class="hidden px-2 py-0.5 text-xs border border-blue-500/30 text-blue-400 rounded hover:bg-blue-500/10 transition-colors" onclick="vote('A')">👍 A 更好</button>
-              <button id="surrender-a" class="hidden px-2 py-0.5 text-xs border border-red-500/30 text-red-400 rounded hover:bg-red-500/10 transition-colors" onclick="surrender('A')">🏳️ A 认输</button>
             </div>
           </div>
           <div id="chat-a" class="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
@@ -179,7 +178,6 @@ import Layout from '../layouts/Layout.astro';
             <div class="flex items-center gap-2">
               <span id="panel-b-metrics" class="text-xs text-gray-600"></span>
               <button id="vote-b" class="hidden px-2 py-0.5 text-xs border border-red-500/30 text-red-400 rounded hover:bg-red-500/10 transition-colors" onclick="vote('B')">👍 B 更好</button>
-              <button id="surrender-b" class="hidden px-2 py-0.5 text-xs border border-red-500/30 text-red-400 rounded hover:bg-red-500/10 transition-colors" onclick="surrender('B')">🏳️ B 认输</button>
             </div>
           </div>
           <div id="chat-b" class="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
@@ -1167,34 +1165,6 @@ import Layout from '../layouts/Layout.astro';
     }
 
     // --- Surrender ---
-    function surrender(who) {
-      state.isAutoDebate = false;
-
-      const winner = who === 'A' ? 'B' : 'A';
-      const loser = who;
-
-      addUserMessage(`[🏳️ ${loser} 认输] ${winner} 获胜！`, null);
-
-      if (winner === 'A') state.scoreA++;
-      else state.scoreB++;
-
-      document.getElementById('score-a').textContent = state.scoreA;
-      document.getElementById('score-b').textContent = state.scoreB;
-      document.getElementById('score-bar')?.classList.remove('hidden');
-
-      document.getElementById('vote-a')?.classList.add('hidden');
-      document.getElementById('vote-b')?.classList.add('hidden');
-      document.getElementById('surrender-a')?.classList.add('hidden');
-      document.getElementById('surrender-b')?.classList.add('hidden');
-
-      hideDebateProgress();
-
-      const sendBtn = document.getElementById('send-btn');
-      if (sendBtn) {
-        sendBtn.disabled = false;
-        sendBtn.textContent = '发送';
-      }
-    }
 
     // --- Auto Continue Debate ---
     async function autoContinueDebate() {
@@ -1220,13 +1190,9 @@ import Layout from '../layouts/Layout.astro';
       if (metricsA) metricsA.textContent = '⏳';
       if (metricsB) metricsB.textContent = '⏳';
 
-      // Hide vote/surrender buttons
+      // Hide vote buttons
       document.getElementById('vote-a')?.classList.add('hidden');
       document.getElementById('vote-b')?.classList.add('hidden');
-      if (state.debateRound < state.autoDebateMaxRounds) {
-        document.getElementById('surrender-a')?.classList.remove('hidden');
-        document.getElementById('surrender-b')?.classList.remove('hidden');
-      }
 
       // Build messages from unified history
       const msgA = buildDebateMessages('pro');
@@ -1357,8 +1323,6 @@ import Layout from '../layouts/Layout.astro';
           sendBtn.disabled = false;
           sendBtn.textContent = '发送';
         }
-        document.getElementById('surrender-a')?.classList.add('hidden');
-        document.getElementById('surrender-b')?.classList.add('hidden');
 
         // Show end message
         addUserMessage('[辩论结束] 已完成 ' + state.autoDebateMaxRounds + ' 轮辩论', null);
@@ -1435,8 +1399,6 @@ import Layout from '../layouts/Layout.astro';
         document.getElementById('score-draw').textContent = '0';
         document.getElementById('score-bar')?.classList.add('hidden');
         hideDebateProgress();
-        document.getElementById('surrender-a')?.classList.add('hidden');
-        document.getElementById('surrender-b')?.classList.add('hidden');
       });
     }
 
